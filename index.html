@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Danu Water</title>
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue-dark:  #0a2540;
+      --blue-mid:   #1a5276;
+      --blue-light: #2e86c1;
+      --teal:       #1abc9c;
+      --white:      #ffffff;
+      --off-white:  #f4f7fa;
+      --text:       #2c3e50;
+      --text-muted: #5d6d7e;
+      --font:       'Segoe UI', Arial, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.65;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* ── Nav ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--blue-dark);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.35);
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: .5px;
+    }
+
+    .logo span { color: var(--teal); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: rgba(255,255,255,.85);
+      font-size: .95rem;
+      font-weight: 500;
+      transition: color .2s;
+    }
+
+    nav a:hover { color: var(--teal); }
+
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 60%, var(--blue-light) 100%);
+      color: var(--white);
+      padding: 7rem 2rem 5rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 800;
+      line-height: 1.2;
+      max-width: 780px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .hero .sub {
+      font-size: clamp(1rem, 2.5vw, 1.35rem);
+      font-weight: 600;
+      color: var(--teal);
+      margin-bottom: .4rem;
+    }
+
+    .hero p {
+      font-size: 1rem;
+      max-width: 600px;
+      margin: 1rem auto 2.5rem;
+      color: rgba(255,255,255,.82);
+    }
+
+    .btn {
+      display: inline-block;
+      padding: .75rem 2rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: .95rem;
+      transition: transform .15s, box-shadow .15s;
+    }
+
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+
+    .btn-primary {
+      background: var(--teal);
+      color: var(--white);
+    }
+
+    .btn-outline {
+      border: 2px solid rgba(255,255,255,.7);
+      color: var(--white);
+      margin-left: 1rem;
+    }
+
+    /* ── Benefits chips ── */
+    .benefits {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: .75rem;
+      margin-top: 2.5rem;
+    }
+
+    .chip {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.25);
+      color: var(--white);
+      padding: .4rem 1rem;
+      border-radius: 999px;
+      font-size: .88rem;
+    }
+
+    /* ── Sections shared ── */
+    section { padding: 5rem 2rem; }
+
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    .section-label {
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: .75rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 800;
+      color: var(--blue-dark);
+      margin-bottom: 1rem;
+    }
+
+    .section-body {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin-bottom: 2rem;
+    }
+
+    .link-arrow {
+      font-weight: 600;
+      color: var(--blue-light);
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      transition: gap .2s;
+    }
+
+    .link-arrow:hover { gap: .65rem; }
+
+    .link-arrow::after { content: '→'; }
+
+    /* ── Solutions ── */
+    .solutions { background: var(--off-white); }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: 8px;
+      padding: 1.75rem 1.5rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,.07);
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.12); }
+
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--blue-dark);
+      margin-bottom: .5rem;
+    }
+
+    .card p { font-size: .9rem; color: var(--text-muted); }
+
+    /* ── Industries ── */
+    .industries { background: var(--white); }
+
+    .industry-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .industry-item {
+      background: var(--off-white);
+      border-radius: 6px;
+      padding: 1.25rem 1rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: .9rem;
+      color: var(--blue-mid);
+      border: 1px solid #dce8f0;
+      transition: background .2s, color .2s;
+    }
+
+    .industry-item:hover { background: var(--blue-mid); color: var(--white); }
+
+    /* ── Utilities ── */
+    .utilities { background: var(--off-white); }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; gap: 2rem; } }
+
+    .stat-block {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .stat {
+      border-left: 4px solid var(--teal);
+      padding-left: 1rem;
+    }
+
+    .stat-number {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--blue-dark);
+    }
+
+    .stat-desc { font-size: .9rem; color: var(--text-muted); }
+
+    /* ── Contact ── */
+    .contact {
+      background: var(--blue-dark);
+      color: var(--white);
+      text-align: center;
+    }
+
+    .contact .section-title { color: var(--white); }
+    .contact .section-body { color: rgba(255,255,255,.75); margin: 0 auto 2rem; }
+
+    .contact-email {
+      display: inline-block;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--teal);
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-email:hover { text-decoration: underline; }
+
+    form {
+      max-width: 520px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    form input, form textarea {
+      width: 100%;
+      padding: .75rem 1rem;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 4px;
+      background: rgba(255,255,255,.08);
+      color: var(--white);
+      font-family: var(--font);
+      font-size: .95rem;
+    }
+
+    form input::placeholder, form textarea::placeholder { color: rgba(255,255,255,.45); }
+
+    form textarea { resize: vertical; min-height: 130px; }
+
+    form button {
+      align-self: flex-start;
+      background: var(--teal);
+      color: var(--white);
+      border: none;
+      cursor: pointer;
+      padding: .75rem 2rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: .95rem;
+      transition: opacity .2s;
+    }
+
+    form button:hover { opacity: .88; }
+
+    /* ── Footer ── */
+    footer {
+      background: #060f1e;
+      color: rgba(255,255,255,.45);
+      text-align: center;
+      padding: 1.5rem 2rem;
+      font-size: .82rem;
+    }
+
+    footer a { color: rgba(255,255,255,.55); margin: 0 .5rem; }
+    footer a:hover { color: var(--teal); }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header>
+    <div class="logo">Danu<span>Water</span></div>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#solutions">Solutions</a></li>
+        <li><a href="#industries">Industries</a></li>
+        <li><a href="#utilities">Utilities</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ── Hero ── -->
+  <section class="hero" id="home">
+    <p class="sub">Reduce your water costs NOW</p>
+    <p class="sub">Safeguard your operations in the face of water scarcity</p>
+    <h1>Industrial Water Recycling That Actually Works &amp; Saves You Money</h1>
+    <p>
+      Our technology removes salts from industrial wastewater and cooling water for
+      onsite reuse via a plug-and-play continuous system.
+    </p>
+    <a href="#solutions" class="btn btn-primary">Explore Solutions</a>
+    <a href="#contact" class="btn btn-outline">Partner With Us</a>
+    <div class="benefits">
+      <span class="chip">95%+ Water Recovery</span>
+      <span class="chip">Reduced Scaling &amp; Corrosion</span>
+      <span class="chip">Alternative Hard Water Source</span>
+      <span class="chip">Regulatory Change Preparedness</span>
+    </div>
+  </section>
+
+  <!-- ── Solutions ── -->
+  <section class="solutions" id="solutions">
+    <div class="container">
+      <div class="section-label">Solutions</div>
+      <h2 class="section-title">How Our Solutions Help Your Business</h2>
+      <p class="section-body">
+        We deliver plug-and-play desalination systems that integrate seamlessly into
+        your existing operations — reducing cost, downtime, and environmental impact.
+      </p>
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon">💧</div>
+          <h3>Wastewater Recycling</h3>
+          <p>Remove dissolved salts from industrial wastewater and return clean water to your process.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔄</div>
+          <h3>Cooling Water Treatment</h3>
+          <p>Extend cycles of concentration and dramatically cut blowdown volumes.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">⚡</div>
+          <h3>Plug-and-Play Systems</h3>
+          <p>Continuous, onsite operation with minimal installation complexity and fast deployment.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📉</div>
+          <h3>Cost Reduction</h3>
+          <p>Lower freshwater intake costs and reduce wastewater disposal fees simultaneously.</p>
+        </div>
+      </div>
+      <br />
+      <a href="#solutions" class="link-arrow">Learn more about our solutions</a>
+    </div>
+  </section>
+
+  <!-- ── Industries ── -->
+  <section class="industries" id="industries">
+    <div class="container">
+      <div class="section-label">Industries</div>
+      <h2 class="section-title">Serving Industry</h2>
+      <p class="section-body">
+        Our technology is industry-agnostic and operates continuously onsite —
+        wherever water is consumed and discharged, we can help.
+      </p>
+      <div class="industry-grid">
+        <div class="industry-item">Manufacturing</div>
+        <div class="industry-item">Food &amp; Beverage</div>
+        <div class="industry-item">Oil &amp; Gas</div>
+        <div class="industry-item">Power Generation</div>
+        <div class="industry-item">Mining</div>
+        <div class="industry-item">Chemicals</div>
+        <div class="industry-item">Pharmaceuticals</div>
+        <div class="industry-item">Textiles</div>
+      </div>
+      <br /><br />
+      <a href="#industries" class="link-arrow">How we serve industry</a>
+    </div>
+  </section>
+
+  <!-- ── Utilities ── -->
+  <section class="utilities" id="utilities">
+    <div class="container">
+      <div class="two-col">
+        <div>
+          <div class="section-label">Utilities</div>
+          <h2 class="section-title">Supporting Utilities</h2>
+          <p class="section-body">
+            By reducing industrial water demand, we free up capacity in municipal
+            supply systems — enabling new development and easing regulatory pressure.
+          </p>
+          <a href="#utilities" class="link-arrow">How we support utilities</a>
+        </div>
+        <div class="stat-block">
+          <div class="stat">
+            <div class="stat-number">95%+</div>
+            <div class="stat-desc">Water recovery rate from industrial wastewater streams</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">Onsite</div>
+            <div class="stat-desc">Continuous operation — no trucking, no off-site treatment</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">Zero</div>
+            <div class="stat-desc">Disruption to existing operations during installation</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Contact ── -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="section-label" style="color: var(--teal);">Contact</div>
+      <h2 class="section-title">Partner With Us</h2>
+      <p class="section-body">
+        Working with leading companies to showcase our technology. Reach out to explore
+        how Danu Water can transform your water management.
+      </p>
+      <a href="mailto:hello@danuwater.com" class="contact-email">hello@danuwater.com</a>
+      <form onsubmit="return false;">
+        <input type="text" placeholder="Your name" />
+        <input type="email" placeholder="Your email" />
+        <input type="text" placeholder="Company" />
+        <textarea placeholder="Tell us about your water challenge…"></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <p>
+      &copy; 2026 Danu Water &nbsp;|&nbsp;
+      <a href="mailto:hello@danuwater.com">hello@danuwater.com</a>
+      &nbsp;|&nbsp;
+      <a href="#">Cookie Policy</a>
+      &nbsp;|&nbsp;
+      <a href="#">Privacy</a>
+    </p>
+  </footer>
+
+</body>
+</html>
