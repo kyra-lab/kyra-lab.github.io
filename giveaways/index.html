@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Water is Right: giveaways | Danu Water</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0f2a44; --deep:#0a1d30; --teal:#1f9e96; --teal-soft:#d7efec;
+  --paper:#f7fafa; --ink:#15212c; --muted:#56667a; --line:#d5dee4; --card:#ffffff;
+  --water:#2bb3aa; --iconline:#8aa3b5; --tag:#fff8e6; --tagline:#e3cf9a;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0b1826; --ink:#e7eef2; --muted:#9fb0bf; --line:#22384d; --card:#102235;
+    --teal-soft:#123a3c; --navy:#dce8ee; --deep:#07121d; --iconline:#5d7a90; --tag:#1d2a33; --tagline:#4a5a66;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0b1826; --ink:#e7eef2; --muted:#9fb0bf; --line:#22384d; --card:#102235;
+  --teal-soft:#123a3c; --navy:#dce8ee; --deep:#07121d; --iconline:#5d7a90; --tag:#1d2a33; --tagline:#4a5a66;
+}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;font-size:1.0625rem;line-height:1.62}
+h1,h2,h3,.sans,button{font-family:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif}
+a{color:var(--teal)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--teal);outline-offset:3px;border-radius:4px}
+.wrap{max-width:40rem;margin:0 auto;padding:0 1.25rem}
+
+.reveal{background:var(--deep);color:#eaf4f6;padding:2.5rem 0 3rem}
+.brand{font-weight:700;font-size:.95rem;color:#9fd9d3;margin:0 0 .4rem;font-family:"Schibsted Grotesk",Arial,sans-serif}
+.show{font-family:"Schibsted Grotesk",Arial,sans-serif;font-weight:800;color:#f3c75a;font-size:1rem;margin:0 0 1.75rem}
+.q{font-size:clamp(1.6rem,6vw,2.3rem);line-height:1.15;font-weight:800;margin:0 0 1rem;letter-spacing:-.01em}
+.reveal p{color:#d3e3e8}
+.btn{font-weight:700;font-size:1.05rem;background:var(--water);color:#04201e;border:0;border-radius:999px;padding:.9rem 1.6rem;cursor:pointer}
+.btn.alt{background:#f3c75a;color:#2a1d00}
+
+section.block{padding:2.75rem 0;border-bottom:1px solid var(--line)}
+h2{font-size:1.45rem;line-height:1.2;margin:0 0 .75rem;color:var(--navy);font-weight:800}
+h3{font-size:1.05rem;margin:0 0 .35rem;color:var(--navy)}
+.muted{color:var(--muted)}
+
+/* Order list */
+.order{list-style:none;padding:0;margin:1.25rem 0 0;counter-reset:rank}
+.order li{display:grid;grid-template-columns:2.2rem 1fr auto;gap:.75rem;align-items:start;
+  padding:.85rem 0;border-top:1px solid var(--line)}
+.order li:last-child{border-bottom:1px solid var(--line)}
+.rank{font-family:"Schibsted Grotesk",Arial,sans-serif;font-weight:800;font-size:1.4rem;color:var(--teal);line-height:1.2}
+.name{font-family:"Schibsted Grotesk",Arial,sans-serif;font-weight:700;font-size:1.05rem;line-height:1.3}
+.why{font-size:.95rem;color:var(--muted);margin-top:.15rem}
+.tag{font-family:"Schibsted Grotesk",Arial,sans-serif;font-weight:800;white-space:nowrap;
+  background:var(--tag);border:1.5px solid var(--tagline);border-radius:6px;padding:.25rem .55rem;font-size:.95rem}
+.close-call{display:inline-block;margin-top:.3rem;font-family:"Schibsted Grotesk",Arial,sans-serif;font-size:.78rem;font-weight:700;
+  color:var(--teal);border:1px solid var(--teal);border-radius:999px;padding:.05rem .5rem}
+.hidden-row .name{color:var(--muted)}
+.order li{opacity:0;transform:translateY(6px)}
+.on .order li{opacity:1;transform:none;transition:opacity .35s ease, transform .35s ease}
+@media (prefers-reduced-motion:reduce){.on .order li{transition:none}}
+#orderWrap{display:none}#orderWrap.on{display:block}
+
+/* Buckets */
+.bucket{width:30px;height:32px;display:inline-block;flex:none}
+.bucket .shell{fill:none;stroke:var(--iconline);stroke-width:1.6}
+.bucket .handle{fill:none;stroke:var(--iconline);stroke-width:1.4}
+.bucket .fill{fill:var(--water)}
+.grid{display:flex;flex-wrap:wrap;gap:6px;margin:.5rem 0 1.25rem}
+.unit{font-size:.88rem;color:var(--muted);display:flex;align-items:center;gap:.4rem;font-family:"Schibsted Grotesk",Arial,sans-serif}
+.cmp h3{display:flex;justify-content:space-between;gap:1rem}
+.cmp h3 span{color:var(--muted);font-weight:500}
+#showWrap{display:none}#showWrap.on{display:block}
+.big{font-family:"Schibsted Grotesk",Arial,sans-serif;font-weight:800;line-height:.95;font-size:clamp(3rem,15vw,5.2rem);letter-spacing:-.03em;margin:.5rem 0 .4rem;color:var(--navy)}
+.big small{display:block;font-size:.32em;font-weight:500;letter-spacing:0;margin-top:.5rem;color:var(--muted)}
+
+.flip{background:var(--teal-soft);border-radius:10px;padding:1rem 1.1rem;margin-top:1.25rem}
+.flip strong{font-family:"Schibsted Grotesk",Arial,sans-serif}
+ul.plain{padding-left:1.1rem} ul.plain li{margin:.45rem 0}
+.sources li{font-size:.95rem}
+.close{background:var(--navy);color:#eaf4f6;padding:2.75rem 0 3.25rem}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .close{background:#102a40}}
+:root[data-theme="dark"] .close{background:#102a40}
+.close h2{color:#fff}.close p{color:#d3e3e8}
+.cta{display:inline-block;margin-top:.75rem;font-family:"Schibsted Grotesk",Arial,sans-serif;font-weight:700;background:var(--water);color:#04201e;text-decoration:none;border-radius:999px;padding:.8rem 1.4rem}
+.fine{font-size:.85rem;color:var(--muted);padding:1.5rem 0 2rem}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <clipPath id="bClip"><path d="M5 10 L25 10 L22.5 30 L7.5 30 Z"/></clipPath>
+    <symbol id="bShell" viewBox="0 0 30 32">
+      <path class="handle" d="M5 10 C5 1, 25 1, 25 10"/>
+      <path class="shell" d="M5 10 L25 10 L22.5 30 L7.5 30 Z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="reveal">
+  <div class="wrap">
+    <p class="brand">Danu Water</p>
+    <p class="show">The Water is Right</p>
+    <h1 class="q">Which of these giveaways took the most water to make?</h1>
+    <p>Line them up at our table from least to most, then check your order here.</p>
+    <button class="btn" id="orderBtn" type="button" aria-controls="orderWrap" aria-expanded="false">Show me the right order</button>
+  </div>
+</header>
+
+<main>
+  <section class="block" id="orderWrap" aria-live="polite">
+    <div class="wrap">
+      <h2>From least to most water</h2>
+      <p class="muted">Water taken in to make each item, from raw materials to the finished freebie. Rounded, and some are ranges.</p>
+      <ol class="order" id="orderList"></ol>
+      <div class="flip">
+        <p style="margin:0"><strong>How did you do?</strong> Pen and stress ball at the bottom, tote at the top? Then you've got the big picture. The middle four are close enough that we count any order as right.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <h2>The showcase: the canvas tote</h2>
+      <p>Write your guess on a card at our table first. Closest without going over wins a tree planted in their name each day.</p>
+      <button class="btn alt" id="showBtn" type="button" aria-controls="showWrap" aria-expanded="false">I've handed in my guess. Show me.</button>
+      <div id="showWrap" aria-live="polite">
+        <p class="big">About 200 litres<small>our best estimate for this tote (somewhere between 100 and 400 L)</small></p>
+        <div class="cmp">
+          <h3>The tote <span>~200 L</span></h3>
+          <div class="grid" id="toteGrid" role="img" aria-label="20 buckets of water"></div>
+          <h3>Everything else on the table, combined <span>~35 L</span></h3>
+          <div class="grid" id="restGrid" role="img" aria-label="About three and a half buckets of water"></div>
+          <p class="unit" id="bucketKey"></p>
+        </div>
+        <p>The "green" alternative to a plastic bag took more than five times the water of everything else on the table put together. Cotton is thirsty to process: it's washed, bleached and often dyed, and every step uses water.</p>
+        <p class="muted">That's before counting the water to grow the cotton, which we leave out for every item. Include it, and the tote would be in the thousands of litres.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <h2>What surprised people</h2>
+      <ul class="plain">
+        <li><strong class="sans">The plastics came last.</strong> The pen and stress ball used the least water. They're still the hardest to recycle: water and waste don't line up.</li>
+        <li><strong class="sans">"Eco" barely changed the notebook.</strong> The recycled part is the cover. The 60 pages inside carry most of the water, so the eco notebook and the leather-look journal come out about the same.</li>
+        <li><strong class="sans">The leather-look cover is plastic.</strong> It's polyurethane, not leather.</li>
+        <li><strong class="sans">The umbrella</strong> was made to keep water off you, and took roughly a bucketful to make. Dyeing and coating the fabric is the thirsty part.</li>
+        <li><strong class="sans">The USB stick scales with storage.</strong> Memory chips need ultrapure water. Roughly half a litre per gigabyte on older chips, so a 64 GB stick could outdo the umbrella.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <h2>How we worked it out</h2>
+      <p>We counted water taken in by factories to make each item, from raw materials to the finished product. We didn't count rain used to grow trees or cotton, for any item. These are estimates for typical items, not measurements of the exact ones on our table.</p>
+      <ul class="plain">
+        <li><strong class="sans">Paper:</strong> about 34 L per kg, from European paper industry figures (3,326 million m³ of water for 96.7 million tonnes of pulp and paper in 2022). Around 90% of it is cleaned and returned to rivers.</li>
+        <li><strong class="sans">Notebooks:</strong> 60 sheets (eco) and 80 pages (journal) of 5×7" paper, plus covers. The eco cover is recycled kraft, which we assumed uses less water.</li>
+        <li><strong class="sans">Tote:</strong> a 200 g canvas bag, scaled from cotton processing water for a t-shirt (about 380 L for 250 g, including the water needed to dilute dye-house waste). An undyed bag is at the low end, a dyed and printed one at the high end.</li>
+        <li><strong class="sans">USB stick:</strong> 32 GB, scaled from a certified figure of 310 L for a 512 GB memory chip. Newer chips are denser, so we took the lower end.</li>
+        <li><strong class="sans">Umbrella, stress ball and pen:</strong> rough estimates from material weights. We couldn't find solid published water figures for dyeing polyester or making foam.</li>
+      </ul>
+      <h3 style="margin-top:1.5rem">Sources</h3>
+      <ul class="plain sources">
+        <li>Cepi (2024). <a href="https://www.cepi.org/wp-content/uploads/2024/09/Key-Statistics-2023-FINAL-2.pdf">Key Statistics 2023: European pulp &amp; paper industry</a>. Cepi represents paper makers.</li>
+        <li>Samsung (2019). <a href="https://news.samsung.com/us/samsung--semiconductor-solutions-industry-first-environmental-sustainability-global-recognition/">Water footprint of a 512 GB eUFS memory chip</a>, certified by the Carbon Trust.</li>
+        <li>Chapagain et al. (2006). <a href="https://www.waterfootprint.org/resources/Report18.pdf">The water footprint of cotton consumption</a>. Water Footprint Network.</li>
+        <li>Verdict (2025). <a href="https://www.verdict.co.uk/semiconductors-manufacturing-water-usage/">Semiconductors are hidden water guzzlers</a>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="close">
+    <div class="wrap">
+      <h2>Why a water company cares</h2>
+      <p>Paper mills take in huge amounts of water, use it, clean it and send it back to the river. Chip factories turn ordinary water into ultrapure water and lose a third of it doing so. Danu Water builds electrodialysis systems that clean industrial water so factories can use it again, instead of drawing fresh water every time.</p>
+      <p>If you'd like the occasional fact like this one, we send a short newsletter.</p>
+      <a class="cta" href="https://danuwater.com">Get the newsletter</a>
+    </div>
+  </section>
+
+  <div class="wrap fine"><p>Figures are estimates built from published data and rounded. One bucket icon holds 10 litres.</p></div>
+</main>
+
+<script>
+(function(){
+  var TOTE=200, BUCKET=10;
+  var items=[
+    {n:'Ballpoint pen',t:'under 0.1 L',w:'A few grams of plastic and ink.'},
+    {n:'Stress ball',t:'under 1 L',w:'About 25 g of polyurethane foam.'},
+    {n:'Eco spiral notebook',t:'~4 L',w:'60 sheets inside; the recycled part is only the cover.',c:'About the same as the journal'},
+    {n:'Leather-look journal',t:'~4–7 L',w:'80 pages, card covers, and a polyurethane (plastic) wrap.',c:'About the same as the notebook'},
+    {n:'Mini umbrella',t:'~5–20 L',w:'Dyed, coated polyester canopy on a steel frame.',c:'Close call with the USB stick'},
+    {n:'USB stick, 32 GB',t:'~10–20 L',w:'Memory chips need ultrapure water to make.',c:'Close call with the umbrella'},
+    {n:'Canvas tote',t:'?',w:'The showcase. See below.',hide:true}
+  ];
+  var list=document.getElementById('orderList');
+  function render(showTote){
+    list.innerHTML='';
+    items.forEach(function(it,i){
+      var li=document.createElement('li'); if(it.hide&&!showTote) li.className='hidden-row';
+      var tag=(it.hide&&showTote)?'~200 L':it.t;
+      var why=(it.hide&&showTote)?'Cotton processing: washing, bleaching, dyeing.':it.w;
+      li.innerHTML='<span class="rank">'+(i+1)+'</span><div><div class="name">'+it.n+'</div><div class="why">'+why+'</div>'+(it.c?'<span class="close-call">'+it.c+'</span>':'')+'</div><span class="tag">'+tag+'</span>';
+      li.style.transitionDelay=(i*0.08)+'s';
+      list.appendChild(li);
+    });
+  }
+  render(false);
+
+  var NS='http://www.w3.org/2000/svg';
+  function bucket(frac){
+    var s=document.createElementNS(NS,'svg');s.setAttribute('class','bucket');s.setAttribute('viewBox','0 0 30 32');s.setAttribute('aria-hidden','true');
+    var u=document.createElementNS(NS,'use');u.setAttribute('href','#bShell');s.appendChild(u);
+    if(frac>0){var h=20*Math.min(frac,1);var r=document.createElementNS(NS,'rect');r.setAttribute('class','fill');
+      r.setAttribute('x','0');r.setAttribute('y',String(30-h));r.setAttribute('width','30');r.setAttribute('height',String(h));r.setAttribute('clip-path','url(#bClip)');s.appendChild(r);}
+    return s;
+  }
+  function fill(el,n){el.innerHTML='';var f=Math.floor(n+1e-9),p=n-f;for(var i=0;i<f;i++)el.appendChild(bucket(1));if(p>0.05)el.appendChild(bucket(p));}
+  fill(document.getElementById('toteGrid'),TOTE/BUCKET);
+  fill(document.getElementById('restGrid'),3.5);
+  var key=document.getElementById('bucketKey');key.appendChild(bucket(1));key.appendChild(document.createTextNode('= one 10-litre bucket of water'));
+
+  var orderWrap=document.getElementById('orderWrap'),orderBtn=document.getElementById('orderBtn');
+  function showOrder(){orderWrap.classList.add('on');orderBtn.setAttribute('aria-expanded','true');orderBtn.style.display='none';
+    requestAnimationFrame(function(){requestAnimationFrame(function(){orderWrap.querySelector('.wrap').classList.add('on');});});}
+  orderBtn.addEventListener('click',function(){showOrder();orderWrap.scrollIntoView({behavior:'smooth'});try{sessionStorage.setItem('gw-order','1')}catch(e){}});
+  var showWrap=document.getElementById('showWrap'),showBtn=document.getElementById('showBtn');
+  function showTote(){showWrap.classList.add('on');showBtn.style.display='none';showBtn.setAttribute('aria-expanded','true');render(true);
+    if(orderWrap.classList.contains('on'))orderWrap.querySelector('.wrap').classList.add('on');}
+  showBtn.addEventListener('click',function(){showTote();try{sessionStorage.setItem('gw-tote','1')}catch(e){}});
+  try{if(sessionStorage.getItem('gw-order')==='1')showOrder();if(sessionStorage.getItem('gw-tote')==='1')showTote();}catch(e){}
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>How much water does it take to make a reusable coffee cup? | Danu Water</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0f2a44; --deep:#0a1d30; --teal:#1f9e96; --teal-soft:#d7efec;
+  --paper:#f7fafa; --ink:#15212c; --muted:#56667a; --line:#d5dee4; --card:#ffffff;
+  --water:#2bb3aa; --cupline:#8aa3b5; --warn:#b4531f;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0b1826; --ink:#e7eef2; --muted:#9fb0bf; --line:#22384d; --card:#102235;
+    --teal-soft:#123a3c; --navy:#dce8ee; --deep:#07121d; --cupline:#5d7a90; --warn:#f0a070;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0b1826; --ink:#e7eef2; --muted:#9fb0bf; --line:#22384d; --card:#102235;
+  --teal-soft:#123a3c; --navy:#dce8ee; --deep:#07121d; --cupline:#5d7a90; --warn:#f0a070;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;font-size:1.0625rem;line-height:1.62}
+h1,h2,h3,.sans,button,select,label,output{font-family:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif}
+a{color:var(--teal)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--teal);outline-offset:3px;border-radius:4px}
+.wrap{max-width:40rem;margin:0 auto;padding:0 1.25rem}
+
+/* Cup icon */
+.cup{width:26px;height:34px;display:inline-block;flex:none}
+.cup .shell{fill:none;stroke:var(--cupline);stroke-width:1.6}
+.cup .fill{fill:var(--water)}
+.cup .lid{fill:var(--cupline)}
+.grid{display:flex;flex-wrap:wrap;gap:6px}
+
+/* Reveal */
+.reveal{background:var(--deep);color:#eaf4f6;padding:2.5rem 0 3rem}
+.reveal .cup .shell{stroke:#6f8ea3}.reveal .cup .lid{fill:#6f8ea3}
+.brand{font-weight:700;font-size:.95rem;color:#9fd9d3;margin:0 0 2rem;font-family:"Schibsted Grotesk",Arial,sans-serif}
+.q{font-size:clamp(1.6rem,6vw,2.3rem);line-height:1.15;font-weight:800;margin:0 0 1.5rem;letter-spacing:-.01em}
+.btn{font-weight:700;font-size:1.05rem;background:var(--water);color:#04201e;border:0;border-radius:999px;padding:.9rem 1.6rem;cursor:pointer}
+.answer{display:none}.revealed .answer{display:block}.revealed .btn{display:none}
+.big{font-family:"Schibsted Grotesk",Arial,sans-serif;font-weight:800;line-height:.95;font-size:clamp(3.4rem,17vw,6rem);letter-spacing:-.03em;margin:.25rem 0 .5rem}
+.big small{display:block;font-size:.3em;font-weight:500;letter-spacing:0;margin-top:.5rem;color:#bfe6e1}
+.answer p{color:#d3e3e8;max-width:34rem}
+#heroCups{margin:1.25rem 0 .75rem;max-width:22rem}
+#heroCups .cup .fill{transform-origin:50% 100%;transform:scaleY(0)}
+.revealed #heroCups .cup .fill{animation:fillup .5s ease-out forwards}
+@keyframes fillup{to{transform:scaleY(1)}}
+@media (prefers-reduced-motion:reduce){.revealed #heroCups .cup .fill{animation:none;transform:scaleY(1)}}
+.key{font-size:.9rem;color:#9fb8c4;font-family:"Schibsted Grotesk",Arial,sans-serif;display:flex;align-items:center;gap:.4rem}
+
+section.block{padding:2.75rem 0;border-bottom:1px solid var(--line)}
+h2{font-size:1.45rem;line-height:1.2;margin:0 0 .75rem;color:var(--navy);font-weight:800}
+h3{font-size:1.05rem;margin:0 0 .35rem;color:var(--navy)}
+.muted{color:var(--muted)}
+.row{display:flex;align-items:center;gap:1rem;margin:1rem 0}
+.row .label{min-width:7.5rem;font-family:"Schibsted Grotesk",Arial,sans-serif;font-weight:700;font-size:.95rem}
+.equals{font-family:"Schibsted Grotesk",Arial,sans-serif;font-weight:800;font-size:clamp(1.8rem,8vw,2.6rem);color:var(--teal);line-height:1.1;margin:1.25rem 0 .25rem}
+
+/* Calculator */
+.calc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1.25rem;margin-top:1.25rem}
+.ctrl{margin-bottom:1.25rem}
+.ctrl label{display:flex;justify-content:space-between;align-items:baseline;font-weight:700;font-size:1rem;margin-bottom:.4rem}
+.ctrl output{color:var(--teal);font-weight:800;font-size:1.15rem}
+input[type=range]{width:100%;accent-color:var(--teal);height:28px}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem}
+.seg button{border:1.5px solid var(--line);background:transparent;color:var(--ink);border-radius:8px;padding:.6rem .4rem;font-size:.9rem;font-weight:600;cursor:pointer;line-height:1.25}
+.seg button small{display:block;font-weight:400;color:var(--muted);font-size:.8rem}
+.seg button[aria-pressed="true"]{border-color:var(--teal);background:var(--teal-soft)}
+.result{border-top:1px solid var(--line);padding-top:1rem;margin-top:.5rem}
+.verdict{font-family:"Schibsted Grotesk",Arial,sans-serif;font-weight:800;font-size:1.3rem;line-height:1.25;margin:0 0 .35rem;color:var(--navy)}
+.verdict.never{color:var(--warn)}
+.compare{margin-top:1rem}
+.compare h3{display:flex;justify-content:space-between;gap:1rem;font-size:1rem}
+.compare h3 span{color:var(--muted);font-weight:500}
+.compare .grid{margin:.4rem 0 1rem;min-height:36px}
+.unit{font-size:.88rem;color:var(--muted);display:flex;align-items:center;gap:.4rem;font-family:"Schibsted Grotesk",Arial,sans-serif}
+
+.flip{background:var(--teal-soft);border-radius:10px;padding:1rem 1.1rem;margin-top:1.25rem}
+.flip strong{font-family:"Schibsted Grotesk",Arial,sans-serif}
+ul.plain{padding-left:1.1rem} ul.plain li{margin:.45rem 0}
+.sources li{font-size:.95rem}
+.close{background:var(--navy);color:#eaf4f6;padding:2.75rem 0 3.25rem}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .close{background:#102a40}}
+:root[data-theme="dark"] .close{background:#102a40}
+.close h2{color:#fff}.close p{color:#d3e3e8}
+.cta{display:inline-block;margin-top:.75rem;font-family:"Schibsted Grotesk",Arial,sans-serif;font-weight:700;background:var(--water);color:#04201e;text-decoration:none;border-radius:999px;padding:.8rem 1.4rem}
+.fine{font-size:.85rem;color:var(--muted);padding:1.5rem 0 2rem}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <clipPath id="cupClip"><path d="M4 9 L22 9 L19.5 32 L6.5 32 Z"/></clipPath>
+    <symbol id="cupShell" viewBox="0 0 26 34">
+      <rect class="lid" x="2.5" y="4" width="21" height="4" rx="1.5"/>
+      <rect class="lid" x="9" y="1.5" width="8" height="3" rx="1"/>
+      <path class="shell" d="M4 9 L22 9 L19.5 32 L6.5 32 Z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="reveal" id="reveal">
+  <div class="wrap">
+    <p class="brand">Danu Water</p>
+    <h1 class="q">How much water does it take to make a reusable glass coffee cup?</h1>
+    <button class="btn" id="revealBtn" type="button" aria-controls="answer" aria-expanded="false">Show me the answer</button>
+    <div class="answer" id="answer" aria-live="polite">
+      <p class="big">About 8 litres<small>to make one 340 ml glass reusable cup, lid and band included</small></p>
+      <div class="grid" id="heroCups" role="img" aria-label="24 full cups of water"></div>
+      <p class="key"><svg class="cup" viewBox="0 0 26 34" aria-hidden="true"><use href="#cupShell"/><rect class="fill" x="0" y="9" width="26" height="23" clip-path="url(#cupClip)"/></svg> = one full 340 ml cup of water</p>
+      <p>That's 24 of the cup itself, filled to the brim, before you've drunk a single coffee from it.</p>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="block">
+    <div class="wrap">
+      <h2>And a paper cup?</h2>
+      <p>A conventional takeaway paper cup, with its plastic lid, takes about 0.54 litres to make.</p>
+      <div class="row"><span class="label">Paper cup</span><div class="grid" id="paperCups" role="img" aria-label="About one and a half cups of water"></div></div>
+      <div class="row"><span class="label">Reusable cup</span><div class="grid" id="keepCups" role="img" aria-label="24 cups of water"></div></div>
+      <p class="equals">1 reusable cup = 15 paper cups</p>
+      <p>On manufacturing water alone, your reusable cup pays for itself after 15 coffees. About three weeks of weekday coffee.</p>
+      <p class="muted">But that's not the end of the story. Every time you use it, you wash it.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <h2>Your cup, your habits</h2>
+      <p>Set how you drink and how you wash. The answer changes more than you'd think.</p>
+      <div class="calc">
+        <div class="ctrl">
+          <label for="perWeek">Coffees a week <output id="perWeekOut" for="perWeek">5</output></label>
+          <input type="range" id="perWeek" min="1" max="21" value="5">
+        </div>
+        <div class="ctrl">
+          <span class="sans" style="font-weight:700;display:block;margin-bottom:.4rem" id="washLabel">How do you wash it?</span>
+          <div class="seg" role="group" aria-labelledby="washLabel">
+            <button type="button" data-w="0.3" aria-pressed="true">Dishwasher<small>0.3 L</small></button>
+            <button type="button" data-w="0.5" aria-pressed="false">Quick rinse<small>0.5 L</small></button>
+            <button type="button" data-w="1.0" aria-pressed="false">Running tap<small>about 1 L</small></button>
+          </div>
+        </div>
+        <div class="ctrl">
+          <label for="weeks">Over <output id="weeksOut" for="weeks">1 year</output></label>
+          <input type="range" id="weeks" min="1" max="104" value="52">
+        </div>
+
+        <div class="result" aria-live="polite">
+          <p class="verdict" id="verdict"></p>
+          <p class="muted" id="verdictSub" style="margin:0"></p>
+
+          <div class="compare">
+            <h3>Reusable cup, washed each time <span id="reuseL"></span></h3>
+            <div class="grid" id="reuseGrid"></div>
+            <h3>A new paper cup each time <span id="paperL"></span></h3>
+            <div class="grid" id="paperGrid"></div>
+            <p class="unit" id="unitKey"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip">
+        <p><strong>The water isn't in the cup. It's in how you use it.</strong> Wash it by hand under a running tap and, on water alone, a reusable cup may never catch up with paper.</p>
+        <p style="margin-bottom:0">That's not a reason to go back to paper. The same study found a reusable cup beats a paper cup on carbon within about 24 days, and on waste from the first coffee. Keep the cup, and wash it smarter: a full dishwasher, or a sink of water instead of a running tap.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <h2>Where the 8 litres go</h2>
+      <p>Surprisingly, the glass isn't the biggest part. The cardboard box it's sold in took more water to make than the cup.</p>
+      <ul class="plain">
+        <li><strong class="sans">Retail box:</strong> about 2.8 L</li>
+        <li><strong class="sans">Glass cup:</strong> about 2.0 L</li>
+        <li><strong class="sans">Silicone band:</strong> about 1.9 L (a cork band uses about 0.5 L)</li>
+        <li><strong class="sans">Lid and plug:</strong> about 0.7 L</li>
+        <li><strong class="sans">Transport and assembly:</strong> about 0.8 L</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <h2>How we worked it out</h2>
+      <p>We compared the water used to make each cup, plus the water used to wash the reusable one after every coffee. A paper cup is used once and thrown away, so its only cost is making it.</p>
+      <h3>Numbers we used</h3>
+      <ul class="plain">
+        <li><strong class="sans">Reusable glass cup:</strong> 8 L, from adding up the parts reported in KeepCup's life cycle assessment for its 340 ml glass cup.</li>
+        <li><strong class="sans">Paper cup:</strong> 0.54 L for a conventional cup and lid, from an independent Intertek assessment covering tree growing to disposal.</li>
+        <li><strong class="sans">Dishwasher:</strong> 0.3 L per cup (15 L a load, 50 cups a load). <strong class="sans">Quick rinse:</strong> 0.5 L. Both from the KeepCup study.</li>
+        <li><strong class="sans">Running tap:</strong> about 1 L. This one is our own assumption: roughly 10 seconds under a typical kitchen tap. The study's 0.5 L rinse assumes about 2 seconds, which is optimistic.</li>
+      </ul>
+      <h3 style="margin-top:1.5rem">Things to know</h3>
+      <ul class="plain">
+        <li><strong class="sans">Both studies were paid for by cup companies:</strong> KeepCup commissioned its study, and Frugalpac, which makes paper cups, commissioned the Intertek one.</li>
+        <li><strong class="sans">They may not count water the same way,</strong> so treat the break-even points as approximate.</li>
+        <li><strong class="sans">You may see claims that paper cups use 20 times more water.</strong> Figures like that usually count the rain that grows the trees. We left rainfall out, as we do for every item on our table.</li>
+        <li>We haven't included the water used to make the energy that heats washing water, or the coffee itself.</li>
+      </ul>
+      <h3 style="margin-top:1.5rem">Sources</h3>
+      <ul class="plain sources">
+        <li>Edge Environment for KeepCup (2018, rev. 2023). Reusable coffee cups life cycle assessment and benchmark.</li>
+        <li>Intertek for Frugalpac (2021). Life cycle assessment of single-use coffee cups, as reported by <a href="https://frugalpac.com/new-coffee-cup-study-reveals/">Frugalpac</a>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="close">
+    <div class="wrap">
+      <h2>Why a water company cares</h2>
+      <p>Your cup is a small version of a big problem. Factories use huge amounts of water to wash, rinse and cool things, and most of it goes down the drain after one use. Danu Water builds electrodialysis systems that clean that water so factories can use it again.</p>
+      <p>If you'd like the occasional fact like this one, we send a short newsletter.</p>
+      <a class="cta" href="https://danuwater.com">Get the newsletter</a>
+    </div>
+  </section>
+
+  <div class="wrap fine"><p>Figures are estimates built from published life cycle studies and rounded. One cup icon holds 340 ml.</p></div>
+</main>
+
+<script>
+(function(){
+  var MAKE_REUSE=8.0, MAKE_PAPER=0.54, CUP=0.34;
+  var NS='http://www.w3.org/2000/svg';
+  function cupIcon(frac){
+    var s=document.createElementNS(NS,'svg');
+    s.setAttribute('class','cup');s.setAttribute('viewBox','0 0 26 34');s.setAttribute('aria-hidden','true');
+    var u=document.createElementNS(NS,'use');u.setAttribute('href','#cupShell');s.appendChild(u);
+    if(frac>0){
+      var h=23*Math.min(frac,1);
+      var r=document.createElementNS(NS,'rect');
+      r.setAttribute('class','fill');r.setAttribute('x','0');r.setAttribute('y',String(32-h));
+      r.setAttribute('width','26');r.setAttribute('height',String(h));r.setAttribute('clip-path','url(#cupClip)');
+      s.appendChild(r);
+    }
+    return s;
+  }
+  function fillGrid(el,cups,max){
+    el.innerHTML='';
+    var full=Math.floor(cups+1e-9), part=cups-full;
+    for(var i=0;i<full&&i<max;i++) el.appendChild(cupIcon(1));
+    if(part>0.05&&full<max) el.appendChild(cupIcon(part));
+  }
+
+  // Hero: 24 cups filling in sequence
+  var hero=document.getElementById('heroCups');
+  for(var i=0;i<24;i++){var c=cupIcon(1);c.querySelector('.fill').style.animationDelay=(i*0.06)+'s';hero.appendChild(c);}
+  fillGrid(document.getElementById('paperCups'),MAKE_PAPER/CUP,99);
+  fillGrid(document.getElementById('keepCups'),MAKE_REUSE/CUP,99);
+
+  var reveal=document.getElementById('reveal'),btn=document.getElementById('revealBtn');
+  function doReveal(){reveal.classList.add('revealed');btn.setAttribute('aria-expanded','true');}
+  btn.addEventListener('click',function(){doReveal();try{sessionStorage.setItem('kc-revealed','1')}catch(e){}});
+  try{if(sessionStorage.getItem('kc-revealed')==='1')doReveal();}catch(e){}
+
+  // Calculator
+  var perWeek=document.getElementById('perWeek'),weeks=document.getElementById('weeks');
+  var wash=0.3, buttons=document.querySelectorAll('.seg button');
+  buttons.forEach(function(b){b.addEventListener('click',function(){
+    buttons.forEach(function(x){x.setAttribute('aria-pressed','false')});
+    b.setAttribute('aria-pressed','true');wash=parseFloat(b.dataset.w);update();
+  })});
+  function fmtL(l){return (l<10?l.toFixed(1):Math.round(l).toLocaleString('en-GB'))+' L';}
+  function fmtWeeks(w){ if(w<52)return w+(w===1?' week':' weeks'); var y=w/52; return (Math.abs(y-Math.round(y))<0.01?Math.round(y):y.toFixed(1))+(y===1?' year':' years'); }
+  function update(){
+    var pw=+perWeek.value, wk=+weeks.value, n=pw*wk;
+    document.getElementById('perWeekOut').textContent=pw;
+    document.getElementById('weeksOut').textContent=fmtWeeks(wk);
+    var reuse=MAKE_REUSE+n*wash, paper=n*MAKE_PAPER;
+    var saving=MAKE_PAPER-wash, v=document.getElementById('verdict'), sub=document.getElementById('verdictSub');
+    if(saving<=0){
+      v.textContent='On water alone, your reusable cup never catches up.';v.className='verdict never';
+      sub.textContent='Each wash uses more water than making a new paper cup. Switching to a dishwasher changes that.';
+    } else {
+      var be=Math.ceil(MAKE_REUSE/saving), beW=be/pw;
+      v.className='verdict';
+      v.textContent='Your cup breaks even on water after '+be+' coffees.';
+      sub.textContent= beW<1 ? 'That’s under a week at your pace.' : 'That’s about '+(beW<10?beW.toFixed(1):Math.round(beW))+' weeks at '+pw+' a week.';
+    }
+    document.getElementById('reuseL').textContent=fmtL(reuse);
+    document.getElementById('paperL').textContent=fmtL(paper);
+    // Scale icons so the bigger total fits in ~60 icons
+    var maxL=Math.max(reuse,paper), scale=1;
+    [1,5,10,25,50].some(function(s){scale=s;return maxL/(CUP*s)<=60;});
+    fillGrid(document.getElementById('reuseGrid'),reuse/(CUP*scale),80);
+    fillGrid(document.getElementById('paperGrid'),paper/(CUP*scale),80);
+    document.getElementById('reuseGrid').setAttribute('aria-label',fmtL(reuse));
+    document.getElementById('paperGrid').setAttribute('aria-label',fmtL(paper));
+    var key=document.getElementById('unitKey');key.innerHTML='';
+    key.appendChild(cupIcon(1));
+    key.appendChild(document.createTextNode(scale===1?'= one full 340 ml cup of water':'= '+scale+' full cups of water ('+(scale*CUP).toFixed(1).replace('.0','')+' L)'));
+  }
+  perWeek.addEventListener('input',update);weeks.addEventListener('input',update);
+  update();
+})();
+</script>
+</body>
+</html>

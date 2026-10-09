@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>How much water does it take to make a power bank? | Danu Water</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0f2a44; --deep:#0a1d30; --teal:#1f9e96; --teal-soft:#d7efec;
+  --paper:#f7fafa; --ink:#15212c; --muted:#56667a; --line:#d5dee4; --card:#ffffff;
+  --water:#2bb3aa;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0b1826; --ink:#e7eef2; --muted:#9fb0bf; --line:#22384d; --card:#102235;
+    --teal-soft:#123a3c; --navy:#dce8ee; --deep:#07121d;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0b1826; --ink:#e7eef2; --muted:#9fb0bf; --line:#22384d; --card:#102235;
+  --teal-soft:#123a3c; --navy:#dce8ee; --deep:#07121d;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+  font-size:1.0625rem;line-height:1.62;
+}
+h1,h2,h3,.sans{font-family:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif}
+a{color:var(--teal)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--teal);outline-offset:3px;border-radius:4px}
+.wrap{max-width:40rem;margin:0 auto;padding:0 1.25rem}
+
+/* Reveal */
+.reveal{background:var(--deep);color:#eaf4f6;padding:2.5rem 0 3rem;position:relative;overflow:hidden}
+.reveal .wrap{position:relative;z-index:1}
+.brand{font-family:"Schibsted Grotesk",Arial,sans-serif;font-weight:700;font-size:.95rem;color:#9fd9d3;margin:0 0 2rem}
+.q{font-size:clamp(1.6rem,6vw,2.3rem);line-height:1.15;font-weight:800;margin:0 0 1.5rem;letter-spacing:-.01em}
+.btn{
+  font-family:"Schibsted Grotesk",Arial,sans-serif;font-weight:700;font-size:1.05rem;
+  background:var(--water);color:#04201e;border:0;border-radius:999px;padding:.9rem 1.6rem;cursor:pointer;
+}
+.answer{display:none}
+.revealed .answer{display:block}
+.revealed .btn{display:none}
+.big{font-family:"Schibsted Grotesk",Arial,sans-serif;font-weight:800;line-height:.95;
+  font-size:clamp(3.4rem,17vw,6.2rem);letter-spacing:-.03em;margin:.25rem 0 .5rem}
+.big small{display:block;font-size:.3em;font-weight:500;letter-spacing:0;margin-top:.5rem;color:#bfe6e1}
+.answer p{max-width:34rem;color:#d3e3e8}
+.tank{position:absolute;inset:auto 0 0 0;height:0;background:linear-gradient(to top,rgba(43,179,170,.35),rgba(43,179,170,.12));z-index:0}
+.revealed .tank{height:58%;transition:height 1.6s cubic-bezier(.2,.7,.2,1)}
+@media (prefers-reduced-motion:reduce){.revealed .tank{transition:none}}
+
+/* Sections */
+section.block{padding:2.75rem 0;border-bottom:1px solid var(--line)}
+h2{font-size:1.45rem;line-height:1.2;margin:0 0 .75rem;color:var(--navy);font-weight:800}
+h3{font-size:1.05rem;margin:0 0 .35rem;color:var(--navy)}
+.muted{color:var(--muted)}
+.two{display:grid;gap:1rem;margin-top:1.25rem}
+@media (min-width:36rem){.two{grid-template-columns:1fr 1fr}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1.1rem 1.1rem 1rem}
+.panel .n{font-family:"Schibsted Grotesk",Arial,sans-serif;font-weight:800;font-size:2rem;color:var(--teal);line-height:1.1;margin:.2rem 0}
+.panel p{margin:.3rem 0 0;font-size:.97rem}
+
+/* Per-charge comparison with drops */
+.drops{display:flex;flex-wrap:wrap;gap:4px;margin:.6rem 0 .2rem}
+.drop{width:14px;height:18px;background:var(--teal);border-radius:50% 50% 50% 50%/60% 60% 40% 40%;opacity:.9}
+.flip{background:var(--teal-soft);border-radius:10px;padding:1rem 1.1rem;margin-top:1.25rem}
+.flip strong{font-family:"Schibsted Grotesk",Arial,sans-serif}
+
+/* Breakdown bar */
+.bar{display:flex;height:22px;border-radius:6px;overflow:hidden;margin:1rem 0 .6rem;border:1px solid var(--line)}
+.bar span{display:block;height:100%}
+.legend{list-style:none;padding:0;margin:0;font-size:.97rem}
+.legend li{display:flex;gap:.6rem;align-items:baseline;margin:.35rem 0}
+.sw{width:.8rem;height:.8rem;border-radius:3px;flex:none;transform:translateY(1px)}
+
+.table-wrap{overflow-x:auto;margin-top:1rem}
+table{border-collapse:collapse;width:100%;font-size:.95rem;min-width:28rem}
+th,td{text-align:left;padding:.55rem .5rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:"Schibsted Grotesk",Arial,sans-serif;font-weight:700;color:var(--navy)}
+td.num{white-space:nowrap;font-family:"Schibsted Grotesk",Arial,sans-serif;font-weight:500}
+
+ul.plain{padding-left:1.1rem}
+ul.plain li{margin:.4rem 0}
+.sources li{margin:.55rem 0;font-size:.95rem}
+
+.close{background:var(--navy);color:#eaf4f6;padding:2.75rem 0 3.25rem}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .close{background:#102a40}}
+:root[data-theme="dark"] .close{background:#102a40}
+.close h2{color:#fff}
+.close p{color:#d3e3e8}
+.cta{display:inline-block;margin-top:.75rem;font-family:"Schibsted Grotesk",Arial,sans-serif;font-weight:700;
+  background:var(--water);color:#04201e;text-decoration:none;border-radius:999px;padding:.8rem 1.4rem}
+.fine{font-size:.85rem;color:var(--muted);padding:1.5rem 0 2rem}
+</style>
+</head>
+<body>
+
+<header class="reveal" id="reveal">
+  <div class="tank" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="brand">Danu Water</p>
+    <h1 class="q">How much water does it take to make a power bank?</h1>
+    <button class="btn" id="revealBtn" type="button" aria-controls="answer" aria-expanded="false">Show me the answer</button>
+    <div class="answer" id="answer" aria-live="polite">
+      <p class="big">20–55 litres<small>to manufacture one power bank</small></p>
+      <p>That's one to four weeks of one person's drinking water, used before the power bank has charged anything. The range depends on its size and what the casing is made of.</p>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="block">
+    <div class="wrap">
+      <h2>Two ways to count it</h2>
+      <p>You can count the water that goes into the device, or the water behind every phone charge it gives you over its life. They tell different stories.</p>
+      <div class="two">
+        <div class="panel">
+          <h3>As a device</h3>
+          <div class="n">20–40 L</div>
+          <p>A 10,000 mAh power bank</p>
+          <div class="n">35–55 L</div>
+          <p>A 20,000 mAh power bank</p>
+          <p class="muted">An aluminium casing adds roughly 4 to 23 litres, depending on how the aluminium was smelted.</p>
+        </div>
+        <div class="panel">
+          <h3>Per phone charge</h3>
+          <div class="n">50–80 ml</div>
+          <p>Budget 10,000 mAh, rated around 300 cycles</p>
+          <div class="drops" aria-hidden="true"><span class="drop"></span><span class="drop"></span><span class="drop"></span><span class="drop"></span><span class="drop"></span><span class="drop"></span><span class="drop"></span></div>
+          <div class="n">15–20 ml</div>
+          <p>Better 20,000 mAh pouch-cell, rated around 800 cycles</p>
+          <div class="drops" aria-hidden="true"><span class="drop"></span><span class="drop"></span></div>
+        </div>
+      </div>
+      <div class="flip">
+        <p><strong>The smaller, cheaper one is the thirstier one.</strong> The bigger power bank takes more water to make, but it lasts far longer, so each charge costs three to four times less water.</p>
+        <p class="muted" style="margin-bottom:0">One catch: power banks are typically replaced within two years, often long before they wear out. The lowest-water power bank is the one you keep.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <h2>Where the water goes</h2>
+      <p>Most of it isn't used in the battery factory. It's upstream, in the metals.</p>
+      <div class="bar" role="img" aria-label="Share of battery cell manufacturing water: cathode materials 55 percent, aluminium 22 percent, cell production 13 percent, everything else 10 percent">
+        <span style="width:55%;background:#0f5c7a"></span>
+        <span style="width:22%;background:#1f9e96"></span>
+        <span style="width:13%;background:#7fcfc8"></span>
+        <span style="width:10%;background:#b7c6d1"></span>
+      </div>
+      <ul class="legend">
+        <li><span class="sw" style="background:#0f5c7a"></span><span><strong class="sans">Cathode materials, 55%.</strong> Mostly cobalt and nickel. Cobalt mined in Congo is processed using hydropower, and water evaporating from the reservoirs is counted.</span></li>
+        <li><span class="sw" style="background:#1f9e96"></span><span><strong class="sans">Aluminium, 22%.</strong> The foil and cell cans. Smelting aluminium takes huge amounts of electricity, often from hydropower. An aluminium casing pushes this share much higher.</span></li>
+        <li><span class="sw" style="background:#7fcfc8"></span><span><strong class="sans">Cell production, 13%.</strong> Making and conditioning the battery cells.</span></li>
+        <li><span class="sw" style="background:#b7c6d1"></span><span><strong class="sans">Everything else, 10%.</strong> Graphite, copper, electrolyte, plastics.</span></li>
+      </ul>
+      <p class="muted">Shares are for the battery cells, calculated from Argonne National Laboratory's battery life cycle model for a lithium-ion battery with NMC cathode chemistry.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <h2>Why cheap tends to cost more water</h2>
+      <p>The studies don't compare power banks by price. They compare chemistry, cell type and lifespan, and budget models tend to lose on all three.</p>
+      <ul class="plain">
+        <li><strong class="sans">Chemistry.</strong> Low-cost electronics commonly use lithium cobalt oxide cells, which contain much more cobalt than the chemistry our figures are based on. Our budget numbers are likely an underestimate.</li>
+        <li><strong class="sans">Cell type.</strong> Power banks built from flat pouch cells had around 66% lower production impacts per unit of energy delivered than ones built from cylindrical cells, thanks to higher energy density and longer life.</li>
+        <li><strong class="sans">Lifespan.</strong> Rated cycle life among 50 best-selling models ranged from about 300 to over 800 full charges.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <h2>What about lithium?</h2>
+      <p>You may have seen claims that lithium takes anywhere from a few hundred to two million litres of water per kilo. The disagreement is mostly about what counts as water.</p>
+      <p>Much of the world's lithium comes from salty underground brine, pumped into ponds and left to evaporate. In the Argonne model, the lithium in the cathode adds under 3 litres per kilo of cathode material. Our reading is that evaporated brine isn't counted as freshwater there, while the headline-grabbing figures do count it. Same lithium, wildly different answers, depending on where you draw the line.</p>
+      <p>That's the problem with industrial water in general: it's rarely measured the same way twice.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <h2>How we worked it out</h2>
+      <p>We counted <strong class="sans">freshwater consumed during manufacturing</strong>, from mining the raw materials to the finished power bank. That's water taken out and not returned, including evaporation. We did not count water used to charge it or to dispose of it.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Part</th><th>Basis</th><th>10,000 mAh</th><th>20,000 mAh</th></tr></thead>
+          <tbody>
+            <tr><td>Battery cells</td><td>About 436 L per kWh of cells, from Argonne's 752 L/kWh battery pack figure with vehicle-only parts removed</td><td class="num">~16 L</td><td class="num">~32 L</td></tr>
+            <tr><td>Circuit board</td><td>About 17 g of electronics at 102 L/kg</td><td class="num">~2 L</td><td class="num">~2 L</td></tr>
+            <tr><td>Plastic casing</td><td>Plastics at 5–7 L/kg</td><td class="num">&lt;1 L</td><td class="num">&lt;1 L</td></tr>
+            <tr><td>Aluminium casing (instead)</td><td>80–100 g; coal-smelted to hydro-smelted aluminium</td><td class="num">+4–23 L</td><td class="num">+4–23 L</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 style="margin-top:1.5rem">What's not included</h3>
+      <ul class="plain">
+        <li><strong class="sans">Pollution.</strong> Water needed to dilute contaminated discharges from mining and processing (often called grey water) isn't in these numbers, so the true figure is higher.</li>
+        <li><strong class="sans">Brine.</strong> Evaporated lithium brine, as explained above.</li>
+        <li><strong class="sans">Per-charge figures</strong> assume full charge cycles and the manufacturer's rated cycle life, which real use rarely reaches.</li>
+      </ul>
+      <h3 style="margin-top:1.5rem">Sources</h3>
+      <ul class="plain sources">
+        <li>Dai, Kelly, Gaines &amp; Wang (2019). Life cycle analysis of lithium-ion batteries for automotive applications. <em>Batteries</em> 5(2):48. Argonne National Laboratory, GREET model. <a href="https://doi.org/10.3390/batteries5020048">doi.org/10.3390/batteries5020048</a></li>
+        <li>Yang, Gu, Guo &amp; Chen (2019). Comparative life cycle assessment of mobile power banks with lithium-ion battery and lithium-ion polymer battery. <em>Sustainability</em> 11(19):5148. <a href="https://doi.org/10.3390/su11195148">doi.org/10.3390/su11195148</a></li>
+        <li>Rieder, Louis &amp; Elmenreich (2025). Life cycle assessment of portable charging technologies: a case study of a solar charger and a power bank. <em>Int. J. Life Cycle Assessment</em> 30:906–927. <a href="https://doi.org/10.1007/s11367-025-02453-8">doi.org/10.1007/s11367-025-02453-8</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="close">
+    <div class="wrap">
+      <h2>Why a water company cares</h2>
+      <p>Every factory in this chain uses water, and most of it leaves as wastewater. Danu Water builds electrodialysis systems that clean industrial wastewater so factories can reuse it, instead of drawing fresh water every time.</p>
+      <p>If you'd like the occasional fact like this one, we send a short newsletter.</p>
+      <a class="cta" href="https://danuwater.com">Get the newsletter</a>
+    </div>
+  </section>
+
+  <div class="wrap fine">
+    <p>Figures are estimates built from published life cycle studies and rounded. Drinking water comparison assumes 2–2.5 litres per person per day.</p>
+  </div>
+</main>
+
+<script>
+(function(){
+  var btn=document.getElementById('revealBtn');
+  var hero=document.getElementById('reveal');
+  btn.addEventListener('click',function(){
+    hero.classList.add('revealed');
+    btn.setAttribute('aria-expanded','true');
+    try{sessionStorage.setItem('pb-revealed','1')}catch(e){}
+  });
+  try{ if(sessionStorage.getItem('pb-revealed')==='1'){hero.classList.add('revealed');btn.setAttribute('aria-expanded','true')} }catch(e){}
+})();
+</script>
+</body>
+</html>
