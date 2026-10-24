@@ -1,0 +1,74 @@
+[
+  {
+    "slug": "techcrunch-disrupt-2026",
+    "date": "2026-10-13",
+    "when": "13–15 October 2026",
+    "title": "Startup Battlefield 200 at TechCrunch Disrupt",
+    "tags": [
+      "event"
+    ],
+    "summary": "Danu Water was selected for the Startup Battlefield 200 in San Francisco. At our booth, visitors guessed how much water it takes to make everyday things.",
+    "body": [
+      "Danu Water was one of the companies selected for TechCrunch Disrupt's Startup Battlefield 200 in San Francisco.",
+      "At booth C2 we put everyday objects on the table, a reusable coffee cup, a power bank and a set of conference giveaways, and asked visitors to guess how much water it took to make each one. Most people guessed far too low.",
+      "The answers, and the reasoning behind them, are now on our Understand your impact pages. They are a small way into a big point: water is built into almost everything industry makes, and most of it can be reused."
+    ],
+    "cta": [
+      "Understand your impact",
+      "/impact/"
+    ]
+  },
+  {
+    "slug": "wepa-bridgend-pilot",
+    "date": "2026-10-01",
+    "when": "October 2026",
+    "title": "Industrial pilot unit on site at WEPA Bridgend",
+    "tags": [
+      "news",
+      "pilot"
+    ],
+    "summary": "Our industrial pilot is running at WEPA's paper mill in Bridgend, Wales, treating 60 m³ of real mill water a day, on a system with capacity for 400 m³ a day.",
+    "body": [
+      "Danu Water's industrial pilot is now running at WEPA's paper mill in Bridgend, Wales, with our CTO Jack Ledingham on site.",
+      "It is treating 60 m³ of the mill's own process water a day, about the household water use of 440 people, on a system with capacity for 400 m³ a day. The pilot puts our adaptive electromembrane separation to work under real operating conditions, with all the variability that comes with them, at technology readiness level 7.",
+      "It follows our prototype, which has been regularly testing industrial wastewater samples since March 2025."
+    ]
+  },
+  {
+    "slug": "pre-seed-sfc-capital",
+    "date": "2026-03-15",
+    "when": "March 2026",
+    "title": "Pre-seed round backed by SFC Capital",
+    "tags": [
+      "news",
+      "funding"
+    ],
+    "summary": "SFC Capital backed Danu Water's pre-seed round, funding the build of our industrial pilot units.",
+    "body": [
+      "Danu Water closed its pre-seed round in March 2026, backed by SFC Capital.",
+      "The round funded the design and build of our industrial pilot units and our first industrial pilot programme. We plan to raise our next round on the back of these industrial demonstrations, to deliver our first commercial orders."
+    ]
+  },
+  {
+    "slug": "prototype",
+    "date": "2025-03-15",
+    "when": "March 2025",
+    "title": "Prototype up and running",
+    "tags": [
+      "news"
+    ],
+    "summary": "Our prototype system began regularly testing real industrial wastewater samples, processing 0.4 m³ a day at technology readiness level 6.",
+    "body": []
+  },
+  {
+    "slug": "founded",
+    "date": "2025-01-15",
+    "when": "January 2025",
+    "title": "Danu Water founded",
+    "tags": [
+      "news"
+    ],
+    "summary": "Kyra Sedransk Campbell and Jack Ledingham founded Danu Water, three months after Kyra left academia to build it full time.",
+    "body": []
+  }
+]

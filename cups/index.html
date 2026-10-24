@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --navy:#0f2a44; --deep:#0a1d30; --teal:#1f9e96; --teal-soft:#d7efec;
+  --navy:#0f2a44; --deep:#0a1d30; --teal:#167f78; --teal-soft:#d7efec;
   --paper:#f7fafa; --ink:#15212c; --muted:#56667a; --line:#d5dee4; --card:#ffffff;
   --water:#2bb3aa; --cupline:#8aa3b5; --warn:#b4531f;
   box-sizing:border-box;
@@ -20,12 +20,12 @@
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
     --paper:#0b1826; --ink:#e7eef2; --muted:#9fb0bf; --line:#22384d; --card:#102235;
-    --teal-soft:#123a3c; --navy:#dce8ee; --deep:#07121d; --cupline:#5d7a90; --warn:#f0a070;
+    --teal:#1f9e96; --teal-soft:#123a3c; --navy:#dce8ee; --deep:#07121d; --cupline:#5d7a90; --warn:#f0a070;
   }
 }
 :root[data-theme="dark"]{
   --paper:#0b1826; --ink:#e7eef2; --muted:#9fb0bf; --line:#22384d; --card:#102235;
-  --teal-soft:#123a3c; --navy:#dce8ee; --deep:#07121d; --cupline:#5d7a90; --warn:#f0a070;
+  --teal:#1f9e96; --teal-soft:#123a3c; --navy:#dce8ee; --deep:#07121d; --cupline:#5d7a90; --warn:#f0a070;
 }
 *,*::before,*::after{box-sizing:inherit}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -167,9 +167,9 @@ ul.plain{padding-left:1.1rem} ul.plain li{margin:.45rem 0}
 
           <div class="compare">
             <h3>Reusable cup, washed each time <span id="reuseL"></span></h3>
-            <div class="grid" id="reuseGrid"></div>
+            <div class="grid" id="reuseGrid" role="img"></div>
             <h3>A new paper cup each time <span id="paperL"></span></h3>
-            <div class="grid" id="paperGrid"></div>
+            <div class="grid" id="paperGrid" role="img"></div>
             <p class="unit" id="unitKey"></p>
           </div>
         </div>
