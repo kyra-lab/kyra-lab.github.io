@@ -224,9 +224,12 @@ def diagram(spec, uid, current=None):
         else:
             where = "as an optional add-on"
         label += f". {nm} {where}"
-    minw = int(width * 0.85)
-    return (f'<div class="diagram-scroll"><svg class="diagram" viewBox="0 0 {width:.0f} {height:.0f}" '
-            f'style="max-width:{width:.0f}px;min-width:{minw}px" role="img" aria-label="{e(label)}">{"".join(p)}</svg></div>')
+    minw = int(width)
+    body = "".join(p)
+    role = "group" if "<a " in body else "img"
+    return (f'<div class="diagram-scroll" tabindex="0" role="region" aria-label="Process diagram">'
+            f'<svg class="diagram" viewBox="0 0 {width:.0f} {height:.0f}" '
+            f'style="max-width:{width:.0f}px;--minw:{minw}px" role="{role}" aria-label="{e(label)}">{body}</svg></div>')
 
 
 def legend(spec, extra=None):
@@ -344,7 +347,8 @@ def sectors_index():
   <p class="lede">One adaptive platform, applied wherever salts, hardness or metals stop water being reused. Choose your sector to see what we can do and where it fits in your process.</p>
 </div></section>
 <section class="band"><div class="wrap">
-  <ul class="tiles">{sector_tiles()}</ul>
+  <h2 class="small-head">Choose your sector</h2>
+  <ul class="tiles" style="margin-top:0">{sector_tiles()}</ul>
 </div></section>
 {cta_band("Don't see your sector?", "If dissolved salts, hardness or metals stop you reusing water, the technology probably applies. Tell us about your stream.")}
 """
@@ -504,6 +508,7 @@ def impact():
   <p class="lede">Almost everything you own took water to make, usually far more than you would guess. Pick an object, make a guess, then see the answer and how we worked it out.</p>
 </div></section>
 <section class="band"><div class="wrap">
+  <h2 class="small-head">Pick an object</h2>
   <ul class="explorers">{cards}</ul>
 </div></section>
 <section class="band mist"><div class="wrap split">
@@ -552,6 +557,7 @@ def news_index():
   <p class="lede">Pilots, events and milestones, along with our thinking on industrial water. Selected LinkedIn posts appear here too.</p>
 </div></section>
 <section class="band"><div class="wrap">
+  <h2 class="sr-only">All updates</h2>
   <div class="filters" role="group" aria-label="Filter by type">{btns}</div>
   <ul class="news-list">{items}</ul>
   <div style="margin-top:2rem">{follow}<p><a href="{SITE["newsletter"]}">Get the Danu Water newsletter</a></p></div>
