@@ -273,3 +273,8 @@ img,svg,video{max-width:100%}
 .opt-tag{position:absolute;top:1.25rem;right:1.25rem;font:700 .75rem var(--sans);color:var(--teal-deep);background:var(--panel);border-radius:4px;padding:.15rem .5rem}
 .placard{max-width:44rem;border:1.5px dashed var(--teal);background:var(--mist);border-radius:14px;padding:2rem}
 .placard h2{font-size:1.5rem}
+.recognition{margin-top:3rem}
+.recognition ul{list-style:none;margin:0 0 1rem;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(11.5rem,1fr));gap:1rem}
+.recognition li{background:#fff;border:1px solid var(--line);border-radius:12px;padding:1rem 1.15rem}
+.recognition li span{display:block;font-size:.85rem;font-weight:700;color:var(--teal)}
+.recognition li strong{display:block;font-family:var(--head);font-weight:600;color:var(--ink);font-size:1.02rem;line-height:1.3;margin-top:.25rem}
