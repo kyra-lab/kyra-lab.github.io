@@ -1,502 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Danu Water</title>
-  <style>
-    /* ── Reset & Base ── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
- 
-    :root {
-      --blue-dark:  #0a2540;
-      --blue-mid:   #1a5276;
-      --blue-light: #2e86c1;
-      --teal:       #1abc9c;
-      --white:      #ffffff;
-      --off-white:  #f4f7fa;
-      --text:       #2c3e50;
-      --text-muted: #5d6d7e;
-      --font:       'Segoe UI', Arial, sans-serif;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: var(--font);
-      color: var(--text);
-      background: var(--white);
-      line-height: 1.65;
-    }
-
-    a { text-decoration: none; color: inherit; }
-
-    /* ── Nav ── */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--blue-dark);
-      padding: 0 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 64px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.35);
-    }
-
-    .logo {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--white);
-      letter-spacing: .5px;
-    }
-
-    .logo span { color: var(--teal); }
-
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 2rem;
-    }
-
-    nav a {
-      color: rgba(255,255,255,.85);
-      font-size: .95rem;
-      font-weight: 500;
-      transition: color .2s;
-    }
-
-    nav a:hover { color: var(--teal); }
-
-    /* ── Hero ── */
-    .hero {
-      background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 60%, var(--blue-light) 100%);
-      color: var(--white);
-      padding: 7rem 2rem 5rem;
-      text-align: center;
-    }
-
-    .hero h1 {
-      font-size: clamp(1.8rem, 4vw, 3rem);
-      font-weight: 800;
-      line-height: 1.2;
-      max-width: 780px;
-      margin: 0 auto 1.5rem;
-    }
-
-    .hero .sub {
-      font-size: clamp(1rem, 2.5vw, 1.35rem);
-      font-weight: 600;
-      color: var(--teal);
-      margin-bottom: .4rem;
-    }
-
-    .hero p {
-      font-size: 1rem;
-      max-width: 600px;
-      margin: 1rem auto 2.5rem;
-      color: rgba(255,255,255,.82);
-    }
-
-    .btn {
-      display: inline-block;
-      padding: .75rem 2rem;
-      border-radius: 4px;
-      font-weight: 600;
-      font-size: .95rem;
-      transition: transform .15s, box-shadow .15s;
-    }
-
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.25); }
-
-    .btn-primary {
-      background: var(--teal);
-      color: var(--white);
-    }
-
-    .btn-outline {
-      border: 2px solid rgba(255,255,255,.7);
-      color: var(--white);
-      margin-left: 1rem;
-    }
-
-    /* ── Benefits chips ── */
-    .benefits {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: .75rem;
-      margin-top: 2.5rem;
-    }
-
-    .chip {
-      background: rgba(255,255,255,.12);
-      border: 1px solid rgba(255,255,255,.25);
-      color: var(--white);
-      padding: .4rem 1rem;
-      border-radius: 999px;
-      font-size: .88rem;
-    }
-
-    /* ── Sections shared ── */
-    section { padding: 5rem 2rem; }
-
-    .container { max-width: 1100px; margin: 0 auto; }
-
-    .section-label {
-      font-size: .8rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--teal);
-      margin-bottom: .75rem;
-    }
-
-    .section-title {
-      font-size: clamp(1.5rem, 3vw, 2.2rem);
-      font-weight: 800;
-      color: var(--blue-dark);
-      margin-bottom: 1rem;
-    }
-
-    .section-body {
-      font-size: 1rem;
-      color: var(--text-muted);
-      max-width: 600px;
-      margin-bottom: 2rem;
-    }
-
-    .link-arrow {
-      font-weight: 600;
-      color: var(--blue-light);
-      display: inline-flex;
-      align-items: center;
-      gap: .35rem;
-      transition: gap .2s;
-    }
-
-    .link-arrow:hover { gap: .65rem; }
-
-    .link-arrow::after { content: '→'; }
-
-    /* ── Solutions ── */
-    .solutions { background: var(--off-white); }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2.5rem;
-    }
-
-    .card {
-      background: var(--white);
-      border-radius: 8px;
-      padding: 1.75rem 1.5rem;
-      box-shadow: 0 2px 12px rgba(0,0,0,.07);
-      transition: transform .2s, box-shadow .2s;
-    }
-
-    .card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.12); }
-
-    .card-icon {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-
-    .card h3 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--blue-dark);
-      margin-bottom: .5rem;
-    }
-
-    .card p { font-size: .9rem; color: var(--text-muted); }
-
-    /* ── Industries ── */
-    .industries { background: var(--white); }
-
-    .industry-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 1rem;
-      margin-top: 2rem;
-    }
-
-    .industry-item {
-      background: var(--off-white);
-      border-radius: 6px;
-      padding: 1.25rem 1rem;
-      text-align: center;
-      font-weight: 600;
-      font-size: .9rem;
-      color: var(--blue-mid);
-      border: 1px solid #dce8f0;
-      transition: background .2s, color .2s;
-    }
-
-    .industry-item:hover { background: var(--blue-mid); color: var(--white); }
-
-    /* ── Utilities ── */
-    .utilities { background: var(--off-white); }
-
-    .two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-    }
-
-    @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; gap: 2rem; } }
-
-    .stat-block {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    .stat {
-      border-left: 4px solid var(--teal);
-      padding-left: 1rem;
-    }
-
-    .stat-number {
-      font-size: 2.2rem;
-      font-weight: 800;
-      color: var(--blue-dark);
-    }
-
-    .stat-desc { font-size: .9rem; color: var(--text-muted); }
-
-    /* ── Contact ── */
-    .contact {
-      background: var(--blue-dark);
-      color: var(--white);
-      text-align: center;
-    }
-
-    .contact .section-title { color: var(--white); }
-    .contact .section-body { color: rgba(255,255,255,.75); margin: 0 auto 2rem; }
-
-    .contact-email {
-      display: inline-block;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--teal);
-      margin-bottom: 2.5rem;
-    }
-
-    .contact-email:hover { text-decoration: underline; }
-
-    form {
-      max-width: 520px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    form input, form textarea {
-      width: 100%;
-      padding: .75rem 1rem;
-      border: 1px solid rgba(255,255,255,.2);
-      border-radius: 4px;
-      background: rgba(255,255,255,.08);
-      color: var(--white);
-      font-family: var(--font);
-      font-size: .95rem;
-    }
-
-    form input::placeholder, form textarea::placeholder { color: rgba(255,255,255,.45); }
-
-    form textarea { resize: vertical; min-height: 130px; }
-
-    form button {
-      align-self: flex-start;
-      background: var(--teal);
-      color: var(--white);
-      border: none;
-      cursor: pointer;
-      padding: .75rem 2rem;
-      border-radius: 4px;
-      font-weight: 600;
-      font-size: .95rem;
-      transition: opacity .2s;
-    }
-
-    form button:hover { opacity: .88; }
-
-    /* ── Footer ── */
-    footer {
-      background: #060f1e;
-      color: rgba(255,255,255,.45);
-      text-align: center;
-      padding: 1.5rem 2rem;
-      font-size: .82rem;
-    }
-
-    footer a { color: rgba(255,255,255,.55); margin: 0 .5rem; }
-    footer a:hover { color: var(--teal); }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Danu Water</title>
+<meta name="description" content="Danu Water removes dissolved salts from industrial wastewater so it can be reused, using adaptive electromembrane separation. Now at industrial pilot scale.">
+<meta property="og:title" content="Danu Water">
+<meta property="og:description" content="Danu Water removes dissolved salts from industrial wastewater so it can be reused, using adaptive electromembrane separation. Now at industrial pilot scale.">
+<meta property="og:type" content="website">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo" href="/"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3C11 10 7 15 7 20a9 9 0 0 0 18 0c0-5-4-10-9-17Z" fill="#36bdb3"/><path d="M11 21c1.5 2.6 4 3.6 6.5 3.2" fill="none" stroke="#0a1d30" stroke-width="2" stroke-linecap="round"/></svg>Danu Water</a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="nav" id="site-nav" aria-label="Main"><ul><li><a href="/industries/">Industries</a></li><li><a href="/technology/">Technology</a></li><li><a href="/impact/">Understand your impact</a></li><li><a href="/news/">News & insights</a></li><li><a href="/contact/">Contact</a></li></ul></nav>
+  </div>
+</header>
+<main id="main">
 
-  <!-- ── Header ── -->
-  <header>
-    <div class="logo">Danu<span>Water</span></div>
-    <nav>
-      <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#solutions">Solutions</a></li>
-        <li><a href="#industries">Industries</a></li>
-        <li><a href="#utilities">Utilities</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
+<section class="hero"><div class="wrap">
+  <h1>Industrial wastewater, back in use</h1>
+  <p class="lede">Danu Water removes dissolved salts from industrial wastewater so it can go back into the process. Our adaptive electromembrane separation system shifts in real time to handle the variability of industrial water. It is now running at industrial pilot scale.</p>
+  <div class="actions"><a class="btn" href="/industries/">See what it does for your industry</a><a class="btn ghost" href="/technology/">How it works</a></div>
+  <div class="hero-flow"><figure class="flow"><svg class="h" viewBox="0 0 766 258" style="max-width:766px" role="img" aria-label="Process flow: Fresh water, then Your process, then Wastewater, then Danu Water. Danu Water sends clean water back to your process to Your process. A side stream carries concentrated salts, for recovery."><defs><marker id="ahero" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="context-stroke"/></marker></defs><g class="fl-step"><rect x="14" y="78" width="150" height="62" rx="6"/><text text-anchor="middle"><tspan x="89.0" y="114">Fresh water</tspan></text></g><g class="fl-step"><rect x="210" y="78" width="150" height="62" rx="6"/><text text-anchor="middle"><tspan x="285.0" y="114">Your process</tspan></text></g><path class="fl-line" d="M166 109.0H207" marker-end="url(#ahero)"/><g class="fl-step"><rect x="406" y="78" width="150" height="62" rx="6"/><text text-anchor="middle"><tspan x="481.0" y="114">Wastewater</tspan></text></g><path class="fl-line" d="M362 109.0H403" marker-end="url(#ahero)"/><g class="fl-danu"><rect x="602" y="78" width="150" height="62" rx="10"/><text text-anchor="middle"><tspan x="677.0" y="114">Danu Water</tspan></text></g><path class="fl-line" d="M558 109.0H599" marker-end="url(#ahero)"/><path class="fl-clean" d="M677.0 76V32H285.0V74" marker-end="url(#ahero)"/><text class="fl-label clean" x="481.0" y="24" text-anchor="middle">Clean water back to your process</text><path class="fl-brine" d="M677.0 142V190" marker-end="url(#ahero)"/><g class="fl-out"><rect x="592" y="194" width="170" height="44" rx="6"/><text text-anchor="middle"><tspan x="677.0" y="212">Concentrated salts,</tspan><tspan x="677.0" y="230">for recovery</tspan></text></g></svg><svg class="v" viewBox="0 0 308 422" role="img" aria-label="Process flow: Fresh water, then Your process, then Wastewater, then Danu Water. Danu Water sends clean water back to your process to Your process. A side stream carries concentrated salts, for recovery."><defs><marker id="vhero" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="context-stroke"/></marker></defs><g class="fl-step"><rect x="44" y="10" width="200" height="54" rx="6"/><text text-anchor="middle"><tspan x="144.0" y="42">Fresh water</tspan></text></g><g class="fl-step"><rect x="44" y="98" width="200" height="54" rx="6"/><text text-anchor="middle"><tspan x="144.0" y="130">Your process</tspan></text></g><path class="fl-line" d="M144.0 66V95" marker-end="url(#vhero)"/><g class="fl-step"><rect x="44" y="186" width="200" height="54" rx="6"/><text text-anchor="middle"><tspan x="144.0" y="218">Wastewater</tspan></text></g><path class="fl-line" d="M144.0 154V183" marker-end="url(#vhero)"/><g class="fl-danu"><rect x="44" y="274" width="200" height="54" rx="10"/><text text-anchor="middle"><tspan x="144.0" y="306">Danu Water</tspan></text></g><path class="fl-line" d="M144.0 242V271" marker-end="url(#vhero)"/><path class="fl-clean" d="M246 301.0H278V125.0H248" marker-end="url(#vhero)"/><text class="fl-label clean" transform="translate(294 213.0) rotate(90)" text-anchor="middle">Clean water back to your process</text><path class="fl-brine" d="M42 301.0H16V390H40" marker-end="url(#vhero)"/><g class="fl-out"><rect x="44" y="368" width="200" height="44" rx="6"/><text text-anchor="middle"><tspan x="144.0" y="386">Concentrated salts, for</tspan><tspan x="144.0" y="404">recovery</tspan></text></g></svg></figure></div>
+</div></section>
 
-  <!-- ── Hero ── -->
-  <section class="hero" id="home">
-    <p class="sub">Reduce your water costs NOW</p>
-    <p class="sub">Safeguard your operations in the face of water scarcity</p>
-    <h1>Industrial Water Recycling That Actually Works &amp; Saves You Money</h1>
-    <p>
-      Our technology removes salts from industrial wastewater and cooling water for
-      onsite reuse via a plug-and-play continuous system.
-    </p>
-    <a href="#solutions" class="btn btn-primary">Explore Solutions</a>
-    <a href="#contact" class="btn btn-outline">Partner With Us</a>
-    <div class="benefits">
-      <span class="chip">95%+ Water Recovery</span>
-      <span class="chip">Reduced Scaling &amp; Corrosion</span>
-      <span class="chip">Alternative Hard Water Source</span>
-      <span class="chip">Regulatory Change Preparedness</span>
-    </div>
-  </section>
+<section class="band"><div class="wrap">
+  <div class="head-row"><h2>Where we are</h2><a href="/news/">All news</a></div>
+  <ol class="timeline">
+    <li class="done"><time datetime="2024-10">October 2024</time><h3>Company founded</h3><p>Kyra Sedransk Campbell and Jack Ledingham start Danu Water.</p></li>
+    <li class="done"><time datetime="2026-03">March 2026</time><h3>Pre-seed backed by SFC Capital</h3><p>Funding the build of our industrial pilot units.</p></li>
+    <li class="done"><time datetime="2026-10">October 2026</time><h3>Pilot running at WEPA Bridgend</h3><p>Industrial-scale unit treating real paper mill water in Wales.</p></li>
+    <li><time datetime="2026-11">November 2026</time><h3>Pilot at Essity Valls</h3><p>Seven weeks on two streams at Essity's site in Catalonia.</p></li>
+    <li><span class="when">Next</span><h3>First commercial systems</h3><p>Turning pilot results into orders.</p></li>
+  </ol>
+</div></section>
 
-  <!-- ── Solutions ── -->
-  <section class="solutions" id="solutions">
-    <div class="container">
-      <div class="section-label">Solutions</div>
-      <h2 class="section-title">How Our Solutions Help Your Business</h2>
-      <p class="section-body">
-        We deliver plug-and-play desalination systems that integrate seamlessly into
-        your existing operations — reducing cost, downtime, and environmental impact.
-      </p>
-      <div class="cards">
-        <div class="card">
-          <div class="card-icon">💧</div>
-          <h3>Wastewater Recycling</h3>
-          <p>Remove dissolved salts from industrial wastewater and return clean water to your process.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon">🔄</div>
-          <h3>Cooling Water Treatment</h3>
-          <p>Extend cycles of concentration and dramatically cut blowdown volumes.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon">⚡</div>
-          <h3>Plug-and-Play Systems</h3>
-          <p>Continuous, onsite operation with minimal installation complexity and fast deployment.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon">📉</div>
-          <h3>Cost Reduction</h3>
-          <p>Lower freshwater intake costs and reduce wastewater disposal fees simultaneously.</p>
-        </div>
+<section class="band mist"><div class="wrap">
+  <div class="head-row"><div><h2>Industries</h2><p class="muted measure" style="margin:0">Each industry has its own water problem. These sheets show where Danu Water fits and how far each offering has got.</p></div><a href="/industries/">All industries</a></div>
+  <ul class="industry-list"><li><a class="row" href="/industries/paper-and-pulp/"><h3>Paper &amp; pulp</h3><p>Close your water loops further without salt build-up, and turn treated effluent into water you can use again.</p>
+<div class="offers"><span class="status pilot">Industrial pilot</span><span class="muted sans" style="font-size:.9rem">3 offerings</span></div></a></li><li><a class="row" href="/industries/mining/"><h3>Mining &amp; mine water</h3><p>Treat mine water for reuse instead of discharge, and manage salt in bioleaching circuits while keeping the metals.</p>
+<div class="offers"><span class="status feasibility">Feasibility</span><span class="muted sans" style="font-size:.9rem">2 offerings</span></div></a></li><li><a class="row" href="/industries/distilling/"><h3>Distilling</h3><p>Get more from vinasse (dunder): water you can reuse and a potassium-rich concentrate, especially where water is scarce.</p>
+<div class="offers"><span class="status exploring">Exploring</span><span class="muted sans" style="font-size:.9rem">2 offerings</span></div></a></li><li><a class="row" href="/industries/municipal-and-utilities/"><h3>Municipal &amp; utilities</h3><p>Turn treated municipal effluent into cooling water, so industry and data centres stop drawing on drinking water.</p>
+<div class="offers"><span class="status feasibility">Feasibility</span><span class="muted sans" style="font-size:.9rem">3 offerings</span></div></a></li></ul>
+</div></section>
+
+<section class="band"><div class="wrap split">
+  <div>
+    <h2>Why it is different</h2>
+    <p>Industrial water is never the same two days running. Most treatment is designed for a fixed condition and struggles when the water changes. Our system measures what is coming in and adjusts how it runs, continuously.</p>
+    <p>That makes reuse dependable enough to build a process around, and affordable enough that there is no green premium to argue about.</p>
+    <p><a href="/technology/">How adaptive electromembrane separation works</a></p>
+  </div>
+  <ul class="proof">
+    <li><strong>95%+ water recovery</strong><span>from industrial wastewater streams</span></li>
+    <li><strong>70–80% less energy</strong><span>than zero liquid discharge technologies</span></li>
+    <li><strong>Continuous and onsite</strong><span>a plug-and-play system, with no tankering or offsite treatment</span></li>
+    <li><strong>Salts as a resource</strong><span>a small concentrate stream that can be recovered, not a large dilute waste</span></li>
+  </ul>
+</div></section>
+
+<section class="band mist"><div class="wrap split">
+  <div>
+    <h2>Understand your impact</h2>
+    <p>How much water does it take to make a reusable coffee cup? A power bank? A bag of conference giveaways? Try guessing, then see the answer and how we worked it out.</p>
+    <p><a class="btn" href="/impact/">Test your guesses</a></p>
+  </div>
+  <div>
+    <h2>Latest</h2>
+    <ul class="news-cards" style="grid-template-columns:1fr"><li><time datetime="2026-11-02">November 2026</time><h3><a href="/news/essity-valls-pilot/">Pilot programme starting at Essity Valls</a></h3><p>A seven-week programme at Essity&#x27;s Valls site in Catalonia will test our system on two streams: a recycle loop and a freshwater stream.</p></li><li><time datetime="2026-10-13">13–15 October 2026</time><h3><a href="/news/techcrunch-disrupt-2026/">Startup Battlefield 200 at TechCrunch Disrupt</a></h3><p>Danu Water was selected for the Startup Battlefield 200 in San Francisco. At our booth, visitors guessed how much water it takes to make everyday things.</p></li><li><time datetime="2026-10-01">October 2026</time><h3><a href="/news/wepa-bridgend-pilot/">Industrial pilot unit on site at WEPA Bridgend</a></h3><p>Our industrial-scale pilot unit is installed and running at WEPA&#x27;s paper mill in Bridgend, Wales, treating real mill water.</p></li></ul>
+  </div>
+</div></section>
+<section class="band dark cta"><div class="wrap">
+<h2>Have a water problem we should look at?</h2><p class="lede">Tell us about your site and your water. We are looking for industrial partners for pilots and first commercial systems.</p>
+<div class="actions"><a class="btn" href="/contact/">Talk to us</a><a class="btn ghost" href="/newsletter/">Get the newsletter</a></div>
+</div></section>
+
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <a class="logo" href="/"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3C11 10 7 15 7 20a9 9 0 0 0 18 0c0-5-4-10-9-17Z" fill="#36bdb3"/><path d="M11 21c1.5 2.6 4 3.6 6.5 3.2" fill="none" stroke="#0a1d30" stroke-width="2" stroke-linecap="round"/></svg>Danu Water</a>
+        <p style="margin-top:.8rem;max-width:22rem">Adaptive electromembrane separation for industrial wastewater reuse.</p>
       </div>
-      <br />
-      <a href="#solutions" class="link-arrow">Learn more about our solutions</a>
+      <div><h2>Industries</h2><ul><li><a href="/industries/paper-and-pulp/">Paper &amp; pulp</a></li><li><a href="/industries/mining/">Mining &amp; mine water</a></li><li><a href="/industries/distilling/">Distilling</a></li><li><a href="/industries/municipal-and-utilities/">Municipal &amp; utilities</a></li></ul></div>
+      <div><h2>Company</h2><ul><li><a href="/technology/">Technology</a></li><li><a href="/technology/#team">Team</a></li><li><a href="/news/">News &amp; insights</a></li><li><a href="/impact/">Understand your impact</a></li></ul></div>
+      <div><h2>Get in touch</h2><ul><li><a href="mailto:hello@danuwater.com">hello@danuwater.com</a></li><li><a href="/newsletter/">Newsletter</a></li></ul></div>
     </div>
-  </section>
-
-  <!-- ── Industries ── -->
-  <section class="industries" id="industries">
-    <div class="container">
-      <div class="section-label">Industries</div>
-      <h2 class="section-title">Serving Industry</h2>
-      <p class="section-body">
-        Our technology is industry-agnostic and operates continuously onsite —
-        wherever water is consumed and discharged, we can help.
-      </p>
-      <div class="industry-grid">
-        <div class="industry-item">Manufacturing</div>
-        <div class="industry-item">Food &amp; Beverage</div>
-        <div class="industry-item">Oil &amp; Gas</div>
-        <div class="industry-item">Power Generation</div>
-        <div class="industry-item">Mining</div>
-        <div class="industry-item">Chemicals</div>
-        <div class="industry-item">Pharmaceuticals</div>
-        <div class="industry-item">Textiles</div>
-      </div>
-      <br /><br />
-      <a href="#industries" class="link-arrow">How we serve industry</a>
-    </div>
-  </section>
-
-  <!-- ── Utilities ── -->
-  <section class="utilities" id="utilities">
-    <div class="container">
-      <div class="two-col">
-        <div>
-          <div class="section-label">Utilities</div>
-          <h2 class="section-title">Supporting Utilities</h2>
-          <p class="section-body">
-            By reducing industrial water demand, we free up capacity in municipal
-            supply systems — enabling new development and easing regulatory pressure.
-          </p>
-          <a href="#utilities" class="link-arrow">How we support utilities</a>
-        </div>
-        <div class="stat-block">
-          <div class="stat">
-            <div class="stat-number">95%+</div>
-            <div class="stat-desc">Water recovery rate from industrial wastewater streams</div>
-          </div>
-          <div class="stat">
-            <div class="stat-number">Onsite</div>
-            <div class="stat-desc">Continuous operation — no trucking, no off-site treatment</div>
-          </div>
-          <div class="stat">
-            <div class="stat-number">Zero</div>
-            <div class="stat-desc">Disruption to existing operations during installation</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Contact ── -->
-  <section class="contact" id="contact">
-    <div class="container">
-      <div class="section-label" style="color: var(--teal);">Contact</div>
-      <h2 class="section-title">Partner With Us</h2>
-      <p class="section-body">
-        Working with leading companies to showcase our technology. Reach out to explore
-        how Danu Water can transform your water management.
-      </p>
-      <a href="mailto:hello@danuwater.com" class="contact-email">hello@danuwater.com</a>
-      <form onsubmit="return false;">
-        <input type="text" placeholder="Your name" />
-        <input type="email" placeholder="Your email" />
-        <input type="text" placeholder="Company" />
-        <textarea placeholder="Tell us about your water challenge…"></textarea>
-        <button type="submit">Send Message</button>
-      </form>
-    </div>
-  </section>
-
-  <!-- ── Footer ── -->
-  <footer>
-    <p>
-      &copy; 2026 Danu Water &nbsp;|&nbsp;
-      <a href="mailto:hello@danuwater.com">hello@danuwater.com</a>
-      &nbsp;|&nbsp;
-      <a href="#">Cookie Policy</a>
-      &nbsp;|&nbsp;
-      <a href="#">Privacy</a>
-    </p>
-  </footer>
-
+    <p class="fine">&copy; 2026 Danu Water Ltd.</p>
+  </div>
+</footer>
+<script src="/assets/site.js"></script>
 </body>
 </html>
