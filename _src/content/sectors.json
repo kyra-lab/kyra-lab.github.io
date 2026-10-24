@@ -294,141 +294,107 @@
   {
     "slug": "textiles",
     "name": "Textiles manufacturing",
-    "draft": true,
-    "card": "Salt-heavy dyebaths and rinse water that could be reused, if the salts and colour came out.",
-    "title": "Water reuse for textile dyeing and finishing",
-    "lede": "Dyeing and finishing use large volumes of water and large doses of salt. Reactive dyeing in particular adds sodium chloride or sulphate by the tonne, and that salt ends up in the effluent. Danu Water separates the salt from the water so both can be used again.",
+    "card": "Reuse 95%+ of dyehouse water, with salt always removed to your target and colour too where you need it.",
+    "title": "Reuse 95%+ of your dyehouse water",
+    "lede": "Dyeing and finishing use large volumes of water and large doses of salt, and the load changes with every recipe. Danu Water turns spent dyebath and rinse water into clean process water, treated to whatever conductivity your process needs, leaving under 5% as a small concentrated stream.",
     "place": "dyehouse",
     "flow": {
       "main": [
         {
           "id": "fresh",
-          "label": "Fresh water"
+          "label": "Fresh water",
+          "sub": "Much less needed"
         },
         {
           "id": "dye",
-          "label": "Dyeing"
+          "label": "Dyeing and finishing"
         },
         {
           "id": "rinse",
-          "label": "Washing and rinsing"
+          "label": "Spent dyebath and rinse water"
         },
         {
-          "id": "etp",
-          "label": "Effluent treatment"
-        },
-        {
-          "id": "dis",
-          "label": "Discharge",
-          "sub": "Less effluent"
+          "id": "pre",
+          "label": "Pre-treatment"
         }
       ],
       "attach": [
         {
           "type": "loop",
-          "product": "textile-reuse",
-          "sub": "Water back to process",
-          "from_after": "etp",
+          "product": "dyehouse-reuse",
+          "sub": "95%+ water back",
+          "from_after": "pre",
           "to_before": "dye",
           "labels": [
-            "treated effluent",
-            "reuse water"
+            "effluent",
+            "clean water"
           ]
-        },
-        {
-          "type": "kidney",
-          "product": "dye-salt",
-          "sub": "From spent dyebaths",
-          "at": "dye",
-          "side": "top"
         }
       ]
     },
     "items": [
       {
-        "id": "textile-reuse",
-        "name": "Effluent back to process water",
-        "tagline": "Treated effluent, good enough to dye with again.",
-        "card": "Removes the salts left in treated effluent so the water can go back into dyeing and rinsing.",
-        "problem": "Textile effluent carries high levels of dissolved salt. Even after biological treatment it cannot go back into the process, because salt affects shade consistency and dye uptake.",
+        "id": "dyehouse-reuse",
+        "name": "Dyehouse water reuse",
+        "short": "Dyehouse reuse",
+        "tagline": "Salt out to your target. Colour too, if you need it.",
+        "card": "Turns spent dyebath and rinse water into clean process water, with 95%+ returned for reuse.",
+        "problem": "Dyehouse wastewater carries a high and variable salt load from dyeing and finishing, plus colour and auxiliaries such as urea and bleach. Salt affects shade consistency and dye uptake, so the water cannot simply go back into the process.",
         "benefits": [
-          "Lower freshwater intake",
-          "Smaller discharge volumes and lower effluent charges",
-          "Consistent water quality for consistent shades"
+          "95%+ of water returned clean and ready to reuse",
+          "Salt always removed to the conductivity your process needs",
+          "Colour reduced alongside salt where your reuse target requires it",
+          "Bleach, urea and other auxiliaries assessed case by case",
+          "Every litre reused is a litre you don't draw in or discharge, a direct step towards zero liquid discharge"
         ],
-        "application": "Takes treated effluent, removes the dissolved salts that stop reuse, and returns the water to dyeing and rinsing. The system adjusts as effluent changes with each production run.",
+        "application": "Treats spent dyebath and rinse water after a dedicated pre-treatment step, returning clean water to the dyehouse. The small residual stream can be discharged, processed further or reused, depending on what is in it and the routes open to your site.",
         "flow": {
           "main": [
             {
               "id": "dye",
-              "label": "Dyeing and rinsing"
+              "label": "Dyehouse"
             },
             {
-              "id": "etp",
-              "label": "Effluent treatment"
+              "id": "rinse",
+              "label": "Spent dyebath and rinse water"
             },
             {
-              "id": "dis",
-              "label": "Discharge",
-              "sub": "Less effluent"
+              "id": "pre",
+              "label": "Pre-treatment"
             }
           ],
           "attach": [
             {
               "type": "loop",
-              "product": "textile-reuse",
-              "sub": "Salts out",
-              "from_after": "etp",
+              "product": "dyehouse-reuse",
+              "sub": "95%+ water back",
+              "from_after": "pre",
               "to_before": "dye",
               "labels": [
-                "treated effluent",
-                "reuse water"
+                "effluent",
+                "clean water"
               ]
             }
           ]
-        },
-        "short": "Effluent reuse"
-      },
-      {
-        "id": "dye-salt",
-        "name": "Salt recovery from dyebaths",
-        "tagline": "Recover the salt you paid for.",
-        "card": "Recovers salt from exhausted dyebaths so it can be reused rather than discharged.",
-        "problem": "Reactive dyeing needs high salt concentrations to fix dye to cotton. Once the bath is spent, that salt is discharged, adding cost and loading the effluent.",
-        "benefits": [
-          "Less salt purchased",
-          "Lower salt load in the effluent",
-          "Easier compliance with discharge limits"
-        ],
-        "application": "Treats spent dyebath liquor, separating a concentrated salt stream that can be reused in the next bath.",
-        "flow": {
-          "main": [
-            {
-              "id": "salt",
-              "label": "Salt and dye"
-            },
-            {
-              "id": "dye",
-              "label": "Dyebath"
-            },
-            {
-              "id": "etp",
-              "label": "Effluent treatment"
-            }
-          ],
-          "attach": [
-            {
-              "type": "kidney",
-              "product": "dye-salt",
-              "sub": "From spent dyebaths",
-              "at": "dye",
-              "side": "bottom"
-            }
-          ]
-        },
-        "short": "Salt recovery"
+        }
       }
-    ]
+    ],
+    "highlights": {
+      "items": [
+        [
+          "95%+",
+          "of water returned clean and ready to reuse"
+        ],
+        [
+          "<5%",
+          "left over as a small, concentrated stream"
+        ],
+        [
+          "ZLD",
+          "less fresh water in and less discharge out, supporting your target"
+        ]
+      ]
+    }
   },
   {
     "slug": "tanneries",
@@ -526,40 +492,44 @@
   {
     "slug": "laundrettes",
     "name": "Laundrettes & laundries",
-    "draft": true,
-    "card": "Wash water that could be cleaned and reused on site, cutting water and energy bills.",
+    "card": "A complete on-site system that cleans wash water for reuse, so less goes to sewer at trade-effluent rates.",
     "title": "Water reuse for laundrettes and laundries",
-    "lede": "Laundries use a lot of water, much of it heated, and most is used once. Reusing rinse and wash water saves both the water and the energy that went into warming it.",
+    "lede": "Laundries use a lot of water, much of it heated, and usually send it straight to sewer at trade-effluent rates. Danu Water supplies the whole treatment train needed to clean that water on site and send it back to the machines.",
     "place": "laundry",
     "flow": {
       "main": [
         {
           "id": "mains",
-          "label": "Mains water"
+          "label": "Mains water",
+          "sub": "Much less needed"
         },
         {
           "id": "wash",
           "label": "Washing machines"
         },
         {
-          "id": "pre",
-          "label": "Pre-treatment"
+          "id": "filt",
+          "label": "Solids filtration"
         },
         {
-          "id": "sewer",
-          "label": "Sewer",
-          "sub": "Less discharge"
+          "id": "floc",
+          "label": "Flocculation"
+        },
+        {
+          "id": "uv",
+          "label": "UV",
+          "sub": "Residual bleach removed"
         }
       ],
       "attach": [
         {
           "type": "loop",
           "product": "laundry-reuse",
-          "sub": "Water back to the wash",
-          "from_after": "pre",
+          "sub": "Clean wash water",
+          "from_after": "uv",
           "to_before": "wash",
           "labels": [
-            "wash water",
+            "treated water",
             "reuse water"
           ]
         }
@@ -569,15 +539,17 @@
       {
         "id": "laundry-reuse",
         "name": "Wash water reuse",
+        "short": "Wash water reuse",
         "tagline": "Wash, clean, repeat.",
-        "card": "A compact unit that cleans wash water so it can go round again.",
-        "problem": "Detergents, softeners and hardness build up if wash water is recycled without treatment, leaving residues on fabrics and scale in machines.",
+        "card": "A complete treatment train, from filtration to Danu Water's system, that sends clean water back to the machines.",
+        "problem": "Most laundries have no on-site treatment, so every litre goes to sewer at trade-effluent rates. Detergents, softeners and hardness build up if wash water is recycled without proper treatment, leaving residues on fabrics and scale in machines.",
         "benefits": [
-          "Lower water bills",
+          "Lower water and trade-effluent bills",
           "Less energy spent heating fresh water",
-          "Softer water, so less detergent and less scale"
+          "Softer, consistent water, so less detergent and less scale",
+          "Delivered as one installed system, with no treatment plant to build"
         ],
-        "application": "Treats wash water after simple pre-treatment and returns it to the machines. Sized for laundrettes as well as larger commercial laundries.",
+        "application": "Wash water passes through solids filtration, flocculation and UV to destroy residual bleach, then Danu Water's system removes the dissolved salts so the water can go back to the machines. These stages protect the membranes and come as part of the installed system. The same full train applies to any site that currently sends its wastewater to sewer.",
         "flow": {
           "main": [
             {
@@ -585,95 +557,176 @@
               "label": "Washing machines"
             },
             {
-              "id": "pre",
-              "label": "Pre-treatment"
+              "id": "filt",
+              "label": "Solids filtration"
             },
             {
-              "id": "sewer",
-              "label": "Sewer",
-              "sub": "Less discharge"
+              "id": "floc",
+              "label": "Flocculation"
+            },
+            {
+              "id": "uv",
+              "label": "UV"
             }
           ],
           "attach": [
             {
               "type": "loop",
               "product": "laundry-reuse",
-              "sub": "Clean wash water",
-              "from_after": "pre",
+              "sub": "Salts out",
+              "from_after": "uv",
               "to_before": "wash",
               "labels": [
-                "wash water",
+                "treated water",
                 "reuse water"
               ]
             }
           ]
-        },
-        "short": "Wash water reuse"
+        }
       }
     ]
   },
   {
     "slug": "steel",
     "name": "Steel",
-    "draft": true,
-    "card": "Cooling and process water reuse, and recovering valuable ions from steelworks wastewater.",
-    "title": "Water and ion recovery for steelmaking",
-    "lede": "Steelworks use vast amounts of water for cooling and processing. Their wastewater carries metals and acids that are costly to treat, and some of what it contains is worth recovering.",
+    "card": "Cut scale and corrosion across the whole works, raise cycles of concentration, and recover metals from finishing lines.",
+    "title": "Scale control and recovery across the steelworks",
+    "lede": "An integrated steelworks runs many different water loops, from intake and gas scrubbers to casting, rolling and finishing. Lowering conductivity at intake, and again at key loops, cuts scale and corrosion throughout the plant. That means fewer forced outages, longer equipment life and less fresh water.",
     "place": "steelworks",
     "flow": {
       "main": [
         {
           "id": "intake",
-          "label": "Intake"
+          "label": "Primary intake"
         },
         {
-          "id": "proc",
-          "label": "Rolling, pickling and finishing"
+          "id": "cond",
+          "product": "steel-intake",
+          "sub": "Site-wide"
         },
         {
-          "id": "wwtp",
-          "label": "Wastewater treatment"
+          "id": "make",
+          "label": "Ironmaking and steelmaking"
         },
         {
-          "id": "dis",
-          "label": "Discharge",
-          "sub": "Less effluent"
+          "id": "cast",
+          "label": "Casting and rolling"
+        },
+        {
+          "id": "fin",
+          "label": "Pickling and galvanising"
         }
       ],
       "attach": [
         {
           "type": "kidney",
-          "product": "steel-cooling",
-          "sub": "Cooling loop",
-          "at": "proc",
+          "product": "steel-loops",
+          "sub": "Salts out",
+          "at": "make",
           "side": "top"
         },
         {
-          "type": "loop",
+          "type": "kidney",
+          "product": "steel-cooling",
+          "sub": "Conductivity held",
+          "at": "cast",
+          "side": "bottom"
+        },
+        {
+          "type": "kidney",
           "product": "steel-recovery",
-          "sub": "Water and ions back",
-          "from_after": "wwtp",
-          "to_before": "proc",
-          "labels": [
-            "wastewater",
-            "reuse water"
-          ]
+          "sub": "Metals and salts back",
+          "at": "fin",
+          "side": "top"
         }
       ]
     },
     "items": [
       {
-        "id": "steel-cooling",
-        "name": "Cooling water management",
-        "tagline": "More cycles, less blowdown.",
-        "card": "Keeps salts in cooling circuits under control, so water can circulate for longer.",
-        "problem": "As cooling water evaporates, salts concentrate until they cause scaling and corrosion, and the circuit has to be blown down and topped up.",
+        "id": "steel-intake",
+        "name": "Intake conditioning",
+        "short": "Intake conditioning",
+        "tagline": "Start every loop with better water.",
+        "card": "Lowers conductivity at the primary intake, so every loop downstream has less work to do.",
+        "problem": "Dissolved salts in intake water end up concentrated in every recirculating loop on site, driving scale, corrosion and blowdown wherever they go.",
         "benefits": [
-          "Higher cycles of concentration",
-          "Less blowdown and make-up water",
-          "Lower scaling and corrosion risk"
+          "Less scale and corrosion across the whole works",
+          "Higher cycles of concentration in every loop",
+          "Less fresh water drawn in",
+          "Lower risk of fouling-driven failures, both safety and financial"
         ],
-        "application": "A side-stream on the cooling circuit that removes salts continuously and returns the water.",
+        "application": "Conditions water at the primary intake, before it is distributed across the site.",
+        "flow": {
+          "main": [
+            {
+              "id": "intake",
+              "label": "Primary intake"
+            },
+            {
+              "id": "cond",
+              "product": "steel-intake",
+              "sub": "Conductivity down"
+            },
+            {
+              "id": "site",
+              "label": "Process loops across the site"
+            }
+          ],
+          "attach": []
+        }
+      },
+      {
+        "id": "steel-loops",
+        "name": "Scrubber loop control",
+        "short": "Scrubber loops",
+        "tagline": "Keep gas scrubbers running clean.",
+        "card": "Controls salt build-up in sintering, blast furnace and converter gas-scrubber loops, trimming blowdown.",
+        "problem": "Wet gas scrubbers depend on recirculating water. As it recirculates, salts concentrate and cause scale, while contaminants such as cyanide, ammonia and metals accumulate.",
+        "benefits": [
+          "Better scrubber performance",
+          "Less blowdown and make-up water",
+          "A route to targeting contaminants and metals where needed"
+        ],
+        "application": "A side-stream on the scrubber recirculation loop that removes dissolved salts and returns the water. Contaminant or metals targeting is scoped and tested for each loop.",
+        "flow": {
+          "main": [
+            {
+              "id": "gas",
+              "label": "Process gas"
+            },
+            {
+              "id": "scrub",
+              "label": "Gas scrubber"
+            },
+            {
+              "id": "clar",
+              "label": "Clarification"
+            }
+          ],
+          "attach": [
+            {
+              "type": "kidney",
+              "product": "steel-loops",
+              "sub": "Salts out",
+              "at": "clar",
+              "side": "bottom"
+            }
+          ]
+        }
+      },
+      {
+        "id": "steel-cooling",
+        "name": "Casting and rolling cooling water",
+        "short": "Cooling loops",
+        "tagline": "Tight tolerances, held steady.",
+        "card": "Holds conductivity down in casting and rolling cooling loops, where tolerances are tightest.",
+        "problem": "Mould cooling in continuous casting can need conductivity below 400 µS/cm. As cooling water evaporates and recirculates, salts climb until loops must be blown down.",
+        "benefits": [
+          "Steady water quality for the most sensitive cooling duties",
+          "Higher cycles of concentration",
+          "Less blowdown and make-up water"
+        ],
+        "application": "Polishes the conductivity of casting and rolling cooling loops, after the solids and oil removal already on site.",
         "flow": {
           "main": [
             {
@@ -682,7 +735,7 @@
             },
             {
               "id": "cool",
-              "label": "Cooling circuit"
+              "label": "Casting and rolling cooling"
             },
             {
               "id": "blow",
@@ -699,90 +752,164 @@
               "side": "bottom"
             }
           ]
-        },
-        "short": "Cooling water"
+        }
       },
       {
         "id": "steel-recovery",
-        "name": "Wastewater reuse and ion recovery",
-        "tagline": "Recover water, and what is in it.",
-        "card": "Recovers reusable water from steelworks wastewater, with a concentrate that can carry valuable ions.",
-        "problem": "Steel wastewater contains salts and metals that prevent reuse, and some of them have value if they can be separated.",
+        "name": "Recovery from pickling and galvanising",
+        "short": "Metals recovery",
+        "tagline": "The most concentrated streams on site, put to use.",
+        "card": "Explores recovering iron, zinc and chloride from pickling rinse and galvanising wash water.",
+        "problem": "Pickling and galvanising produce the most concentrated salt streams in a steelworks, carrying iron, zinc, chloride and ammonium that are costly to treat and valuable to recover.",
         "benefits": [
-          "Water returned to the process",
-          "Smaller discharge",
-          "A concentrated stream for recovering valuable elements"
+          "Recovered metals and salts instead of waste",
+          "Less load on wastewater treatment",
+          "Rinse water returned to the line"
         ],
-        "application": "Treats wastewater after conventional treatment, returning water to the works and producing a concentrate for recovery.",
+        "application": "Treats rinse and wash water from pickling and galvanising lines to recover salts and metals. Fit is assessed for each stream.",
         "flow": {
           "main": [
             {
-              "id": "proc",
-              "label": "Steel processes"
+              "id": "bath",
+              "label": "Pickling or flux bath"
             },
             {
-              "id": "wwtp",
+              "id": "rinse",
+              "label": "Rinse and wash water"
+            },
+            {
+              "id": "wwt",
               "label": "Wastewater treatment"
-            },
-            {
-              "id": "dis",
-              "label": "Discharge",
-              "sub": "Less effluent"
             }
           ],
           "attach": [
             {
-              "type": "loop",
+              "type": "kidney",
               "product": "steel-recovery",
-              "sub": "Water and ions back",
-              "from_after": "wwtp",
-              "to_before": "proc",
-              "labels": [
-                "wastewater",
-                "reuse water"
-              ]
+              "sub": "Metals and salts back",
+              "at": "rinse",
+              "side": "bottom"
             }
           ]
-        },
-        "short": "Water and ion recovery"
+        }
       }
     ]
   },
   {
     "slug": "mining",
     "name": "Mining & mine water",
-    "card": "Treat mine water for reuse instead of discharge, and manage salt in bioleaching circuits while keeping the metals.",
-    "title": "Mine water and metals recovery",
-    "lede": "Mine water is variable, often full of solids and dominated by different salts from one site to the next. Those are the conditions where conventional membranes struggle and where an adaptive system is useful.",
+    "card": "Treat mine water for reuse, polish discharge to meet permits, design water in from day one, and keep metals in leach circuits.",
+    "title": "Mine water, permits and metals recovery",
+    "lede": "Mining across Europe is often held back not by geology but by water. Existing operations face permit reviews and new critical-mineral projects struggle to get permitted, both blocked at meeting discharge limits. Danu Water closes that gap, and can recover saleable by-products while it does.",
     "place": "site",
     "flow": {
       "main": [
         {
           "id": "mine",
-          "label": "Mine workings"
+          "label": "Mine water or process liquor"
         },
         {
-          "id": "pump",
-          "label": "Pumping"
+          "id": "train",
+          "label": "Existing treatment",
+          "sub": "Lime, RO, settlement"
         },
         {
-          "id": "settle",
-          "label": "Dosing and settlement"
+          "id": "pol",
+          "product": "mine-polish",
+          "sub": "Final polish"
         },
         {
-          "id": "mw",
-          "product": "mine-water-reuse",
-          "sub": "Salts out"
-        },
-        {
-          "id": "reuse",
-          "label": "Reuse",
-          "sub": "Agriculture or industry"
+          "id": "out",
+          "label": "Discharge or reuse",
+          "sub": "Within permit"
         }
       ],
-      "attach": []
+      "attach": [
+        {
+          "type": "addon",
+          "product": "mine-water-reuse",
+          "sub": "Water for reuse",
+          "at": "pol",
+          "then": "Agriculture or industry"
+        }
+      ]
     },
     "items": [
+      {
+        "id": "mine-polish",
+        "name": "Final polish for permit compliance",
+        "short": "Final polish",
+        "tagline": "Below the limit, with a by-product to sell.",
+        "card": "Polishes treated discharge to reduce sulphate and metals further, recovering by-products such as sodium sulphate.",
+        "problem": "Many sites already treat their water with lime or RO and still struggle with tightening sulphate and metals limits. Arguments that further treatment is infeasible or disproportionately costly are under pressure.",
+        "benefits": [
+          "Sulphate and metals reduced beyond existing treatment",
+          "Saleable by-products, such as sodium sulphate, that offset the cost",
+          "Designed against all three layers of EU water law: watercourse, mine site and processing step"
+        ],
+        "application": "An electromembrane polishing step after the existing treatment train, applicable to sulphate-dominated and acid mine drainage sites.",
+        "flow": {
+          "main": [
+            {
+              "id": "amd",
+              "label": "Mine drainage"
+            },
+            {
+              "id": "train",
+              "label": "Existing treatment",
+              "sub": "Lime or RO"
+            },
+            {
+              "id": "pol",
+              "product": "mine-polish",
+              "sub": "Final polish"
+            },
+            {
+              "id": "out",
+              "label": "Discharge",
+              "sub": "Within permit"
+            }
+          ],
+          "attach": []
+        }
+      },
+      {
+        "id": "mine-designed-in",
+        "name": "Designed in for new projects",
+        "short": "Designed in",
+        "tagline": "Within permit from the first day.",
+        "card": "Built into the water design of new lithium, rare earth and other critical-mineral projects from day one.",
+        "problem": "New processing routes, such as acid roasting for lithium, generate concentrated salt side streams by design. Retrofitting treatment later adds cost, risk and permitting delay.",
+        "benefits": [
+          "Never a discharge or contamination risk",
+          "Feasibility evidence for the permit application",
+          "Recovered secondary materials that circular economy rules reward"
+        ],
+        "application": "Part of the project's water design from the outset, treating process liquors and recovering salts such as sodium sulphate.",
+        "flow": {
+          "main": [
+            {
+              "id": "ore",
+              "label": "Ore processing"
+            },
+            {
+              "id": "liq",
+              "label": "Process liquors"
+            },
+            {
+              "id": "di",
+              "product": "mine-designed-in",
+              "sub": "Built in"
+            },
+            {
+              "id": "out",
+              "label": "Water reused or discharged",
+              "sub": "Within permit"
+            }
+          ],
+          "attach": []
+        }
+      },
       {
         "id": "mine-water-reuse",
         "name": "Mine water for reuse",
@@ -794,7 +921,7 @@
           "Tolerates variability between and within sites",
           "Copes with solids and scaling minerals that foul reverse osmosis"
         ],
-        "application": "Sits after conventional dosing and settlement, removing the dissolved salts that stop mine water being reused. Best suited to moderate salinities, particularly sulphate-dominated and mixed waters.",
+        "application": "Sits after conventional mine water treatment, removing the dissolved salts that stop mine water being reused. Below about 10,000 µS/cm treatment is straightforward; higher salinities are handled with multiple units, a bespoke high-salinity design or blending.",
         "flow": {
           "main": [
             {
@@ -868,15 +995,15 @@
   {
     "slug": "distilling",
     "name": "Distilling",
-    "card": "Get more from vinasse (dunder): water you can reuse and a potassium-rich concentrate, especially where water is scarce.",
-    "title": "Water and vinasse in distilling",
-    "lede": "For every litre of rum, a distillery produces many litres of vinasse, known as dunder in the Caribbean. It is strong, salty and hard to treat, and many distilleries are on islands where fresh water is precious.",
+    "card": "Close the water loop in rum distillation: reuse water, potassium fertiliser and more biogas from vinasse and cooling blowdown.",
+    "title": "Closing the water loop in rum distillation",
+    "lede": "For every litre of rum, a distillery produces many litres of vinasse, known as dunder in the Caribbean, and many distilleries sit where fresh water is precious. Danu Water turns vinasse and cooling blowdown into reuse water, potassium fertiliser and more biogas.",
     "place": "distillery",
     "flow": {
       "main": [
         {
-          "id": "water",
-          "label": "Water and molasses"
+          "id": "raw",
+          "label": "Raw water"
         },
         {
           "id": "ferm",
@@ -889,42 +1016,94 @@
         {
           "id": "vin",
           "label": "Vinasse (dunder)"
+        },
+        {
+          "id": "dig",
+          "label": "Digestion and polishing"
         }
       ],
       "attach": [
         {
-          "type": "loop",
-          "product": "vinasse",
-          "sub": "Potassium recovered",
-          "from_after": "vin",
-          "to_before": "ferm",
-          "labels": [
-            "vinasse",
-            "lower-salt dunder"
-          ]
+          "type": "kidney",
+          "product": "distillery-cooling",
+          "sub": "Blowdown back to tower",
+          "at": "still",
+          "side": "top"
         },
         {
           "type": "kidney",
-          "product": "distillery-water",
-          "sub": "Salts out",
-          "at": "still",
+          "product": "sulphate-control",
+          "sub": "Protects digesters",
+          "at": "dig",
           "side": "top"
+        },
+        {
+          "type": "loop",
+          "product": "vinasse",
+          "sub": "Reuse water and fertiliser",
+          "from_after": "dig",
+          "to_before": "ferm",
+          "labels": [
+            "digested vinasse",
+            "recycled water"
+          ]
         }
       ]
     },
     "items": [
       {
         "id": "vinasse",
-        "name": "Vinasse desalting and potassium recovery",
+        "name": "Water and potassium recovery",
+        "short": "Water and potassium",
         "tagline": "From disposal problem to fertiliser.",
-        "card": "Removes salts from vinasse, so more can be recycled, and recovers a potassium-rich concentrate.",
-        "problem": "Vinasse is high-strength, high-salt and produced in large volumes. Many distilleries already return some dunder to fermentation, but salt build-up limits how much, and the potassium it carries is usually wasted.",
+        "card": "Recovers reuse water and a potassium fertiliser product from digested vinasse.",
+        "problem": "Vinasse is high-strength, salty and produced in large volumes. Even after digestion it is usually discharged, and the potassium it carries is wasted.",
         "benefits": [
-          "More dunder can go back to fermentation",
-          "A potassium-rich fertiliser instead of a disposal problem",
-          "Smaller, easier-to-treat effluent"
+          "Reuse water back into the distillery",
+          "A saleable potassium sulphate fertiliser",
+          "Much less effluent discharged"
         ],
-        "application": "Treats vinasse after distillation, producing a lower-salt stream for recycling and a potassium-rich concentrate.",
+        "application": "Treats digested and polished vinasse, returning water to the process and producing a potassium-rich product.",
+        "flow": {
+          "main": [
+            {
+              "id": "vin",
+              "label": "Vinasse (dunder)"
+            },
+            {
+              "id": "dig",
+              "label": "Digestion and polishing"
+            },
+            {
+              "id": "dis",
+              "label": "Discharge",
+              "sub": "Much less"
+            }
+          ],
+          "attach": [
+            {
+              "type": "kidney",
+              "product": "vinasse",
+              "sub": "Water and potassium",
+              "at": "dig",
+              "side": "bottom"
+            }
+          ]
+        }
+      },
+      {
+        "id": "backset",
+        "name": "More backset to fermentation",
+        "short": "Backset",
+        "tagline": "Return more dunder without the salt.",
+        "card": "Removes salts from backset so more dunder can return to fermentation, saving dilution water.",
+        "problem": "Many distilleries already return some dunder to fermentation as backset. Salt build-up limits how much they can reuse, so fresh water is used for molasses dilution instead.",
+        "benefits": [
+          "Less fresh water for molasses dilution",
+          "Less vinasse sent onwards for treatment",
+          "Steadier fermentation conditions"
+        ],
+        "application": "Desalts the backset stream before it returns to fermentation.",
         "flow": {
           "main": [
             {
@@ -943,65 +1122,126 @@
           "attach": [
             {
               "type": "loop",
-              "product": "vinasse",
-              "sub": "Potassium recovered",
+              "product": "backset",
+              "sub": "Salts out",
               "from_after": "vin",
               "to_before": "ferm",
               "labels": [
-                "vinasse",
-                "lower-salt dunder"
+                "backset",
+                "lower-salt backset"
               ]
             }
           ]
-        },
-        "short": "Vinasse treatment"
+        }
       },
       {
-        "id": "distillery-water",
-        "name": "Process and cooling water reuse",
-        "tagline": "Less pressure on scarce local water.",
-        "card": "Recovers reusable water from distillery wastewater and cooling systems.",
-        "problem": "Island and water-stressed distilleries depend on limited supplies for fermentation and cooling.",
+        "id": "sulphate-control",
+        "name": "Sulphate control for digesters",
+        "short": "Sulphate control",
+        "tagline": "Less H₂S, more biogas.",
+        "card": "Cuts sulphate ahead of anaerobic digestion, reducing hydrogen sulphide and lifting biogas output.",
+        "problem": "Sulphate in vinasse feeds the bacteria that produce hydrogen sulphide, which inhibits digestion, corrodes equipment and lowers biogas quality.",
         "benefits": [
-          "Lower freshwater use",
-          "Less exposure to supply restrictions",
-          "Reduced discharge"
+          "Less hydrogen sulphide",
+          "Protected digesters",
+          "More biogas to displace fuel oil"
         ],
-        "application": "Treats cooling and process water on site so it can be used again.",
+        "application": "Removes sulphate from vinasse on its way to the digesters.",
         "flow": {
           "main": [
             {
-              "id": "supply",
-              "label": "Local supply"
+              "id": "vin",
+              "label": "Vinasse (dunder)"
             },
             {
-              "id": "still",
-              "label": "Distillation and cooling"
+              "id": "dig",
+              "label": "Anaerobic digestion"
             },
             {
-              "id": "dis",
-              "label": "Discharge",
-              "sub": "Less effluent"
+              "id": "gas",
+              "label": "Biogas",
+              "sub": "More of it"
             }
           ],
           "attach": [
             {
               "type": "kidney",
-              "product": "distillery-water",
-              "sub": "Salts out",
-              "at": "still",
+              "product": "sulphate-control",
+              "sub": "Sulphate out",
+              "at": "vin",
               "side": "bottom"
             }
           ]
-        },
-        "short": "Water reuse"
+        }
+      },
+      {
+        "id": "distillery-cooling",
+        "name": "Cooling blowdown recovery",
+        "short": "Cooling blowdown",
+        "tagline": "Send blowdown back to the tower.",
+        "card": "Desalts cooling tower blowdown and returns it to the tower, cutting make-up water.",
+        "problem": "Cooling towers lose water through evaporation and blowdown, and the blowdown carries the salts that would otherwise cause scale.",
+        "benefits": [
+          "Less cooling tower make-up water",
+          "Less discharge",
+          "Less scale in the cooling circuit"
+        ],
+        "application": "Treats blowdown from the cooling tower and returns the water to it.",
+        "flow": {
+          "main": [
+            {
+              "id": "make",
+              "label": "Make-up water"
+            },
+            {
+              "id": "tower",
+              "label": "Cooling tower"
+            },
+            {
+              "id": "blow",
+              "label": "Blowdown",
+              "sub": "Much less"
+            }
+          ],
+          "attach": [
+            {
+              "type": "kidney",
+              "product": "distillery-cooling",
+              "sub": "Salts out",
+              "at": "tower",
+              "side": "bottom"
+            }
+          ]
+        }
       }
-    ]
+    ],
+    "highlights": {
+      "title": "In an exemplar distillery",
+      "items": [
+        [
+          "55%",
+          "less fresh water"
+        ],
+        [
+          "~80%",
+          "less effluent discharged"
+        ],
+        [
+          "~1,400 t",
+          "potassium fertiliser a year"
+        ],
+        [
+          "+10%",
+          "biogas from protected digesters"
+        ]
+      ],
+      "note": "Exemplar figures for a large molasses distillery with anaerobic digestion, modelled on public data. Not a site assessment."
+    }
   },
   {
     "slug": "municipal-and-utilities",
     "name": "Municipal & utilities",
-    "card": "Turn treated municipal effluent into cooling water, so industry and data centres stop drawing on drinking water.",
+    "card": "Turn treated municipal effluent into cooling water, and help data centres use harder local water instead of drinking water.",
     "title": "Effluent reuse for utilities and cooling",
     "lede": "Cooling is one of the largest uses of water in industry, and demand from data centres is rising fast. Much of it is still met with drinking-quality water. Treated municipal effluent is a reliable alternative, once the salts are dealt with.",
     "place": "network",
@@ -1033,14 +1273,15 @@
         "id": "effluent-cooling",
         "name": "Municipal effluent to cooling water",
         "tagline": "Keep drinking water for drinking.",
-        "card": "Turns treated municipal effluent into cooling water make-up, freeing potable supply.",
-        "problem": "Every cubic metre of drinking water used for cooling is unavailable for homes and new development, while treated effluent, a steady local supply, is usually discharged. Salts and hardness are what stop it being used for cooling.",
+        "card": "Turns pretreated municipal effluent into cooling water, recovering minerals and making acid and base the plant can use.",
+        "problem": "Every cubic metre of drinking water used for cooling is unavailable for homes and new development. Treated effluent is a steady local supply, but dissolved salts and hardness stop it being used for cooling.",
         "benefits": [
           "Frees potable supply for homes and growth",
-          "More cycles of concentration and less blowdown",
+          "Recovered salt turned into the acid and base the rest of the plant uses",
+          "A mineral-rich brine for recovery, towards near-zero liquid discharge",
           "By-products such as lime sludge can go to local farms as agricultural lime"
         ],
-        "application": "Part of a treatment train that takes treated municipal effluent and produces cooling water make-up, with Danu Water removing the salts that limit reuse.",
+        "application": "Conventional pre-treatment prepares the effluent. Danu Water removes the dissolved salts and turns the recovered salt into reagents, producing reclaimed cooling water and recovered minerals.",
         "flow": {
           "main": [
             {
@@ -1069,14 +1310,15 @@
         "id": "data-centres",
         "name": "Cooling water for data centres",
         "tagline": "Computing without the drinking water.",
-        "card": "Supplies data centres, including edge sites, with cooling water made from effluent or lower-quality local water.",
-        "problem": "Data centre cooling demand is growing fast, often in water-stressed areas, and is frequently met from mains supply.",
+        "card": "Unlocks harder aquifer and well water for data centre cooling, and raises cycles of concentration.",
+        "problem": "Data centre cooling towers are often restricted to soft fresh water and low cycles of concentration by water-quality limits, so they draw heavily on mains supply and blow down large volumes.",
         "benefits": [
-          "Reduces the water footprint of computing",
-          "Eases local concern and permitting",
-          "A route to water-as-a-service supply"
+          "Harder aquifer, well and borehole sources become usable",
+          "Substantially higher cycles of concentration and less blowdown",
+          "Blowdown can be treated and recirculated",
+          "Lower antiscalant use"
         ],
-        "application": "Treats effluent or lower-quality local water to cooling quality, close to where it is used.",
+        "application": "Conditions make-up water and treats blowdown for recirculation. Silica pre-treatment is advised at some sites.",
         "flow": {
           "main": [
             {
@@ -1176,15 +1418,14 @@
   {
     "slug": "desalination",
     "name": "Desalination",
-    "draft": true,
-    "card": "More water from existing plants, and less brine, as discharge rules tighten.",
-    "title": "Supporting desalination plants",
-    "lede": "Desalination plants are being asked to produce more water while discharging less brine. Danu Water works alongside existing reverse osmosis to recover more water and shrink the brine stream.",
+    "card": "Push past reverse osmosis' ceiling: more water from every plant and far less brine, without extra heat or chemicals.",
+    "title": "Push desalination past reverse osmosis' ceiling",
+    "lede": "Reverse osmosis does the bulk of the work cheaply, until scaling limits recovery. Past that point, the usual options mean more chemicals, more heat or more footprint. Danu Water takes over at exactly that point, recovering more water and shrinking the brine that is so costly to dispose of.",
     "place": "plant",
     "flow": {
       "main": [
         {
-          "id": "sea",
+          "id": "intake",
           "label": "Seawater or brackish intake"
         },
         {
@@ -1193,37 +1434,40 @@
         },
         {
           "id": "prod",
-          "label": "Product water"
+          "label": "Product water",
+          "sub": "More of it"
         }
       ],
       "attach": [
         {
           "type": "addon",
           "product": "brine-reduction",
-          "sub": "Brine concentration",
+          "sub": "Recovers more water",
           "at": "ro",
-          "then": "Smaller brine stream"
+          "then": "Much smaller brine stream"
         }
       ]
     },
     "items": [
       {
         "id": "brine-reduction",
-        "name": "Brine reduction and extra output",
-        "tagline": "More water, less brine.",
-        "card": "Treats RO brine to recover more water and concentrate what is left, cutting discharge volumes.",
-        "problem": "Brine discharge is coming under tighter rules, and reverse osmosis cannot push recovery much further on its own because of scaling and pressure limits.",
+        "name": "Brine reduction for brackish RO",
+        "short": "Brine reduction",
+        "tagline": "More water, much less brine.",
+        "card": "Treats RO concentrate to lift overall recovery from about 75% to 95%, cutting brine volume by around 80%.",
+        "problem": "Brackish RO is usually limited to 70–85% recovery by scaling in the concentrate. For inland plants, getting rid of the remaining brine, by thermal treatment, evaporation ponds or deep wells, can be the largest cost of the whole plant.",
         "benefits": [
-          "Higher overall plant recovery",
-          "Smaller brine volumes to discharge or manage",
-          "A concentrated brine that is easier to valorise, for example in construction materials"
+          "Overall recovery raised to around 95%",
+          "Brine volume cut by about 80%, so disposal energy and costs fall dramatically",
+          "A smaller, more concentrated brine for thermal treatment or salt recovery",
+          "Strongest when designed into new plants, and still worthwhile as a retrofit"
         ],
-        "application": "Treats the RO concentrate, returning recovered water and producing a much smaller, more concentrated brine.",
+        "application": "Sits on the RO concentrate, recovering water to potable-range quality and leaving a much smaller brine. Selective separation can also recover specific salts for reuse instead of discharging them.",
         "flow": {
           "main": [
             {
               "id": "intake",
-              "label": "Intake"
+              "label": "Brackish intake"
             },
             {
               "id": "ro",
@@ -1239,14 +1483,67 @@
             {
               "type": "addon",
               "product": "brine-reduction",
-              "sub": "Brine concentration",
+              "sub": "Recovers more water",
               "at": "ro",
-              "then": "Smaller brine stream"
+              "then": "Much smaller brine stream"
             }
           ]
-        },
-        "short": "Brine reduction"
+        }
+      },
+      {
+        "id": "beyond-ro",
+        "name": "Finishing for seawater and industrial sites",
+        "short": "RO finishing",
+        "tagline": "Finish the job without more chemicals, heat or space.",
+        "card": "Breaks past RO's limits on recovery or purity at space-constrained sites such as LNG terminals and floating platforms.",
+        "problem": "Adding RO capacity drives the same scaling problem harder. Thermal evaporation works but brings real energy, space and complexity costs, and both routes usually need ongoing chemical dosing.",
+        "benefits": [
+          "Self-cleaning by design, with no downtime for chemical clean-in-place",
+          "No scale-control chemicals needed on demanding feedwater",
+          "Compact skids that suit space-constrained and floating sites",
+          "Fewer chemical deliveries and a smaller, cleaner reject stream for permitting"
+        ],
+        "application": "Follows RO in the water train, taking it past its ceiling to potable-grade output with a smaller, easier-to-manage reject stream.",
+        "flow": {
+          "main": [
+            {
+              "id": "sea",
+              "label": "Seawater intake"
+            },
+            {
+              "id": "ro",
+              "label": "RO desalting"
+            },
+            {
+              "id": "br",
+              "product": "beyond-ro",
+              "sub": "Past RO's ceiling"
+            },
+            {
+              "id": "out",
+              "label": "Potable-grade output"
+            }
+          ],
+          "attach": []
+        }
       }
-    ]
+    ],
+    "highlights": {
+      "items": [
+        [
+          "75% → 95%",
+          "typical overall recovery when Danu Water treats brackish RO concentrate"
+        ],
+        [
+          "~80%",
+          "less brine volume to dispose of"
+        ],
+        [
+          "No added heat",
+          "and no scale-control chemicals to run reliably"
+        ]
+      ],
+      "note": "Indicative figures for brackish RO. Every plant is assessed on its own water and disposal route."
+    }
   }
 ]

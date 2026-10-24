@@ -27,10 +27,11 @@
       "news",
       "pilot"
     ],
-    "summary": "Our industrial-scale pilot unit is installed and running at WEPA's paper mill in Bridgend, Wales, treating real mill water.",
+    "summary": "Our industrial pilot is running at WEPA's paper mill in Bridgend, Wales, treating 60 m³ of real mill water a day, on a system with capacity for 400 m³ a day.",
     "body": [
-      "Danu Water's industrial pilot unit is now installed at WEPA's paper mill in Bridgend, Wales, with our CTO Jack Ledingham on site running it.",
-      "The pilot treats the mill's own process water, with all the variability that comes with it. It is the step from laboratory results to performance under real operating conditions, and the basis for our first commercial systems."
+      "Danu Water's industrial pilot is now running at WEPA's paper mill in Bridgend, Wales, with our CTO Jack Ledingham on site.",
+      "It is treating 60 m³ of the mill's own process water a day, about the household water use of 440 people, on a system with capacity for 400 m³ a day. The pilot puts our adaptive electromembrane separation to work under real operating conditions, with all the variability that comes with them, at technology readiness level 7.",
+      "It follows our prototype, which has been regularly testing industrial wastewater samples since March 2025."
     ]
   },
   {
@@ -49,14 +50,25 @@
     ]
   },
   {
+    "slug": "prototype",
+    "date": "2025-03-15",
+    "when": "March 2025",
+    "title": "Prototype up and running",
+    "tags": [
+      "news"
+    ],
+    "summary": "Our prototype system began regularly testing real industrial wastewater samples, processing 0.4 m³ a day at technology readiness level 6.",
+    "body": []
+  },
+  {
     "slug": "founded",
-    "date": "2024-10-01",
-    "when": "October 2024",
+    "date": "2025-01-15",
+    "when": "January 2025",
     "title": "Danu Water founded",
     "tags": [
       "news"
     ],
-    "summary": "Kyra Sedransk Campbell and Jack Ledingham founded Danu Water to make industrial wastewater reuse work in the real world.",
+    "summary": "Kyra Sedransk Campbell and Jack Ledingham founded Danu Water, three months after Kyra left academia to build it full time.",
     "body": []
   }
 ]

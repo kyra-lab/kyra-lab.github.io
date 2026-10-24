@@ -6,7 +6,7 @@ Edit the content in _src/content/ (sectors.json, news.json), then run:
 and commit the generated HTML. Folders starting with "_" are not published by GitHub Pages.
 The impact explorers (/cups/, /power-bank/, /giveaways/) are hand-written pages and are not touched.
 """
-import datetime, html, json, pathlib, textwrap
+import datetime, html, json, pathlib, shutil, textwrap
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CONTENT = ROOT / "_src" / "content"
@@ -137,6 +137,8 @@ def node_svg(x, y, n, link=True, current=None):
     if pid:
         it = ITEMS.get(pid)
         name = (it.get("short") or it["name"]) if it else pid
+        if n.get("sub", "").lower() == name.lower():
+            n = dict(n, sub="")
         opt = it.get("optional") if it else False
         cls = "dn-opt" if opt else "dn-prod"
         g = f'<g class="{cls}"><rect x="{x}" y="{y}" width="{W}" height="{H}" rx="8"/>{lines(x + W / 2, y + H / 2, name, n.get("sub", ""))}</g>'
@@ -161,7 +163,7 @@ def diagram(spec, uid, current=None):
             d += H + 46
         depth = max(depth, d)
     n = len(main)
-    width = PAD * 2 + n * W + (n - 1) * GAP + (110 if extra_right else 0)
+    width = PAD * 2 + n * W + (n - 1) * GAP + (150 if extra_right else 0)
     height = row + H + depth + PAD
     x = lambda i: PAD + i * (W + GAP)
     m = f'marker-end="url(#m{uid})"'
@@ -258,6 +260,18 @@ def news_href(n):
     return f'/news/{n["slug"]}/' if n.get("body") else None
 
 
+PROOF = [
+    ("95%+ water recovery", "from industrial wastewater, tuned to each site"),
+    ("Low-energy operation", "no heat and no high-pressure pumping"),
+    ("No direct CO₂ emissions", "the system runs on electricity alone"),
+    ("Brine reduction", "a concentrate typically under 10% of the inlet, so disposal energy and costs are dramatically reduced"),
+]
+
+
+def proof(extra=()):
+    return '<ul class="proof">' + "".join(f"<li><strong>{e(a)}</strong><span>{e(b)}</span></li>" for a, b in list(PROOF) + list(extra)) + "</ul>"
+
+
 PILOT_VIDEO = "assets/pilot-copper-sulphate.mp4"
 
 
@@ -300,12 +314,14 @@ def home():
 <section class="band mist"><div class="wrap">
   <div class="head-row"><h2>Where we are</h2><a href="/news/">All news</a></div>
   <ol class="timeline">
-    <li class="done"><time datetime="2024-10">October 2024</time><h3>Company founded</h3><p>Kyra Sedransk Campbell and Jack Ledingham start Danu Water.</p></li>
-    <li class="done"><time datetime="2026-03">March 2026</time><h3>Pre-seed backed by SFC Capital</h3><p>Funding the build of our industrial pilot units.</p></li>
-    <li class="done"><time datetime="2026-10">October 2026</time><h3>Pilot running at WEPA Bridgend</h3><p>Industrial-scale unit treating real paper mill water in Wales.</p></li>
+    <li class="done"><time datetime="2024-10">October 2024</time><h3>From professor to founder</h3><p>Kyra Sedransk Campbell leaves academia to build Danu Water full time.</p></li>
+    <li class="done"><time datetime="2025-01">January 2025</time><h3>Company founded</h3><p>Kyra and Jack Ledingham found Danu Water.</p></li>
+    <li class="done"><time datetime="2025-03">March 2025</time><h3>Prototype running <span class="trl">TRL 6</span></h3><p>Regularly testing real industrial wastewater samples, processing 0.4 m³ a day: about what three people use at home.</p></li>
+    <li class="done"><time datetime="2026-03">March 2026</time><h3>Pre-seed backed by SFC Capital</h3><p>Funding the build of our industrial pilot.</p></li>
+    <li class="done"><time datetime="2026-10">October 2026</time><h3>Industrial pilot at WEPA Bridgend <span class="trl">TRL 7</span></h3><p>Treating 60 m³ a day of real paper mill water, the household use of about 440 people, on a system with capacity for 400 m³ a day.</p></li>
     <li class="done"><time datetime="2026-10">October 2026</time><h3>Startup Battlefield 200</h3><p>Selected for TechCrunch Disrupt in San Francisco.</p></li>
-    <li><span class="when">Next</span><h3>First commercial systems</h3><p>Turning pilot results into orders.</p></li>
   </ol>
+  <p class="footnote">Household comparisons use average UK use of 137 litres per person per day (Water UK). TRL is technology readiness level, on a scale of 1 to 9.</p>
   {pilot_video()}
 </div></section>
 
@@ -313,15 +329,11 @@ def home():
   <div>
     <h2>Why it is different</h2>
     <p>Industrial water is never the same two days running. Most treatment is designed for a fixed condition and struggles when the water changes. Our system measures what is coming in and adjusts how it runs, continuously.</p>
+    <p>We deliver complete systems, not just membrane stacks: designed around your site and your water, with any pre-treatment it needs, and controls that keep it on target without an operator chasing it.</p>
     <p>That makes reuse dependable enough to build a process around, and affordable enough that there is no green premium to argue about.</p>
     <p><a href="/technology/">How adaptive electromembrane separation works</a></p>
   </div>
-  <ul class="proof">
-    <li><strong>95%+ water recovery</strong><span>from industrial wastewater streams</span></li>
-    <li><strong>70–80% less energy</strong><span>than zero liquid discharge technologies</span></li>
-    <li><strong>Continuous and onsite</strong><span>a plug-and-play system, with no tankering or offsite treatment</span></li>
-    <li><strong>Salts as a resource</strong><span>a small concentrate stream that can be recovered, not a large dilute waste</span></li>
-  </ul>
+  {proof()}
 </div></section>
 
 <section class="band mist"><div class="wrap split">
@@ -362,6 +374,16 @@ def product_card(it, sector):
             f'<p>{e(it["card"])}</p><span class="go">View {"listing" if it.get("family") else "details"}</span></a></li>')
 
 
+def highlights(s):
+    h = s.get("highlights")
+    if not h:
+        return ""
+    cells = "".join(f"<li><strong>{e(v)}</strong><span>{e(t)}</span></li>" for v, t in h["items"])
+    title = f'<h2 class="small-head">{e(h["title"])}</h2>' if h.get("title") else ""
+    note = f'<p class="footnote" style="margin-top:.6rem">{e(h["note"])}</p>' if h.get("note") else ""
+    return f'<div class="highlights">{title}<ul>{cells}</ul>{note}</div>'
+
+
 def sector_page(s):
     items = [resolve(it) for it in s["items"]]
     branded = any(it.get("family") for it in items)
@@ -374,6 +396,7 @@ def sector_page(s):
   <p class="lede">{e(s["lede"])}</p>
 </div></section>
 <section class="band"><div class="wrap">
+  {highlights(s)}
   <h2 class="small-head">Where {"each product sits" if branded else "Danu Water fits"}</h2>
   <figure class="diagram-card">{diagram(s["flow"], s["slug"])}{legend(s["flow"])}<p class="scroll-hint">Scroll sideways to see the whole process.</p></figure>
   <div class="jobs-note">
@@ -468,24 +491,49 @@ def technology():
     <h2>Why adaptive matters</h2>
     <p>Industrial water changes by the hour: with production rates, products, raw materials, temperature and season. A system tuned for one condition is either over-designed or failing for much of the time.</p>
     <p>Ours monitors the incoming water and adjusts how it operates as conditions change. That keeps the output on target and the energy use down, and lets us treat only to the level each use needs.</p>
-    <p>Our industrial pilot puts this to the test on real, changing mill water.</p>
+    <p>Our industrial pilot puts this to the test on real, changing paper mill water, at 60 m³ a day on a system built for 400 m³ a day.</p>
   </div>
-  <ul class="proof">
-    <li><strong>95%+ water recovery</strong><span>from industrial wastewater streams</span></li>
-    <li><strong>70–80% less energy</strong><span>than zero liquid discharge technologies</span></li>
-    <li><strong>Plug-and-play</strong><span>continuous onsite operation, with minimal disruption to install</span></li>
-    <li><strong>Built for messy water</strong><span>solids, scaling and variability that defeat other approaches</span></li>
-  </ul>
+  {proof([("Built for messy water", "solids, scaling and variability that defeat other approaches"), ("Continuous and unattended", "24/7 operation, with membranes lasting 5+ years")])}
+</div></section>
+<section class="band"><div class="wrap split">
+  <div class="measure">
+    <h2>Complete systems, not just stacks</h2>
+    <p>We design and deliver the whole system around your site: the electromembrane units, any pre-treatment your water needs, and the controls that keep it on target. You tell us what you need the water to do, and we take responsibility for getting it there.</p>
+    <p>Systems are modular. Start at the capacity you need today and add modules at scheduled maintenance as you grow, without losing efficiency.</p>
+  </div>
+  <div>
+    <h2 class="small-head">System sizes</h2>
+    <table class="sizes">
+      <thead><tr><th scope="col">Module</th><th scope="col">Operating range</th></tr></thead>
+      <tbody>
+        <tr><td>Compact</td><td>0.4–4 m³/day</td></tr>
+        <tr><td>Standard</td><td>4–40 m³/day</td></tr>
+        <tr><td>Industrial</td><td>40–400 m³/day</td></tr>
+        <tr><td>Enterprise</td><td>400–4,000 m³/day</td></tr>
+        <tr><td>Enterprise+</td><td>Over 4,000 m³/day, with units in parallel</td></tr>
+      </tbody>
+    </table>
+    <p class="footnote">Exact sizing and configuration follow an assessment of your site's water.</p>
+  </div>
+</div></section>
+<section class="band mist"><div class="wrap">
+  <h2>How we work with you</h2>
+  <ol class="steps">
+    <li><h3>Share your data</h3><p>Your flow rates, a water analysis if you have one, and what you need the treated water to do.</p></li>
+    <li><h3>Bench test</h3><p>We run your samples through our system and firm up the numbers for your site.</p></li>
+    <li><h3>On-site pilot</h3><p>Where you want extra confidence, a skid on one stream proves the case under real conditions.</p></li>
+    <li><h3>Full system</h3><p>Sized to your site and installed alongside your process, with modules added as you grow.</p></li>
+  </ol>
 </div></section>
 <section class="band"><div class="wrap measure">
   <h2>No green premium</h2>
-  <p>Industrial wastewater treatment has long been seen as technically intractable, expensive, or both. Danu Water is designed to pay for itself, through lower freshwater and discharge costs, less downtime from scaling and corrosion, and in some cases valuable products recovered from the concentrate. When the business case stands on its own, sustainability follows.</p>
+  <p>Industrial wastewater treatment has long been seen as technically intractable, expensive, or both. Danu Water is designed to pay for itself: through lower freshwater and discharge costs, less downtime from scaling and corrosion, process chemicals that work better when water quality is tuned to what the process needs, and in some cases valuable products recovered from the concentrate. When the business case stands on its own, sustainability follows.</p>
 </div></section>
 <section class="band mist" id="team"><div class="wrap">
   <h2>Team</h2>
   <div class="people" style="margin-top:1.5rem">
-    <div><h3>Kyra Sedransk Campbell</h3><p class="role">Co-founder and CEO</p><p>Formerly Professor of Chemical Engineering and a Royal Society Research Fellow. Kyra leads the business, commercial strategy and partnerships.</p></div>
-    <div><h3>Jack Ledingham</h3><p class="role">Co-founder and CTO</p><p>Leads the technical build, from system design to running our industrial pilot on site.</p></div>
+    <div><h3>Kyra Sedransk Campbell</h3><p class="role">Co-founder and CEO</p><p>Formerly Professor of Chemical Engineering and a Royal Society Research Fellow, Kyra left academia in October 2024 to build Danu Water. She leads the business, commercial strategy and partnerships.</p></div>
+    <div><h3>Jack Ledingham</h3><p class="role">Co-founder and CTO</p><p>One of the world's leading experts in electrodialysis, Jack designed Danu Water's adaptive electromembrane separation system. He leads the technical build, from system design to running our industrial pilot on site.</p></div>
   </div>
   <p class="muted" style="margin-top:2rem">Backed by SFC Capital.</p>
 </div></section>
@@ -609,6 +657,7 @@ if __name__ == "__main__":
     ITEMS["_conc"] = {"id": "_conc", "name": "Concentrate", "optional": True, "sector": sectors[0]}
     (ROOT / "assets" / "favicon.svg").write_text(
         '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M16 3C11 10 7 15 7 20a9 9 0 0 0 18 0c0-5-4-10-9-17Z" fill="#0B6E69"/></svg>')
+    shutil.rmtree(ROOT / "sectors", ignore_errors=True)  # so removed products don't leave stale pages
     home(); sectors_index()
     for s in sectors:
         sector_page(s)
