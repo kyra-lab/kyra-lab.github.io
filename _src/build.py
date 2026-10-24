@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Builds the Danu Water website.
 
-Edit the content in _src/content/*.json (or the page text below), then run:
+Edit the content in _src/content/ (sectors.json, news.json), then run:
     python3 _src/build.py
 and commit the generated HTML. Folders starting with "_" are not published by GitHub Pages.
 The impact explorers (/cups/, /power-bank/, /giveaways/) are hand-written pages and are not touched.
@@ -15,33 +15,45 @@ TODAY = datetime.date.today().isoformat()
 SITE = {
     "email": "hello@danuwater.com",
     "newsletter": "/newsletter/",
-    # Add the company LinkedIn page URL here to show "Follow us on LinkedIn" links.
+    # Add the company LinkedIn page URL here to show LinkedIn links.
     "linkedin": "",
 }
 
-STATUS = {
-    "pilot": ("Industrial pilot", "Running, or about to run, on a real industrial site."),
-    "feasibility": ("Feasibility", "Modelling and design work on real water data."),
-    "exploring": ("Exploring", "Early conversations with partners about need and fit."),
-}
-
 e = lambda s: html.escape(str(s), quote=True)
-industries = json.loads((CONTENT / "industries.json").read_text())
+sectors = json.loads((CONTENT / "sectors.json").read_text())
 news = sorted(json.loads((CONTENT / "news.json").read_text()), key=lambda n: n["date"], reverse=True)
+
+# Every product or application, keyed by id, with the sector whose pages it lives under.
+ITEMS = {}
+for s in sectors:
+    for it in s["items"]:
+        if "ref" not in it:
+            ITEMS[it["id"]] = dict(it, sector=s)
+
+
+def item_url(pid):
+    it = ITEMS[pid]
+    return f"/sectors/{it['sector']['slug']}/{pid}/"
+
+
+def resolve(it):
+    if "ref" in it:
+        return ITEMS[it["ref"].split("/")[1]]
+    return ITEMS[it["id"]]
 
 # ---------------------------------------------------------------- layout
 
 LOGO = ('<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3C11 10 7 15 7 20a9 9 0 0 0 18 0c0-5-4-10-9-17Z" '
-        'fill="#36bdb3"/><path d="M11 21c1.5 2.6 4 3.6 6.5 3.2" fill="none" stroke="#0a1d30" stroke-width="2" stroke-linecap="round"/></svg>')
+        'fill="#7CC4BC"/><path d="M11 21c1.5 2.6 4 3.6 6.5 3.2" fill="none" stroke="#0D2B2E" stroke-width="2" stroke-linecap="round"/></svg>')
 
-NAV = [("/industries/", "Industries", "industries"), ("/technology/", "Technology", "technology"),
+NAV = [("/sectors/", "Sectors", "sectors"), ("/technology/", "Technology", "technology"),
        ("/impact/", "Understand your impact", "impact"), ("/news/", "News & insights", "news"),
        ("/contact/", "Contact", "contact")]
 
 
 def page(path, title, desc, body, active=""):
     nav = "".join(f'<li><a href="{h}"{" aria-current=\"page\"" if k == active else ""}>{t}</a></li>' for h, t, k in NAV)
-    ind = "".join(f'<li><a href="/industries/{i["slug"]}/">{e(i["name"])}</a></li>' for i in industries)
+    sec = "".join(f'<li><a href="/sectors/{s["slug"]}/">{e(s["name"])}</a></li>' for s in sectors)
     li = f'<li><a href="{SITE["linkedin"]}">LinkedIn</a></li>' if SITE["linkedin"] else ""
     full_title = "Danu Water" if title is None else f"{title} | Danu Water"
     doc = f"""<!DOCTYPE html>
@@ -57,7 +69,7 @@ def page(path, title, desc, body, active=""):
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
@@ -77,9 +89,9 @@ def page(path, title, desc, body, active=""):
     <div class="cols">
       <div>
         <a class="logo" href="/">{LOGO}Danu Water</a>
-        <p style="margin-top:.8rem;max-width:22rem">Adaptive electromembrane separation for industrial wastewater reuse.</p>
+        <p style="margin-top:.8rem;max-width:22rem">Adaptive electromembrane separation for industrial water reuse.</p>
       </div>
-      <div><h2>Industries</h2><ul>{ind}</ul></div>
+      <div><h2>Sectors</h2><ul class="two">{sec}</ul></div>
       <div><h2>Company</h2><ul><li><a href="/technology/">Technology</a></li><li><a href="/technology/#team">Team</a></li><li><a href="/news/">News &amp; insights</a></li><li><a href="/impact/">Understand your impact</a></li></ul></div>
       <div><h2>Get in touch</h2><ul><li><a href="mailto:{SITE["email"]}">{SITE["email"]}</a></li><li><a href="{SITE["newsletter"]}">Newsletter</a></li>{li}</ul></div>
     </div>
@@ -96,138 +108,142 @@ def page(path, title, desc, body, active=""):
     print("wrote", out.relative_to(ROOT))
 
 
-def status(key):
-    return f'<span class="status {key}">{STATUS[key][0]}</span>'
-
-
 def cta_band(heading="Have a water problem we should look at?",
-             text="Tell us about your site and your water. We are looking for industrial partners for pilots and first commercial systems."):
+             text="Tell us about your site and your water, and we will tell you honestly where Danu Water fits."):
     return f"""<section class="band dark cta"><div class="wrap">
 <h2>{heading}</h2><p class="lede">{text}</p>
 <div class="actions"><a class="btn" href="/contact/">Talk to us</a><a class="btn ghost" href="{SITE["newsletter"]}">Get the newsletter</a></div>
 </div></section>"""
 
 # ---------------------------------------------------------------- flow diagrams
+# Matches the layout of the product sheets: a main process line, with Danu Water
+# products inline, as kidneys on a step, as return loops, or as optional add-ons.
+
+W, H, GAP, PAD = 158, 58, 58, 16
 
 
-def wrap_label(text, width=17):
-    return textwrap.wrap(text, width) or [""]
+def lines(x, cy, title, sub, width=19, fill_cls=""):
+    t = textwrap.wrap(title, width) or [""]
+    s = textwrap.wrap(sub, width + 4) if sub else []
+    rows = [(l, "t") for l in t] + [(l, "s") for l in s]
+    lh = 16
+    y0 = cy - (len(rows) - 1) * lh / 2 + 5
+    spans = "".join(f'<tspan x="{x}" y="{y0 + i * lh:.0f}" class="{c}">{e(l)}</tspan>' for i, (l, c) in enumerate(rows))
+    return f'<text text-anchor="middle"{fill_cls}>{spans}</text>'
 
 
-def text_lines(x, cy, text, width=17, cls=""):
-    lines = wrap_label(text, width)
-    lh = 17
-    y0 = cy - (len(lines) - 1) * lh / 2 + 5
-    spans = "".join(f'<tspan x="{x}" y="{y0 + i * lh:.0f}">{e(l)}</tspan>' for i, l in enumerate(lines))
-    return f'<text text-anchor="middle"{cls}>{spans}</text>'
+def node_svg(x, y, n, link=True, current=None):
+    pid = n.get("product")
+    if pid:
+        it = ITEMS.get(pid)
+        name = (it.get("short") or it["name"]) if it else pid
+        opt = it.get("optional") if it else False
+        cls = "dn-opt" if opt else "dn-prod"
+        g = f'<g class="{cls}"><rect x="{x}" y="{y}" width="{W}" height="{H}" rx="8"/>{lines(x + W / 2, y + H / 2, name, n.get("sub", ""))}</g>'
+        if link and it and pid != current and not pid.startswith("_"):
+            g = f'<a href="{item_url(pid)}">{g}</a>'
+        return g
+    return f'<g class="dn-step"><rect x="{x}" y="{y}" width="{W}" height="{H}" rx="8"/>{lines(x + W / 2, y + H / 2, n["label"], n.get("sub", ""))}</g>'
 
 
-def box(x, y, w, h, label, kind, width=17):
-    r = 10 if kind == "fl-danu" else 6
-    return (f'<g class="{kind}"><rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{r}"/>'
-            f'{text_lines(x + w / 2, y + h / 2, label, width)}</g>')
+def diagram(spec, uid, current=None):
+    main = spec["main"]
+    att = spec.get("attach", [])
+    idx = {n["id"]: i for i, n in enumerate(main)}
+    top_k = any(a["type"] == "kidney" and a.get("side") == "top" for a in att)
+    below = [a for a in att if a["type"] in ("loop", "addon") or (a["type"] == "kidney" and a.get("side") == "bottom")]
+    extra_right = any(a["type"] == "loop" and idx[a["from_after"]] == len(main) - 1 for a in att)
+    row = PAD + (H + 70 if top_k else 0)
+    depth = 0
+    for a in below:
+        d = H + 70
+        if a["type"] == "addon" and a.get("then"):
+            d += H + 46
+        depth = max(depth, d)
+    n = len(main)
+    width = PAD * 2 + n * W + (n - 1) * GAP + (110 if extra_right else 0)
+    height = row + H + depth + PAD
+    x = lambda i: PAD + i * (W + GAP)
+    m = f'marker-end="url(#m{uid})"'
+    p = [f'<defs><marker id="m{uid}" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="context-stroke"/></marker></defs>']
+    mid = row + H / 2
+    for i in range(1, n):
+        p.append(f'<path class="dl" d="M{x(i) - GAP + 2} {mid}H{x(i) - 4}" {m}/>')
+    for a in att:
+        t = a["type"]
+        pn = {"product": a["product"], "sub": a.get("sub", "")}
+        if t == "kidney":
+            i = idx[a["at"]]
+            bx = x(i)
+            x1, x2 = bx + W * 0.36, bx + W * 0.64
+            if a.get("side") == "top":
+                by = row - 70 - H
+                p.append(node_svg(bx, by, pn, current=current))
+                p.append(f'<path class="dp" d="M{x1} {row - 2}V{by + H + 4}" {m}/><path class="dp" d="M{x2} {by + H + 2}V{row - 4}" {m}/>')
+                ly = row - 32
+            else:
+                by = row + H + 70
+                p.append(node_svg(bx, by, pn, current=current))
+                p.append(f'<path class="dp" d="M{x1} {row + H + 2}V{by - 4}" {m}/><path class="dp" d="M{x2} {by - 2}V{row + H + 4}" {m}/>')
+                ly = row + H + 40
+            p.append(f'<text class="dlab" x="{x1 - 8}" y="{ly}" text-anchor="end">draw-off</text><text class="dlab" x="{x2 + 8}" y="{ly}">return</text>')
+        elif t == "loop":
+            a_i, b_i = idx[a["from_after"]], idx[a["to_before"]]
+            sx = x(a_i) + W + (GAP / 2 if a_i < n - 1 else 26)
+            ex = x(b_i) - GAP / 2
+            by = row + H + 70
+            bx = (sx + ex) / 2 - W / 2
+            byc = by + H / 2
+            p.append(node_svg(bx, by, pn, current=current))
+            p.append(f'<path class="dp" d="M{sx} {mid}V{byc}H{bx + W + 4}" {m}/>')
+            p.append(f'<path class="dp" d="M{bx - 2} {byc}H{ex}V{mid + 4}" {m}/>')
+            if a_i == n - 1:
+                p.append(f'<path class="dl" d="M{x(a_i) + W + 2} {mid}H{sx}"/>')
+            labs = a.get("labels", ["", ""])
+            p.append(f'<text class="dlab" x="{sx + 8}" y="{(mid + byc) / 2 + 12}">{e(labs[0])}</text>')
+            p.append(f'<text class="dlab" x="{ex - 8}" y="{(mid + byc) / 2 + 12}" text-anchor="end">{e(labs[1])}</text>')
+        elif t == "addon":
+            i = idx[a["at"]]
+            bx, by = x(i), row + H + 70
+            p.append(f'<path class="dp dash" d="M{bx + W / 2} {row + H + 2}V{by - 4}" {m}/>')
+            p.append(node_svg(bx, by, pn, current=current))
+            if a.get("then"):
+                ty = by + H + 46
+                p.append(f'<path class="dl" d="M{bx + W / 2} {by + H + 2}V{ty - 4}" {m}/>')
+                p.append(node_svg(bx, ty, {"label": a["then"]}))
+    for i, nd in enumerate(main):
+        p.append(node_svg(x(i), row, nd, current=current))
+    label = "Process diagram: " + ", then ".join(
+        (ITEMS[nd["product"]]["name"] if nd.get("product") in ITEMS else nd.get("label", "")) for nd in main)
+    for a in att:
+        nm = ITEMS[a["product"]]["name"] if a["product"] in ITEMS else a["product"]
+        if a["type"] == "kidney":
+            where = "as a kidney on " + next(nd.get("label", "") for nd in main if nd["id"] == a["at"])
+        elif a["type"] == "loop":
+            where = "returning water to the process"
+        else:
+            where = "as an optional add-on"
+        label += f". {nm} {where}"
+    minw = int(width * 0.85)
+    return (f'<div class="diagram-scroll"><svg class="diagram" viewBox="0 0 {width:.0f} {height:.0f}" '
+            f'style="max-width:{width:.0f}px;min-width:{minw}px" role="img" aria-label="{e(label)}">{"".join(p)}</svg></div>')
 
 
-DEFS = ('<defs><marker id="a{id}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">'
-        '<path d="M0 0L10 5L0 10z" fill="context-stroke"/></marker></defs>')
+def legend(spec, extra=None):
+    has_opt = any((a["type"] == "addon") for a in spec.get("attach", []))
+    bits = ['<span class="lg"><i class="sw prod"></i>Danu Water product</span>']
+    if has_opt:
+        bits.append('<span class="lg"><i class="sw dash"></i>Optional or site-specific connection</span>')
+    if extra:
+        bits = [f'<span class="lg"><i class="sw line"></i>{e(extra)}</span>']
+    return f'<p class="legend">{"".join(bits)}</p>'
 
 
-def flow_h(spec, uid):
-    nodes = list(spec["steps"])
-    nodes.insert(spec["danu"], "Danu Water")
-    d = spec["danu"]
-    ret = spec.get("ret")
-    w, h, gap, pad = 150, 62, 46, 14
-    top = 78
-    extra = 0 if ret is not None or d < len(nodes) - 1 else 1
-    n = len(nodes) + extra
-    W = pad * 2 + n * w + (n - 1) * gap
-    H = top + h + 54 + 50 + pad
-    x = lambda i: pad + i * (w + gap)
-    m = f'marker-end="url(#a{uid})"'
-    parts = [DEFS.replace("{id}", uid)]
-    for i, label in enumerate(nodes):
-        parts.append(box(x(i), top, w, h, label, "fl-danu" if i == d else "fl-step"))
-        if i:
-            cls = "fl-line"
-            parts.append(f'<path class="{cls}" d="M{x(i) - gap + 2} {top + h / 2}H{x(i) - 3}" {m}/>')
-    if ret is not None:
-        r = ret if ret < d else ret + 1
-        x1, x2 = x(d) + w / 2, x(r) + w / 2
-        parts.append(f'<path class="fl-clean" d="M{x1} {top - 2}V32H{x2}V{top - 4}" {m}/>')
-        parts.append(f'<text class="fl-label clean" x="{(x1 + x2) / 2}" y="24" text-anchor="middle">{e(spec["clean"])}</text>')
-    else:
-        xe = x(len(nodes))
-        parts.append(f'<path class="fl-clean" d="M{x(d) + w + 2} {top + h / 2}H{xe - 3}" {m}/>')
-        parts.append(f'<g class="fl-out" style="--o:1"><rect x="{xe}" y="{top}" width="{w}" height="{h}" rx="6" style="stroke:var(--teal);stroke-dasharray:none;stroke-width:2"/>'
-                     f'{text_lines(xe + w / 2, top + h / 2, spec["clean"], 17)}</g>')
-    sx = x(d) + w / 2
-    parts.append(f'<path class="fl-brine" d="M{sx} {top + h + 2}V{top + h + 50}" {m}/>')
-    parts.append(f'<g class="fl-out"><rect x="{x(d) - 10}" y="{top + h + 54}" width="{w + 20}" height="44" rx="6"/>'
-                 f'{text_lines(sx, top + h + 76, spec["side"], 22)}</g>')
-    return f'<svg class="h" viewBox="0 0 {W} {H}" style="max-width:{W}px" role="img" aria-label="{e(alt(spec, nodes))}">{"".join(parts)}</svg>'
-
-
-def flow_v(spec, uid):
-    nodes = list(spec["steps"])
-    nodes.insert(spec["danu"], "Danu Water")
-    d = spec["danu"]
-    ret = spec.get("ret")
-    w, h, gap = 200, 54, 34
-    left, top = 44, 10
-    if ret is None and d == len(nodes) - 1:
-        nodes_draw = nodes + [None]
-    else:
-        nodes_draw = nodes
-    y = lambda i: top + i * (h + gap)
-    m = f'marker-end="url(#v{uid})"'
-    parts = [DEFS.replace("{id}", "v" + uid).replace('id="av', 'id="v')]
-    for i, label in enumerate(nodes_draw):
-        if label is None:
-            parts.append(f'<g class="fl-out"><rect x="{left}" y="{y(i)}" width="{w}" height="{h}" rx="6" style="stroke:var(--teal);stroke-dasharray:none;stroke-width:2"/>'
-                         f'{text_lines(left + w / 2, y(i) + h / 2, spec["clean"], 24)}</g>')
-            parts.append(f'<path class="fl-clean" d="M{left + w / 2} {y(i) - gap + 2}V{y(i) - 3}" {m}/>')
-            continue
-        parts.append(box(left, y(i), w, h, label, "fl-danu" if i == d else "fl-step", 24))
-        if i:
-            parts.append(f'<path class="fl-line" d="M{left + w / 2} {y(i) - gap + 2}V{y(i) - 3}" {m}/>')
-    if ret is not None:
-        r = ret if ret < d else ret + 1
-        rx = left + w + 34
-        parts.append(f'<path class="fl-clean" d="M{left + w + 2} {y(d) + h / 2}H{rx}V{y(r) + h / 2}H{left + w + 4}" {m}/>')
-        cy = (y(d) + y(r)) / 2 + h / 2
-        parts.append(f'<text class="fl-label clean" transform="translate({rx + 16} {cy}) rotate(90)" text-anchor="middle">{e(spec["clean"])}</text>')
-    bottom = y(len(nodes_draw)) + 6
-    parts.append(f'<path class="fl-brine" d="M{left - 2} {y(d) + h / 2}H16V{bottom + 22}H{left - 4}" {m}/>')
-    parts.append(f'<g class="fl-out"><rect x="{left}" y="{bottom}" width="{w}" height="44" rx="6"/>'
-                 f'{text_lines(left + w / 2, bottom + 22, spec["side"], 26)}</g>')
-    H = bottom + 54
-    W = left + w + 64
-    return f'<svg class="v" viewBox="0 0 {W} {H}" role="img" aria-label="{e(alt(spec, nodes))}">{"".join(parts)}</svg>'
-
-
-def alt(spec, nodes):
-    s = "Process flow: " + ", then ".join(nodes) + ". "
-    if spec.get("ret") is not None:
-        s += f"Danu Water sends {spec['clean'].lower()} to {spec['steps'][spec['ret']]}. "
-    else:
-        s += f"Danu Water produces {spec['clean'].lower()}. "
-    return s + f"A side stream carries {spec['side'].lower()}."
-
-
-def flow(spec, uid, caption=True):
-    cap = f'<figcaption>{e(spec["caption"])}</figcaption>' if caption and spec.get("caption") else ""
-    return f'<figure class="flow">{flow_h(spec, uid)}{flow_v(spec, uid)}{cap}</figure>'
+def illustration(key, which):
+    f = CONTENT / "illustrations" / f"{key}-{which}.svg"
+    return f.read_text() if f.exists() else ""
 
 # ---------------------------------------------------------------- pages
-
-
-def news_meta(n):
-    upcoming = n["date"] > TODAY
-    tags = "".join(f'<span class="tag{" linkedin" if t == "linkedin" else ""}">{TAGNAMES.get(t, t.title())}</span>' for t in n["tags"][:1])
-    if upcoming:
-        tags = '<span class="tag">Coming up</span>' + tags
-    return tags
 
 
 TAGNAMES = {"news": "News", "event": "Event", "insight": "Insight", "linkedin": "LinkedIn", "pilot": "Pilot", "funding": "Funding"}
@@ -254,22 +270,31 @@ def pilot_video():
   </div>"""
 
 
+def sector_tiles():
+    return "".join(f'<li><a href="/sectors/{s["slug"]}/"><h3>{e(s["name"])}</h3><p>{e(s["card"])}</p></a></li>' for s in sectors)
+
+
 def home():
-    hero_spec = {"steps": ["Fresh water", "Your process", "Wastewater"], "danu": 3, "ret": 1,
-                 "clean": "Clean water back to your process", "side": "Concentrated salts, for recovery"}
+    hero = {"main": [{"id": "in", "label": "Water in"}, {"id": "proc", "label": "Your process"},
+                     {"id": "ww", "label": "Wastewater"}, {"id": "out", "label": "Discharge", "sub": "Much less"}],
+            "attach": [{"type": "loop", "product": "_danu", "sub": "Salts out, water back", "from_after": "ww", "to_before": "proc", "labels": ["wastewater", "reuse water"]}]}
     latest = [n for n in news if news_href(n)][:3]
     cards = "".join(f'<li><time datetime="{n["date"]}">{e(n["when"])}</time><h3><a href="{news_href(n)}">{e(n["title"])}</a></h3><p>{e(n["summary"])}</p></li>' for n in latest)
-    rows = "".join(f'''<li><a class="row" href="/industries/{i["slug"]}/"><h3>{e(i["name"])}</h3><p>{e(i["summary"])}</p>
-<div class="offers">{"".join(status(o["status"]) for o in sorted(i["offerings"], key=lambda o: list(STATUS).index(o["status"]))[:1])}<span class="muted sans" style="font-size:.9rem">{len(i["offerings"])} offerings</span></div></a></li>''' for i in industries)
     body = f"""
 <section class="hero"><div class="wrap">
-  <h1>Industrial wastewater, back in use</h1>
-  <p class="lede">Danu Water removes dissolved salts from industrial wastewater so it can go back into the process. Our adaptive electromembrane separation system shifts in real time to handle the variability of industrial water. It is now running at industrial pilot scale.</p>
-  <div class="actions"><a class="btn" href="/industries/">See what it does for your industry</a><a class="btn ghost" href="/technology/">How it works</a></div>
-  <div class="hero-flow">{flow(hero_spec, "hero", caption=False)}</div>
+  <h1>Industrial water, back in use</h1>
+  <p class="lede">Danu Water removes the salts, hardness and metals that stop water being reused. Our adaptive electromembrane separation shifts in real time to handle the variability of industrial water, from a laundrette to a mine site.</p>
+  <div class="actions"><a class="btn" href="/sectors/">Find your sector</a><a class="btn ghost" href="/technology/">How it works</a></div>
+  <div class="hero-flow">{diagram(hero, "hero")}</div>
 </div></section>
 
 <section class="band"><div class="wrap">
+  <h2>Find your sector</h2>
+  <p class="muted measure">Each sector has its own water problems. Choose yours to see what Danu Water can do and where it fits in your process.</p>
+  <ul class="tiles">{sector_tiles()}</ul>
+</div></section>
+
+<section class="band mist"><div class="wrap">
   <div class="head-row"><h2>Where we are</h2><a href="/news/">All news</a></div>
   <ol class="timeline">
     <li class="done"><time datetime="2024-10">October 2024</time><h3>Company founded</h3><p>Kyra Sedransk Campbell and Jack Ledingham start Danu Water.</p></li>
@@ -279,11 +304,6 @@ def home():
     <li><span class="when">Next</span><h3>First commercial systems</h3><p>Turning pilot results into orders.</p></li>
   </ol>
   {pilot_video()}
-</div></section>
-
-<section class="band mist"><div class="wrap">
-  <div class="head-row"><div><h2>Industries</h2><p class="muted measure" style="margin:0">Each industry has its own water problem. These sheets show where Danu Water fits and how far each offering has got.</p></div><a href="/industries/">All industries</a></div>
-  <ul class="industry-list">{rows}</ul>
 </div></section>
 
 <section class="band"><div class="wrap split">
@@ -314,87 +334,117 @@ def home():
 </div></section>
 {cta_band()}
 """
-    page("/", None, "Danu Water removes dissolved salts from industrial wastewater so it can be reused, using adaptive electromembrane separation. Now at industrial pilot scale.", body)
+    page("/", None, "Danu Water removes the salts, hardness and metals that stop industrial water being reused, using adaptive electromembrane separation.", body)
 
 
-def industries_index():
-    rows = ""
-    for i in industries:
-        offers = "".join(f'<li style="list-style:none;display:flex;gap:.75rem;flex-wrap:wrap;align-items:baseline"><a href="/industries/{i["slug"]}/#{o["id"]}" class="sans" style="font-weight:600">{e(o["name"])}</a>{status(o["status"])}</li>' for o in i["offerings"])
-        rows += f'''<li style="padding:1.75rem 0;display:grid;grid-template-columns:minmax(12rem,1fr) 2fr;gap:1.5rem" class="ind-row">
-<div><h3 style="margin:0 0 .4rem;font-size:1.4rem"><a href="/industries/{i["slug"]}/" style="color:inherit">{e(i["name"])}</a></h3><p class="muted" style="margin:0">{e(i["summary"])}</p></div>
-<ul style="margin:0;padding:0;display:grid;gap:.6rem">{offers}<li style="list-style:none"><a href="/industries/{i["slug"]}/">Read the {e(i["name"].lower())} sheet</a></li></ul></li>'''
-    legend = "".join(f'<div>{status(k)}<p>{v[1]}</p></div>' for k, v in STATUS.items())
+def sectors_index():
     body = f"""
 <section class="page-head"><div class="wrap">
-  <h1>Industries</h1>
-  <p class="lede">The same core technology solves different problems in different industries. Each information sheet sets out the water challenge, where Danu Water fits in the process, and how far each offering has got.</p>
+  <h1>Sectors</h1>
+  <p class="lede">One adaptive platform, applied wherever salts, hardness or metals stop water being reused. Choose your sector to see what we can do and where it fits in your process.</p>
 </div></section>
 <section class="band"><div class="wrap">
-  <div class="legend">{legend}</div>
-  <ul class="industry-list" style="border-top:0">{rows}</ul>
-  <style>@media (max-width:760px){{.ind-row{{grid-template-columns:1fr!important}}}}</style>
-  <h2 style="margin-top:3.5rem;font-size:1.4rem">Also exploring</h2>
-  <p class="muted measure">Conversations are under way in other sectors where salt is the barrier to reuse. If yours is one of them, we would like to hear from you.</p>
-  <ul class="also"><li>Textiles and dyeing</li><li>Commercial laundries</li><li>Steel</li><li>Electronics</li><li>Chemicals</li><li>Food and drink</li><li>High-salinity desalination</li></ul>
+  <ul class="tiles">{sector_tiles()}</ul>
 </div></section>
-{cta_band("Don't see your industry?", "If dissolved salts stop you reusing water, the technology probably applies. Tell us about your stream.")}
+{cta_band("Don't see your sector?", "If dissolved salts, hardness or metals stop you reusing water, the technology probably applies. Tell us about your stream.")}
 """
-    page("/industries/", "Industries", "Information sheets on how Danu Water helps paper and pulp, mining, distilling, and municipal and utility water users reuse water.", body, "industries")
+    page("/sectors/", "Sectors", "How Danu Water helps paper, textiles, tanneries, laundries, steel, mining, distilling, utilities, groundwater users and desalination plants reuse water.", body, "sectors")
 
 
-def industry_sheet(i):
-    pains = "".join(f"<li><strong>{e(a)}</strong><br>{e(b)}</li>" for a, b in i["pains"])
-    facts = "".join(f"<li>{e(f)}</li>" for f in i["facts"])
-    jump = "".join(f'<li><a href="#{o["id"]}">{e(o["name"])}</a></li>' for o in i["offerings"])
-    offers = ""
-    for o in i["offerings"]:
-        ben = "".join(f"<li>{e(b)}</li>" for b in o["benefits"])
-        fl = flow(o["flow"], o["id"]) if o.get("flow") else ""
-        offers += f"""<article class="offer" id="{o["id"]}">
-  <div class="offer-head"><h3>{e(o["name"])}</h3>{status(o["status"])}</div>
-  <p class="measure" style="font-size:1.1rem">{e(o["what"])}</p>
-  <div class="offer-cols">
-    <div><h4>What it changes</h4><ul>{ben}</ul></div>
-    <div><h4>Best suited to</h4><p>{e(o["fit"])}</p></div>
-    <div><h4>Where it stands</h4><p>{e(o["status_note"])}</p></div>
-  </div>
-  {fl}
-</article>"""
-    others = "".join(f'<li><a href="/industries/{x["slug"]}/">{e(x["name"])}</a></li>' for x in industries if x is not i)
-    n = len(i["offerings"])
+def product_card(it, sector):
+    fam = (it.get("family") or "Application").replace(" family", "").replace("loops", "loop")
+    cls = ' class="opt"' if it.get("optional") else ""
+    return (f'<li{cls}><a href="{item_url(it["id"])}"><p class="fam">{e(fam)}</p><h3>{e(it["name"])}</h3>'
+            f'<p>{e(it["card"])}</p><span class="go">View {"listing" if it.get("family") else "details"}</span></a></li>')
+
+
+def sector_page(s):
+    items = [resolve(it) for it in s["items"]]
+    branded = any(it.get("family") for it in items)
+    cards = "".join(product_card(it, s) for it in items)
+    others = "".join(f'<li><a href="/sectors/{x["slug"]}/">{e(x["name"])}</a></li>' for x in sectors if x is not s)
     body = f"""
 <section class="page-head"><div class="wrap">
-  <p class="crumbs"><a href="/industries/">Industries</a></p>
-  <h1>{e(i["title"])}</h1>
-  <p class="lede">{e(i["lede"])}</p>
-  <ul class="jump" aria-label="Offerings on this page">{jump}</ul>
+  <p class="crumbs"><a href="/sectors/">Sectors</a> / {e(s["name"])}</p>
+  <h1>{e(s["title"])}</h1>
+  <p class="lede">{e(s["lede"])}</p>
 </div></section>
-<section class="band"><div class="wrap sheet-grid">
-  <div>
-    <h2>The challenge</h2>
-    <p class="measure">{e(i["problem_intro"])}</p>
-    <ul class="pain measure">{pains}</ul>
+<section class="band"><div class="wrap">
+  <h2 class="small-head">Where {"each product sits" if branded else "Danu Water fits"}</h2>
+  <figure class="diagram-card">{diagram(s["flow"], s["slug"])}{legend(s["flow"])}<p class="scroll-hint">Scroll sideways to see the whole process.</p></figure>
+  <div class="jobs-note">
+    <h3>These are jobs, not a fixed line-up</h3>
+    <p>The {"products" if branded else "applications"} illustrate the jobs that are often needed in a {e(s["place"])}. In practice, we design around each site's own combination of problems. Where and how much water we take, and where we return it, is up to you. Often a single unit can do several jobs, or a pair are designed to work together.</p>
   </div>
-  <aside class="facts"><h2>Progress so far</h2><ul>{facts}</ul></aside>
+  <ul class="products">{cards}</ul>
 </div></section>
 <section class="band mist"><div class="wrap">
-  <h2>{"What we offer" if n > 1 else "What we offer"}</h2>
-  <p class="muted measure" style="margin-bottom:2.5rem">{n} offering{"s" if n != 1 else ""} for {e(i["name"].lower())}. Each status shows how far it has got.</p>
-  {offers}
-</div></section>
-<section class="band"><div class="wrap">
-  <h2 style="font-size:1.3rem">Other industries</h2>
+  <h2 class="small-head">Other sectors</h2>
   <ul class="also">{others}</ul>
 </div></section>
-{cta_band(f"Talk to us about your {i['name'].lower().replace(' & ', ' and ')} site", "Share what you know about your water, even roughly, and we will tell you honestly whether and where Danu Water fits.")}
+{cta_band(f"Talk to us about your {s['name'].lower().replace(' & ', ' and ')} site", "Share what you know about your water, even roughly, and we will tell you where Danu Water fits.")}
 """
-    page(f"/industries/{i['slug']}/", i["title"], i["summary"], body, "industries")
+    page(f"/sectors/{s['slug']}/", s["name"], s["card"], body, "sectors")
+
+
+def item_page(it):
+    s = it["sector"]
+    fam = it.get("family") or s["name"]
+    ben = "".join(f"<li>{e(b)}</li>" for b in it["benefits"])
+    illus = ""
+    if it.get("illus"):
+        il = it["illus"]
+        illus = f"""<div class="illus">
+  <figure>{illustration(il["key"], "without")}<figcaption><strong class="bad">{e(il.get("without_label", "Without"))}</strong>{e(il["without"])}</figcaption></figure>
+  <figure>{illustration(il["key"], "with")}<figcaption><strong class="good">With {e(it["name"])}</strong>{e(il["with"])}</figcaption></figure>
+</div>"""
+    addon = ""
+    if it.get("addon") and it["addon"] in ITEMS:
+        a = ITEMS[it["addon"]]
+        addon = f'<div class="addon"><p class="fam">Add-on</p><h3><a href="{item_url(a["id"])}">{e(a["name"])}</a></h3><p>{e(a["application"])}</p></div>'
+    side = illus or addon
+    if illus and addon:
+        side = illus + addon
+    grid = ""
+    if it.get("grid"):
+        g = it["grid"]
+        cells = "".join(f"<li><h3>{e(t)}</h3><p>{e(d)}</p></li>" for t, d in g["items"])
+        grid = f'<section class="band" style="padding-top:0"><div class="wrap"><h2 class="small-head">{e(g["title"])}</h2><ul class="cells">{cells}</ul></div></section>'
+    used = [x for x in [resolve(i) for i in s["items"]] if x["id"] != it["id"]]
+    more = "".join(product_card(x, s) for x in used)
+    more_block = f'<h2 class="small-head" style="margin-top:3rem">More for {e(s["name"].lower())}</h2><ul class="products">{more}</ul>' if more else ""
+    body = f"""
+<section class="page-head light"><div class="wrap">
+  <p class="crumbs"><a href="/sectors/">Sectors</a> / <a href="/sectors/{s["slug"]}/">{e(s["name"])}</a></p>
+  <p class="fam">{e(fam)}</p>
+  <h1>{e(it["name"])}</h1>
+  <p class="tagline">{e(it["tagline"])}</p>
+</div></section>
+<section class="band" style="padding-top:2.5rem"><div class="wrap listing">
+  <div>
+    <h2 class="small-head">The problem</h2><p>{e(it["problem"])}</p>
+    <h2 class="small-head">Benefits</h2><ul class="ticks">{ben}</ul>
+    <h2 class="small-head">Application</h2><p>{e(it["application"])}</p>
+  </div>
+  <aside>{side}</aside>
+</div></section>
+{grid}
+<section class="band mist"><div class="wrap">
+  <h2 class="small-head">Where it sits in the {e(s["place"])}</h2>
+  <figure class="diagram-card">{diagram(it["flow"], it["id"], current=it["id"])}{legend(it["flow"], it["flow"].get("legend"))}<p class="scroll-hint">Scroll sideways to see the whole process.</p></figure>
+  <p class="footnote">Shown as a standalone job for clarity. Where and how much water is taken and returned is designed around each site, and one unit may do several jobs. Powered by Danu Water's adaptive electromembrane separation.</p>
+  {more_block}
+</div></section>
+{cta_band(f"Could {e(it['name'])} work on your site?", "Tell us about your water and we will design around your process.")}
+"""
+    page(item_url(it["id"]), f'{it["name"]} | {s["name"]}', it["card"], body, "sectors")
 
 
 def technology():
-    spec = {"steps": ["Incoming water"], "danu": 1, "ret": None, "clean": "Low-salt water for reuse",
-            "side": "Concentrated salts", "caption": "Every Danu Water system splits one stream into two: water clean enough to reuse, and a small concentrate."}
+    spec = {"main": [{"id": "in", "label": "Incoming water", "sub": "Variable quality"},
+                     {"id": "d", "product": "_danu", "sub": "Adaptive separation"},
+                     {"id": "out", "label": "Water for reuse", "sub": "Salts removed"}],
+            "attach": [{"type": "addon", "product": "_conc", "sub": "Concentrated salts", "at": "d"}]}
     body = f"""
 <section class="page-head"><div class="wrap">
   <h1>Adaptive electromembrane separation</h1>
@@ -403,17 +453,17 @@ def technology():
 <section class="band"><div class="wrap split">
   <div class="measure">
     <h2>How it works</h2>
-    <p>Most of what stops wastewater being reused is dissolved salt: sodium, chloride, calcium, sulphate and more. It cannot be filtered out, because it is dissolved.</p>
-    <p>Our system uses an electric field to pull those charged ions out of the water and through selective membranes. One stream comes out with the salts removed. The other carries them away in concentrated form.</p>
+    <p>Most of what stops water being reused is dissolved: salts such as sodium, chloride and sulphate, hardness from calcium and magnesium, and metals. None of it can be filtered out.</p>
+    <p>Our system uses an electric field to pull those charged ions out of the water and through selective membranes. One stream comes out with them removed. The other carries them away in concentrated form.</p>
     <p>The water itself never has to be pushed through a membrane at high pressure, which is why the approach copes with water that would quickly foul reverse osmosis.</p>
   </div>
-  <div>{flow(spec, "tech")}</div>
+  <figure class="diagram-card">{diagram(spec, "tech")}<figcaption class="footnote" style="margin-top:.75rem">Every system splits one stream into two: water clean enough to reuse, and a small concentrate.</figcaption></figure>
 </div></section>
 <section class="band mist"><div class="wrap split">
   <div class="measure">
     <h2>Why adaptive matters</h2>
     <p>Industrial water changes by the hour: with production rates, products, raw materials, temperature and season. A system tuned for one condition is either over-designed or failing for much of the time.</p>
-    <p>Ours monitors the incoming water and adjusts how it operates as conditions change. That keeps the output on target and the energy use down, without an operator chasing it.</p>
+    <p>Ours monitors the incoming water and adjusts how it operates as conditions change. That keeps the output on target and the energy use down, and lets us treat only to the level each use needs.</p>
     <p>Our industrial pilot puts this to the test on real, changing mill water.</p>
   </div>
   <ul class="proof">
@@ -431,13 +481,13 @@ def technology():
   <h2>Team</h2>
   <div class="people" style="margin-top:1.5rem">
     <div><h3>Kyra Sedransk Campbell</h3><p class="role">Co-founder and CEO</p><p>Formerly Professor of Chemical Engineering and a Royal Society Research Fellow. Kyra leads the business, commercial strategy and partnerships.</p></div>
-    <div><h3>Jack Ledingham</h3><p class="role">Co-founder and CTO</p><p>Leads the technical build, from system design to running our industrial pilots on site.</p></div>
+    <div><h3>Jack Ledingham</h3><p class="role">Co-founder and CTO</p><p>Leads the technical build, from system design to running our industrial pilot on site.</p></div>
   </div>
   <p class="muted" style="margin-top:2rem">Backed by SFC Capital.</p>
 </div></section>
 {cta_band()}
 """
-    page("/technology/", "Technology", "How Danu Water's adaptive electromembrane separation removes dissolved salts from industrial wastewater, adjusting in real time to changing water.", body, "technology")
+    page("/technology/", "Technology", "How Danu Water's adaptive electromembrane separation removes dissolved salts, hardness and metals from water, adjusting in real time.", body, "technology")
 
 
 def impact():
@@ -460,8 +510,8 @@ def impact():
   <div class="measure">
     <h2>Why a water company cares</h2>
     <p>Most of the water in these objects was used in factories: making paper and card, glass, plastics, metals and electronics. Much of it was used once and discharged.</p>
-    <p>That is the water Danu Water works on. When industrial sites can clean and reuse their own wastewater, the hidden water in everyday things goes down.</p>
-    <p><a href="/industries/">See how we help industry</a></p>
+    <p>That is the water Danu Water works on. When industrial sites can clean and reuse their own water, the hidden water in everyday things goes down.</p>
+    <p><a href="/sectors/">See how we help industry</a></p>
   </div>
   <div class="measure">
     <h2>Where these came from</h2>
@@ -469,7 +519,7 @@ def impact():
     <p><a href="/news/techcrunch-disrupt-2026/">Read about TechCrunch Disrupt</a></p>
   </div>
 </div></section>
-{cta_band("Want to cut the water behind what you make?", "If you run an industrial site, we can help you reuse your wastewater.")}
+{cta_band("Want to cut the water behind what you make?", "If you run an industrial site, we can help you reuse your water.")}
 """
     page("/impact/", "Understand your impact", "Guess how much water it takes to make everyday objects, then see the answer and how it was worked out.", body, "impact")
 
@@ -491,8 +541,9 @@ def news_index():
             more = f'<a class="more" href="{n["link"]}">{"Read on LinkedIn" if "linkedin" in n["tags"] else "Read more"}</a>'
         elif href:
             more = f'<a class="more" href="{href}">Read more</a>'
+        tag = n["tags"][0]
         items += f'''<li class="news-item" data-tags="{" ".join(n["tags"])}">
-<div class="meta"><time datetime="{n["date"]}">{e(n["when"])}</time>{news_meta(n)}</div>
+<div class="meta"><time datetime="{n["date"]}">{e(n["when"])}</time><span class="tag{" linkedin" if tag == "linkedin" else ""}">{TAGNAMES.get(tag, tag.title())}</span></div>
 <div><h3>{title}</h3><p>{e(n["summary"])}</p>{more}</div></li>'''
     follow = f'<p class="muted">More updates on <a href="{SITE["linkedin"]}">our LinkedIn page</a>.</p>' if SITE["linkedin"] else ""
     body = f"""
@@ -528,28 +579,34 @@ def contact():
     body = f"""
 <section class="page-head"><div class="wrap">
   <h1>Talk to us</h1>
-  <p class="lede">We are working with industrial partners on pilots and first commercial systems, and we are always glad to hear about a difficult water stream.</p>
+  <p class="lede">We work with industrial partners on pilots and commercial systems, and we are always glad to hear about a difficult water stream.</p>
 </div></section>
 <section class="band"><div class="wrap split">
   <div class="measure">
     <h2>Email</h2>
-    <p><a class="sans" style="font-size:1.3rem;font-weight:700" href="mailto:{SITE["email"]}">{SITE["email"]}</a></p>
-    <p>It helps to tell us your industry, roughly how much water you use or discharge, and what stops you reusing it today. A water analysis, if you have one, is even better.</p>
+    <p><a class="big-link" href="mailto:{SITE["email"]}">{SITE["email"]}</a></p>
+    <p>It helps to tell us your sector, roughly how much water you use or discharge, and what stops you reusing it today. A water analysis, if you have one, is even better.</p>
   </div>
   <div class="measure">
     <h2>Stay in touch</h2>
-    <p>Our newsletter covers pilot results, new applications and events, a few times a year.</p>
+    <p>Our newsletter covers new applications, results and events, a few times a year.</p>
     <p><a class="btn" href="{SITE["newsletter"]}">Sign up for the newsletter</a></p>
   </div>
 </div></section>
 """
-    page("/contact/", "Contact", "Contact Danu Water about industrial wastewater reuse, pilots and partnerships.", body, "contact")
+    page("/contact/", "Contact", "Contact Danu Water about industrial water reuse, pilots and partnerships.", body, "contact")
 
 
 if __name__ == "__main__":
+    # Generic nodes used in the hero and technology diagrams
+    ITEMS["_danu"] = {"id": "_danu", "name": "Danu Water", "sector": sectors[0]}
+    ITEMS["_conc"] = {"id": "_conc", "name": "Concentrate", "optional": True, "sector": sectors[0]}
     (ROOT / "assets" / "favicon.svg").write_text(
-        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M16 3C11 10 7 15 7 20a9 9 0 0 0 18 0c0-5-4-10-9-17Z" fill="#1f9e96"/></svg>')
-    home(); industries_index()
-    for i in industries:
-        industry_sheet(i)
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M16 3C11 10 7 15 7 20a9 9 0 0 0 18 0c0-5-4-10-9-17Z" fill="#0B6E69"/></svg>')
+    home(); sectors_index()
+    for s in sectors:
+        sector_page(s)
+        for it in s["items"]:
+            if "ref" not in it:
+                item_page(ITEMS[it["id"]])
     technology(); impact(); news_index(); contact()
