@@ -265,8 +265,8 @@ def pilot_video():
     poster = PILOT_VIDEO.replace(".mp4", ".jpg")
     pa = f' poster="/{poster}"' if (ROOT / poster).exists() else ""
     return f"""<div class="pilot-video">
-    <video src="/{PILOT_VIDEO}"{pa} muted loop playsinline autoplay controls preload="metadata" aria-label="Danu Water pilot unit removing copper sulphate from water"></video>
-    <div><h3>See it working</h3><p>Our pilot unit removing copper sulphate from water.</p><p><a href="/technology/">How it works</a></p></div>
+    <video src="/{PILOT_VIDEO}"{pa} muted loop playsinline autoplay controls preload="metadata" aria-label="Danu Water system separating blue copper sulphate: one stream darkens as it concentrates while the other turns clear"></video>
+    <div><h3>See it working</h3><p>Copper sulphate colours the water blue. As our system runs, the salt moves from one stream to the other: the left side gets bluer as it concentrates, and the right side clears until virtually no salt remains.</p><p><a href="/technology/">How it works</a></p></div>
   </div>"""
 
 
