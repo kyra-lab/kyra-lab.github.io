@@ -239,6 +239,21 @@ def news_href(n):
     return f'/news/{n["slug"]}/' if n.get("body") else None
 
 
+PILOT_VIDEO = "assets/pilot-copper-sulphate.mp4"
+
+
+def pilot_video():
+    """Shown on the homepage once the video file is in /assets/."""
+    if not (ROOT / PILOT_VIDEO).exists():
+        return ""
+    poster = PILOT_VIDEO.replace(".mp4", ".jpg")
+    pa = f' poster="/{poster}"' if (ROOT / poster).exists() else ""
+    return f"""<div class="pilot-video">
+    <video src="/{PILOT_VIDEO}"{pa} muted loop playsinline autoplay controls preload="metadata" aria-label="Danu Water pilot unit removing copper sulphate from water"></video>
+    <div><h3>See it working</h3><p>Our pilot unit removing copper sulphate from water.</p><p><a href="/technology/">How it works</a></p></div>
+  </div>"""
+
+
 def home():
     hero_spec = {"steps": ["Fresh water", "Your process", "Wastewater"], "danu": 3, "ret": 1,
                  "clean": "Clean water back to your process", "side": "Concentrated salts, for recovery"}
@@ -260,9 +275,10 @@ def home():
     <li class="done"><time datetime="2024-10">October 2024</time><h3>Company founded</h3><p>Kyra Sedransk Campbell and Jack Ledingham start Danu Water.</p></li>
     <li class="done"><time datetime="2026-03">March 2026</time><h3>Pre-seed backed by SFC Capital</h3><p>Funding the build of our industrial pilot units.</p></li>
     <li class="done"><time datetime="2026-10">October 2026</time><h3>Pilot running at WEPA Bridgend</h3><p>Industrial-scale unit treating real paper mill water in Wales.</p></li>
-    <li><time datetime="2026-11">November 2026</time><h3>Pilot at Essity Valls</h3><p>Seven weeks on two streams at Essity's site in Catalonia.</p></li>
+    <li class="done"><time datetime="2026-10">October 2026</time><h3>Startup Battlefield 200</h3><p>Selected for TechCrunch Disrupt in San Francisco.</p></li>
     <li><span class="when">Next</span><h3>First commercial systems</h3><p>Turning pilot results into orders.</p></li>
   </ol>
+  {pilot_video()}
 </div></section>
 
 <section class="band mist"><div class="wrap">
@@ -398,7 +414,7 @@ def technology():
     <h2>Why adaptive matters</h2>
     <p>Industrial water changes by the hour: with production rates, products, raw materials, temperature and season. A system tuned for one condition is either over-designed or failing for much of the time.</p>
     <p>Ours monitors the incoming water and adjusts how it operates as conditions change. That keeps the output on target and the energy use down, without an operator chasing it.</p>
-    <p>Our industrial pilots test this directly, running the same streams at fixed and at dynamic setpoints.</p>
+    <p>Our industrial pilot puts this to the test on real, changing mill water.</p>
   </div>
   <ul class="proof">
     <li><strong>95%+ water recovery</strong><span>from industrial wastewater streams</span></li>

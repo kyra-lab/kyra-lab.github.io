@@ -243,3 +243,10 @@ img,svg{max-width:100%}
 .site-foot a{color:#c9d8e2;text-decoration:none}
 .site-foot a:hover{color:#fff;text-decoration:underline}
 .site-foot .fine{margin-top:2.5rem;padding-top:1.25rem;border-top:1px solid #1d3550;font-size:.85rem;color:#7f97a9}
+
+/* Pilot video on the homepage */
+.pilot-video{display:grid;grid-template-columns:minmax(0,1.6fr) 1fr;gap:2rem;align-items:center;margin-top:3rem}
+.pilot-video video{width:100%;border-radius:10px;background:#0a1d30;display:block}
+.pilot-video h3{font-size:1.3rem}
+@media (max-width:760px){.pilot-video{grid-template-columns:1fr;gap:1rem}}
+@media (prefers-reduced-motion:reduce){.pilot-video video{animation:none}}

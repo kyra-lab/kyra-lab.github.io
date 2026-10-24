@@ -7,27 +7,47 @@
     "lede": "Mills are being pushed to use less fresh water. The barrier to closing loops further is salt: chlorides, sulphates and calcium build up until they cause scaling, corrosion and quality problems. Danu Water removes them, so the water can keep circulating.",
     "problem_intro": "Paper is one of the most water-intensive industries, and many mills sit in regions where water is getting scarcer and discharge limits are tightening.",
     "pains": [
-      ["Salt build-up in closed loops", "Every time water is recirculated, dissolved salts concentrate. Above a threshold they cause deposits, scaling, corrosion and runnability problems."],
-      ["Rising freshwater and discharge costs", "Abstraction licences, water tariffs and effluent charges are all moving in one direction."],
-      ["Water stress", "In drought-prone regions, water restrictions can force mills to cut production."],
-      ["Variable water", "Mill water changes with grade, furnish and season. Fixed treatment systems struggle to keep up."]
+      [
+        "Salt build-up in closed loops",
+        "Every time water is recirculated, dissolved salts concentrate. Above a threshold they cause deposits, scaling, corrosion and runnability problems."
+      ],
+      [
+        "Rising freshwater and discharge costs",
+        "Abstraction licences, water tariffs and effluent charges are all moving in one direction."
+      ],
+      [
+        "Water stress",
+        "In drought-prone regions, water restrictions can force mills to cut production."
+      ],
+      [
+        "Variable water",
+        "Mill water changes with grade, furnish and season. Fixed treatment systems struggle to keep up."
+      ]
     ],
     "facts": [
       "Industrial pilot unit operating at WEPA's Bridgend mill, Wales, since October 2026",
-      "Seven-week pilot programme at Essity's Valls site, Spain, from November 2026",
-      "Letters of intent from WEPA and Essity"
+      "Letters of intent from paper industry partners"
     ],
     "offerings": [
       {
         "id": "recycle-loop",
         "name": "Recycle loop salt control",
         "status": "pilot",
-        "status_note": "Industrial pilot at WEPA Bridgend; testing at Essity Valls from November 2026",
+        "status_note": "Industrial pilot running at WEPA Bridgend",
         "what": "A side-stream on the white water or process water loop that removes dissolved salts continuously, so the loop stays below the level where problems start.",
-        "benefits": ["Close loops further and cut freshwater intake", "Less scaling, corrosion and deposit-related downtime", "Steadier water chemistry for the paper machine"],
+        "benefits": [
+          "Close loops further and cut freshwater intake",
+          "Less scaling, corrosion and deposit-related downtime",
+          "Steadier water chemistry for the paper machine"
+        ],
         "fit": "Mills running tight water circuits, or planning to, where conductivity or hardness is the limit.",
         "flow": {
-          "steps": ["Fresh water", "Stock preparation", "Paper machine", "White water loop"],
+          "steps": [
+            "Fresh water",
+            "Stock preparation",
+            "Paper machine",
+            "White water loop"
+          ],
           "danu": 4,
           "ret": 1,
           "clean": "Low-salt water back to the loop",
@@ -38,13 +58,21 @@
       {
         "id": "freshwater-stream",
         "name": "Treated effluent to fresh water",
-        "status": "pilot",
-        "status_note": "Freshwater stream tests in the Essity Valls programme",
+        "status": "feasibility",
+        "status_note": "In development. Talk to us about trials at your mill",
         "what": "Polishing of biologically treated effluent to a quality that can replace part of the mill's freshwater intake, instead of sending it to discharge.",
-        "benefits": ["A water source the mill controls, independent of drought restrictions", "Smaller discharge volumes and lower effluent charges", "A step towards near-closed water use"],
+        "benefits": [
+          "A water source the mill controls, independent of drought restrictions",
+          "Smaller discharge volumes and lower effluent charges",
+          "A step towards near-closed water use"
+        ],
         "fit": "Mills with an effluent treatment plant and a freshwater supply that is costly, constrained or under pressure.",
         "flow": {
-          "steps": ["Mill processes", "Effluent treatment", "Discharge (smaller)"],
+          "steps": [
+            "Mill processes",
+            "Effluent treatment",
+            "Discharge (smaller)"
+          ],
           "danu": 2,
           "ret": 0,
           "clean": "Reuse-quality water replaces fresh intake",
@@ -58,7 +86,10 @@
         "status": "exploring",
         "status_note": "Assessing options with partners",
         "what": "Our process produces a small, concentrated salt stream rather than a dilute waste. We are working on routes to use it, rather than dispose of it.",
-        "benefits": ["Lower disposal volumes", "Potential inputs for other industries, such as construction materials or fertiliser"],
+        "benefits": [
+          "Lower disposal volumes",
+          "Potential inputs for other industries, such as construction materials or fertiliser"
+        ],
         "fit": "Sites where brine disposal is a cost or a permitting issue.",
         "flow": null
       }
@@ -72,10 +103,22 @@
     "lede": "Mine water is variable, often full of solids and dominated by different salts from one site to the next. Those are the conditions where conventional membranes struggle and where an adaptive system is useful.",
     "problem_intro": "Active and closed mines pump vast volumes of water that must be treated before release. At the same time, metal recovery processes like bioleaching are limited by salt they cannot easily remove.",
     "pains": [
-      ["Treat-and-discharge costs", "Large pumped volumes, treated in perpetuity at closed sites, with nothing recovered."],
-      ["Every site is different", "Some waters are chloride-dominated, others sulphate-dominated from pyrite oxidation. One fixed design does not fit all."],
-      ["Solids and scaling", "Reverse osmosis is easily fouled by solids and scaling minerals, which mine water carries in quantity."],
-      ["Salt in leach circuits", "In bioleaching, salt builds up in the recirculating solution and has to be controlled without losing copper or iron."]
+      [
+        "Treat-and-discharge costs",
+        "Large pumped volumes, treated in perpetuity at closed sites, with nothing recovered."
+      ],
+      [
+        "Every site is different",
+        "Some waters are chloride-dominated, others sulphate-dominated from pyrite oxidation. One fixed design does not fit all."
+      ],
+      [
+        "Solids and scaling",
+        "Reverse osmosis is easily fouled by solids and scaling minerals, which mine water carries in quantity."
+      ],
+      [
+        "Salt in leach circuits",
+        "In bioleaching, salt builds up in the recirculating solution and has to be controlled without losing copper or iron."
+      ]
     ],
     "facts": [
       "Water-chemistry modelling across chloride-dominated, sulphate-dominated and mixed mine waters",
@@ -89,10 +132,18 @@
         "status": "feasibility",
         "status_note": "Modelling across site types, including lime and caustic pre-treatment",
         "what": "Treatment of pumped mine water, after conventional settlement, to a quality that can be used for agriculture or industry rather than simply discharged.",
-        "benefits": ["Turns a perpetual treatment cost into a water resource", "Tolerates the variability between and within sites", "Handles conditions that foul reverse osmosis"],
+        "benefits": [
+          "Turns a perpetual treatment cost into a water resource",
+          "Tolerates the variability between and within sites",
+          "Handles conditions that foul reverse osmosis"
+        ],
         "fit": "Mine water schemes with moderate salinity, particularly sulphate-dominated and mixed waters.",
         "flow": {
-          "steps": ["Mine workings", "Pumping", "Dosing & settlement"],
+          "steps": [
+            "Mine workings",
+            "Pumping",
+            "Dosing & settlement"
+          ],
           "danu": 3,
           "ret": null,
           "clean": "Water for agriculture or industry",
@@ -106,10 +157,18 @@
         "status": "exploring",
         "status_note": "Technical discussions with an industry partner",
         "what": "Selective removal of sodium chloride from bioleach solutions, keeping copper and iron in the circuit so the iron can be reused by the bacteria.",
-        "benefits": ["Keeps salinity where the process needs it", "Retains valuable copper and reusable iron", "Reduces bleed and make-up volumes"],
+        "benefits": [
+          "Keeps salinity where the process needs it",
+          "Retains valuable copper and reusable iron",
+          "Reduces bleed and make-up volumes"
+        ],
         "fit": "Heap and tank bioleaching of low and medium-grade copper ores, such as chalcopyrite.",
         "flow": {
-          "steps": ["Heap leach", "Copper recovery", "Raffinate"],
+          "steps": [
+            "Heap leach",
+            "Copper recovery",
+            "Raffinate"
+          ],
           "danu": 3,
           "ret": 0,
           "clean": "Lower-salt solution, iron retained",
@@ -127,10 +186,22 @@
     "lede": "For every litre of rum, a distillery produces many litres of vinasse, known as dunder in the Caribbean. It is strong, salty and hard to treat, and many distilleries are on islands where fresh water is precious.",
     "problem_intro": "We are looking at how Danu Water can help across the rum-making process, with a particular focus on Caribbean distilleries.",
     "pains": [
-      ["Vinasse disposal", "High-strength, high-salt and produced in large volumes, vinasse is difficult and costly to treat or discharge."],
-      ["Limits on recycling dunder", "Many distilleries already return some dunder to fermentation. Salt build-up limits how much they can reuse."],
-      ["Scarce fresh water", "Island distilleries depend on limited supplies for fermentation and cooling."],
-      ["Lost nutrients", "Vinasse is rich in potassium, a valuable fertiliser that is usually wasted."]
+      [
+        "Vinasse disposal",
+        "High-strength, high-salt and produced in large volumes, vinasse is difficult and costly to treat or discharge."
+      ],
+      [
+        "Limits on recycling dunder",
+        "Many distilleries already return some dunder to fermentation. Salt build-up limits how much they can reuse."
+      ],
+      [
+        "Scarce fresh water",
+        "Island distilleries depend on limited supplies for fermentation and cooling."
+      ],
+      [
+        "Lost nutrients",
+        "Vinasse is rich in potassium, a valuable fertiliser that is usually wasted."
+      ]
     ],
     "facts": [
       "Early-stage work focused on Caribbean rum distilleries",
@@ -143,10 +214,18 @@
         "status": "exploring",
         "status_note": "Process assessment underway",
         "what": "Removal of salts from vinasse, producing a lower-salt stream that is easier to treat or recycle, and a potassium-rich concentrate.",
-        "benefits": ["More dunder can go back to fermentation", "A fertiliser product instead of a disposal problem", "Smaller, easier-to-treat effluent"],
+        "benefits": [
+          "More dunder can go back to fermentation",
+          "A fertiliser product instead of a disposal problem",
+          "Smaller, easier-to-treat effluent"
+        ],
         "fit": "Molasses-based distilleries with vinasse disposal costs or a local need for fertiliser.",
         "flow": {
-          "steps": ["Fermentation", "Distillation", "Vinasse (dunder)"],
+          "steps": [
+            "Fermentation",
+            "Distillation",
+            "Vinasse (dunder)"
+          ],
           "danu": 3,
           "ret": 0,
           "clean": "Lower-salt dunder back to fermentation",
@@ -160,7 +239,11 @@
         "status": "exploring",
         "status_note": "Scoping with prospective partners",
         "what": "Recovery of reusable water from distillery wastewater and cooling systems, reducing demand on scarce local supplies.",
-        "benefits": ["Lower freshwater use", "Less exposure to supply restrictions", "Reduced discharge"],
+        "benefits": [
+          "Lower freshwater use",
+          "Less exposure to supply restrictions",
+          "Reduced discharge"
+        ],
         "fit": "Distilleries in water-stressed locations.",
         "flow": null
       }
@@ -174,10 +257,22 @@
     "lede": "Cooling is one of the largest uses of water in industry, and demand from data centres is rising fast. Much of it is still met with drinking-quality water. Treated municipal effluent is a reliable alternative, once the salts are dealt with.",
     "problem_intro": "Utilities are under pressure to free up supply capacity, while industrial and digital users need large, dependable volumes of cooling water.",
     "pains": [
-      ["Competition for potable water", "Every cubic metre of drinking water used for cooling is unavailable for homes and new development."],
-      ["Salts limit cooling cycles", "Hardness and dissolved salts cause scaling and corrosion, forcing frequent blowdown."],
-      ["Effluent is underused", "Treated effluent is a steady, local supply that is usually discharged."],
-      ["By-products need a home", "Treatment trains produce sludges and concentrates. Finding uses for them matters as much as the clean water."]
+      [
+        "Competition for potable water",
+        "Every cubic metre of drinking water used for cooling is unavailable for homes and new development."
+      ],
+      [
+        "Salts limit cooling cycles",
+        "Hardness and dissolved salts cause scaling and corrosion, forcing frequent blowdown."
+      ],
+      [
+        "Effluent is underused",
+        "Treated effluent is a steady, local supply that is usually discharged."
+      ],
+      [
+        "By-products need a home",
+        "Treatment trains produce sludges and concentrates. Finding uses for them matters as much as the clean water."
+      ]
     ],
     "facts": [
       "Concept design for a staged treatment train from municipal effluent to cooling water make-up",
@@ -191,10 +286,17 @@
         "status": "feasibility",
         "status_note": "Concept design and water-chemistry modelling",
         "what": "A treatment train that takes treated municipal effluent and produces cooling water make-up, with Danu Water removing the salts that limit reuse.",
-        "benefits": ["Frees potable supply for homes and growth", "More cycles of concentration and less blowdown", "By-products such as lime sludge can go to local farms as agricultural lime"],
+        "benefits": [
+          "Frees potable supply for homes and growth",
+          "More cycles of concentration and less blowdown",
+          "By-products such as lime sludge can go to local farms as agricultural lime"
+        ],
         "fit": "Utilities with industrial or power customers nearby, and users with large cooling demands.",
         "flow": {
-          "steps": ["Wastewater treatment works", "Pre-treatment"],
+          "steps": [
+            "Wastewater treatment works",
+            "Pre-treatment"
+          ],
           "danu": 2,
           "ret": null,
           "clean": "Cooling water make-up",
@@ -208,7 +310,11 @@
         "status": "exploring",
         "status_note": "Discussing pilot opportunities",
         "what": "Supplying data centres, including smaller edge sites, with cooling water made from effluent or lower-quality local water instead of mains supply.",
-        "benefits": ["Reduces the water footprint of computing", "Eases local opposition and permitting", "A route to water-as-a-service supply"],
+        "benefits": [
+          "Reduces the water footprint of computing",
+          "Eases local opposition and permitting",
+          "A route to water-as-a-service supply"
+        ],
         "fit": "Operators and utilities planning data centre capacity in water-stressed areas.",
         "flow": null
       },
@@ -218,7 +324,10 @@
         "status": "exploring",
         "status_note": "Early enquiries",
         "what": "Treatment of wells and other water sources with rising salinity, where reverse osmosis struggles with solids, scaling or recovery.",
-        "benefits": ["High water recovery", "A concentrate stream that can be used rather than dumped"],
+        "benefits": [
+          "High water recovery",
+          "A concentrate stream that can be used rather than dumped"
+        ],
         "fit": "Communities and businesses whose water source is becoming saltier.",
         "flow": null
       }

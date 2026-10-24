@@ -1,38 +1,32 @@
 [
   {
-    "slug": "essity-valls-pilot",
-    "date": "2026-11-02",
-    "when": "November 2026",
-    "title": "Pilot programme starting at Essity Valls",
-    "tags": ["news", "pilot"],
-    "summary": "A seven-week programme at Essity's Valls site in Catalonia will test our system on two streams: a recycle loop and a freshwater stream.",
-    "body": [
-      "From November, Danu Water will run a seven-week pilot programme at Essity's site in Valls, Spain.",
-      "The programme has four test phases across two streams, a recycle loop and a freshwater stream. Each is run at fixed setpoints and then at dynamic setpoints, where the system adjusts itself in real time to changes in the incoming water. That comparison is at the heart of what makes adaptive electromembrane separation different.",
-      "Valls is our second industrial pilot site in the paper sector, alongside WEPA's Bridgend mill in Wales."
-    ],
-    "approval": "Confirm with Essity before publishing"
-  },
-  {
     "slug": "techcrunch-disrupt-2026",
     "date": "2026-10-13",
     "when": "13–15 October 2026",
     "title": "Startup Battlefield 200 at TechCrunch Disrupt",
-    "tags": ["event"],
+    "tags": [
+      "event"
+    ],
     "summary": "Danu Water was selected for the Startup Battlefield 200 in San Francisco. At our booth, visitors guessed how much water it takes to make everyday things.",
     "body": [
       "Danu Water was one of the companies selected for TechCrunch Disrupt's Startup Battlefield 200 in San Francisco.",
       "At booth C2 we put everyday objects on the table, a reusable coffee cup, a power bank and a set of conference giveaways, and asked visitors to guess how much water it took to make each one. Most people guessed far too low.",
       "The answers, and the reasoning behind them, are now on our Understand your impact pages. They are a small way into a big point: water is built into almost everything industry makes, and most of it can be reused."
     ],
-    "cta": ["Understand your impact", "/impact/"]
+    "cta": [
+      "Understand your impact",
+      "/impact/"
+    ]
   },
   {
     "slug": "wepa-bridgend-pilot",
     "date": "2026-10-01",
     "when": "October 2026",
     "title": "Industrial pilot unit on site at WEPA Bridgend",
-    "tags": ["news", "pilot"],
+    "tags": [
+      "news",
+      "pilot"
+    ],
     "summary": "Our industrial-scale pilot unit is installed and running at WEPA's paper mill in Bridgend, Wales, treating real mill water.",
     "body": [
       "Danu Water's industrial pilot unit is now installed at WEPA's paper mill in Bridgend, Wales, with our CTO Jack Ledingham on site running it.",
@@ -44,11 +38,14 @@
     "date": "2026-03-15",
     "when": "March 2026",
     "title": "Pre-seed round backed by SFC Capital",
-    "tags": ["news", "funding"],
+    "tags": [
+      "news",
+      "funding"
+    ],
     "summary": "SFC Capital backed Danu Water's pre-seed round, funding the build of our industrial pilot units.",
     "body": [
       "Danu Water closed its pre-seed round in March 2026, backed by SFC Capital.",
-      "The round funded the design and build of our industrial pilot units and the pilot programmes with WEPA and Essity. We plan to raise our next round on the back of these industrial demonstrations, to deliver our first commercial orders."
+      "The round funded the design and build of our industrial pilot units and our first industrial pilot programme. We plan to raise our next round on the back of these industrial demonstrations, to deliver our first commercial orders."
     ]
   },
   {
@@ -56,7 +53,9 @@
     "date": "2024-10-01",
     "when": "October 2024",
     "title": "Danu Water founded",
-    "tags": ["news"],
+    "tags": [
+      "news"
+    ],
     "summary": "Kyra Sedransk Campbell and Jack Ledingham founded Danu Water to make industrial wastewater reuse work in the real world.",
     "body": []
   }
