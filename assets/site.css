@@ -267,3 +267,9 @@ img,svg,video{max-width:100%}
 .steps h3{margin:0 0 .35rem;font-size:1.1rem}
 .steps p{margin:0;font-size:.95rem;color:var(--muted)}
 .split>*,.listing>*,.sheet-grid>*{min-width:0}
+.steps li{position:relative}
+.steps li.optional{border-style:dashed;border-color:var(--teal);background:var(--mist)}
+.steps li.optional::before{background:#fff;color:var(--teal);border:2px dashed var(--teal)}
+.opt-tag{position:absolute;top:1.25rem;right:1.25rem;font:700 .75rem var(--sans);color:var(--teal-deep);background:var(--panel);border-radius:4px;padding:.15rem .5rem}
+.placard{max-width:44rem;border:1.5px dashed var(--teal);background:var(--mist);border-radius:14px;padding:2rem}
+.placard h2{font-size:1.5rem}

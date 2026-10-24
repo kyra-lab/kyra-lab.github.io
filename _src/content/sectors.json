@@ -399,95 +399,16 @@
   {
     "slug": "tanneries",
     "name": "Tanneries",
-    "draft": true,
-    "card": "Very salty effluent from hide curing and processing, and chromium to keep out of the environment.",
-    "title": "Salt and water management for tanneries",
-    "lede": "Hides arrive preserved in salt, and much of it ends up in tannery effluent. Combined with the chemicals used in tanning, it makes tannery wastewater some of the hardest industrial water to treat or reuse.",
+    "card": "Our tannery offering is in development. Get in touch if you're interested.",
+    "title": "Tanneries",
+    "lede": "Tannery effluent, with its high salt load from hide curing, is a natural fit for Danu Water's technology. We're developing our tannery offering now.",
     "place": "tannery",
     "flow": {
-      "main": [
-        {
-          "id": "hides",
-          "label": "Salted hides"
-        },
-        {
-          "id": "beam",
-          "label": "Soaking and beamhouse"
-        },
-        {
-          "id": "tan",
-          "label": "Tanning"
-        },
-        {
-          "id": "etp",
-          "label": "Effluent treatment"
-        },
-        {
-          "id": "dis",
-          "label": "Discharge",
-          "sub": "Less salt"
-        }
-      ],
-      "attach": [
-        {
-          "type": "loop",
-          "product": "tannery-reuse",
-          "sub": "Salts out",
-          "from_after": "etp",
-          "to_before": "beam",
-          "labels": [
-            "treated effluent",
-            "reuse water"
-          ]
-        }
-      ]
+      "main": [],
+      "attach": []
     },
-    "items": [
-      {
-        "id": "tannery-reuse",
-        "name": "Desalting tannery effluent",
-        "tagline": "Take the salt out of the hardest stream.",
-        "card": "Removes dissolved salts from treated tannery effluent, so the water can be reused and discharge limits met.",
-        "problem": "Soaking salted hides releases large amounts of chloride, which conventional biological treatment does not remove. High-salinity discharge is increasingly restricted.",
-        "benefits": [
-          "Meets tightening limits on chloride and total dissolved solids",
-          "Water recovered for soaking and washing",
-          "A concentrated salt stream rather than a large salty discharge"
-        ],
-        "application": "Treats effluent after conventional treatment, removing salts so water can return to the beamhouse.",
-        "flow": {
-          "main": [
-            {
-              "id": "beam",
-              "label": "Beamhouse and tanning"
-            },
-            {
-              "id": "etp",
-              "label": "Effluent treatment"
-            },
-            {
-              "id": "dis",
-              "label": "Discharge",
-              "sub": "Less salt"
-            }
-          ],
-          "attach": [
-            {
-              "type": "loop",
-              "product": "tannery-reuse",
-              "sub": "Salts out",
-              "from_after": "etp",
-              "to_before": "beam",
-              "labels": [
-                "treated effluent",
-                "reuse water"
-              ]
-            }
-          ]
-        },
-        "short": "Effluent desalting"
-      }
-    ]
+    "items": [],
+    "placeholder": true
   },
   {
     "slug": "laundrettes",
@@ -1235,7 +1156,7 @@
           "biogas from protected digesters"
         ]
       ],
-      "note": "Exemplar figures for a large molasses distillery with anaerobic digestion, modelled on public data. Not a site assessment."
+      "note": "Desk modelling of an exemplar molasses distillery with anaerobic digestion, based on public data. Not site data."
     }
   },
   {
@@ -1543,7 +1464,7 @@
           "and no scale-control chemicals to run reliably"
         ]
       ],
-      "note": "Indicative figures for brackish RO. Every plant is assessed on its own water and disposal route."
+      "note": "Desk modelling for brackish RO, not site data. Every plant is assessed on its own water and disposal route."
     }
   }
 ]

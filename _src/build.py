@@ -384,7 +384,32 @@ def highlights(s):
     return f'<div class="highlights">{title}<ul>{cells}</ul>{note}</div>'
 
 
+def placeholder_page(s):
+    others = "".join(f'<li><a href="/sectors/{x["slug"]}/">{e(x["name"])}</a></li>' for x in sectors if x is not s)
+    body = f"""
+<section class="page-head"><div class="wrap">
+  <p class="crumbs"><a href="/sectors/">Sectors</a> / {e(s["name"])}</p>
+  <h1>{e(s["title"])}</h1>
+  <p class="lede">{e(s["lede"])}</p>
+</div></section>
+<section class="band"><div class="wrap">
+  <div class="placard">
+    <h2>Coming soon</h2>
+    <p>We're putting together what Danu Water can do for tanneries. If you run a tannery or work with tannery wastewater, we'd like to hear from you. Your water could help shape the offering.</p>
+    <p><a class="btn" href="/contact/">Get in touch</a></p>
+  </div>
+</div></section>
+<section class="band mist"><div class="wrap">
+  <h2 class="small-head">Other sectors</h2>
+  <ul class="also">{others}</ul>
+</div></section>
+"""
+    page(f"/sectors/{s['slug']}/", s["name"], s["card"], body, "sectors")
+
+
 def sector_page(s):
+    if s.get("placeholder"):
+        return placeholder_page(s)
     items = [resolve(it) for it in s["items"]]
     branded = any(it.get("family") for it in items)
     cards = "".join(product_card(it, s) for it in items)
@@ -493,7 +518,7 @@ def technology():
     <p>Ours monitors the incoming water and adjusts how it operates as conditions change. That keeps the output on target and the energy use down, and lets us treat only to the level each use needs.</p>
     <p>Our industrial pilot puts this to the test on real, changing paper mill water, at 60 m³ a day on a system built for 400 m³ a day.</p>
   </div>
-  {proof([("Built for messy water", "solids, scaling and variability that defeat other approaches"), ("Continuous and unattended", "24/7 operation, with membranes lasting 5+ years")])}
+  {proof([("Built for messy water", "solids, scaling and variability that defeat other approaches"), ("Continuous and unattended", "designed to run 24/7 without an operator"), ("Long membrane life", "3+ years expected in normal use; 5+ years likely in many operating conditions, and longer in some cases")])}
 </div></section>
 <section class="band"><div class="wrap split">
   <div class="measure">
@@ -518,10 +543,11 @@ def technology():
 </div></section>
 <section class="band mist"><div class="wrap">
   <h2>How we work with you</h2>
+  <p class="measure muted">Every project starts with your data and ends with a full system. Bench tests and pilots are optional: whether you need them depends on what has already been proven on similar water and what you need to be confident. Some projects go straight from your data to a full system.</p>
   <ol class="steps">
     <li><h3>Share your data</h3><p>Your flow rates, a water analysis if you have one, and what you need the treated water to do.</p></li>
-    <li><h3>Bench test</h3><p>We run your samples through our system and firm up the numbers for your site.</p></li>
-    <li><h3>On-site pilot</h3><p>Where you want extra confidence, a skid on one stream proves the case under real conditions.</p></li>
+    <li class="optional"><span class="opt-tag">Optional</span><h3>Bench test</h3><p>Where it's needed, we run your samples through our system and firm up the numbers for your site.</p></li>
+    <li class="optional"><span class="opt-tag">Optional</span><h3>On-site pilot</h3><p>Where you want extra confidence, a skid on one stream proves the case under real conditions.</p></li>
     <li><h3>Full system</h3><p>Sized to your site and installed alongside your process, with modules added as you grow.</p></li>
   </ol>
 </div></section>
