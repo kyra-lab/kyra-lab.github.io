@@ -251,7 +251,7 @@ def illustration(key, which):
 # ---------------------------------------------------------------- pages
 
 
-TAGNAMES = {"news": "News", "event": "Event", "insight": "Insight", "linkedin": "LinkedIn", "pilot": "Pilot", "funding": "Funding"}
+TAGNAMES = {"news": "News", "award": "Awards", "event": "Event", "insight": "Insight", "linkedin": "LinkedIn", "pilot": "Pilot", "funding": "Funding"}
 
 
 def news_href(n):
@@ -285,6 +285,14 @@ def pilot_video():
     <video src="/{PILOT_VIDEO}"{pa} muted loop playsinline autoplay controls preload="metadata" aria-label="Danu Water system separating blue copper sulphate: one stream darkens as it concentrates while the other turns clear"></video>
     <div><h3>See it working</h3><p>Copper sulphate colours the water blue. As our system runs, the salt moves from one stream to the other: the left side gets bluer as it concentrates, and the right side clears until virtually no salt remains.</p><p><a href="/technology/">How it works</a></p></div>
   </div>"""
+
+
+def recognition():
+    items = [n for n in news if "award" in n["tags"] or n["slug"] == "techcrunch-disrupt-2026"]
+    if not items:
+        return ""
+    li = "".join(f'<li><span>{e(n["when"])}</span><strong>{e(n["title"])}</strong></li>' for n in items)
+    return f'<div class="recognition"><h3 class="small-head">Recognition</h3><ul>{li}</ul><p><a href="/news/">All news and awards</a></p></div>'
 
 
 def sector_tiles():
@@ -323,6 +331,7 @@ def home():
   </ol>
   <p class="footnote">Household comparisons use average UK use of 137 litres per person per day (Water UK). TRL is technology readiness level, on a scale of 1 to 9.</p>
   {pilot_video()}
+  {recognition()}
 </div></section>
 
 <section class="band"><div class="wrap split">
@@ -609,7 +618,7 @@ def news_index():
         for t in n["tags"]:
             if t not in used:
                 used.append(t)
-    order = [t for t in ["news", "pilot", "event", "funding", "insight", "linkedin"] if t in used]
+    order = [t for t in ["news", "pilot", "award", "event", "funding", "insight", "linkedin"] if t in used]
     btns = '<button data-filter="all" aria-pressed="true">All</button>' + "".join(f'<button data-filter="{t}" aria-pressed="false">{TAGNAMES[t]}</button>' for t in order)
     items = ""
     for n in news:

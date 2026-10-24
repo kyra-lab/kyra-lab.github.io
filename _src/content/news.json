@@ -19,6 +19,17 @@
     ]
   },
   {
+    "slug": "women-in-green-business-2026",
+    "date": "2026-10-07",
+    "when": "7 October 2026",
+    "title": "Highly Commended, Clean Technology Innovator of the Year",
+    "tags": [
+      "award"
+    ],
+    "summary": "Kyra Sedransk Campbell was Highly Commended in the Clean Technology Innovator of the Year category at BusinessGreen's Women in Green Business Awards 2026, chosen from more than 460 entries.",
+    "body": []
+  },
+  {
     "slug": "wepa-bridgend-pilot",
     "date": "2026-10-01",
     "when": "October 2026",
@@ -33,6 +44,39 @@
       "It is treating 60 m³ of the mill's own process water a day, about the household water use of 440 people, on a system with capacity for 400 m³ a day. The pilot puts our adaptive electromembrane separation to work under real operating conditions, with all the variability that comes with them, at technology readiness level 7.",
       "It follows our prototype, which has been regularly testing industrial wastewater samples since March 2025."
     ]
+  },
+  {
+    "slug": "climb26",
+    "date": "2026-06-30",
+    "when": "June 2026",
+    "title": "Winner of Barclays' Climb26 pitch competition",
+    "tags": [
+      "award"
+    ],
+    "summary": "Danu Water was one of ten companies named winners of the Barclays pitch competition at Climb26.",
+    "body": []
+  },
+  {
+    "slug": "manufacturing-futures-2026",
+    "date": "2026-06-04",
+    "when": "June 2026",
+    "title": "Runner-up in Manufacturing Futures 2026",
+    "tags": [
+      "award"
+    ],
+    "summary": "Danu Water was named runner-up in the Manufacturing Futures 2026 competition, winning a year's membership of UKFT, the UK Fashion and Textile Association.",
+    "body": []
+  },
+  {
+    "slug": "britains-got-startups-2026",
+    "date": "2026-06-03",
+    "when": "June 2026",
+    "title": "Finalist in Britain's Got Startups",
+    "tags": [
+      "award"
+    ],
+    "summary": "Danu Water pitched at the Britain's Got Startups Best of Britain finale at the London Stock Exchange.",
+    "body": []
   },
   {
     "slug": "pre-seed-sfc-capital",
