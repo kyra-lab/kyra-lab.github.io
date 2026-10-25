@@ -287,11 +287,18 @@ def pilot_video():
   </div>"""
 
 
+def video_link(n, cls=""):
+    if not n.get("video"):
+        return ""
+    c = f' class="{cls}"' if cls else ""
+    return f' <a{c} href="{n["video"]}" target="_blank" rel="noopener">Watch the video</a>'
+
+
 def recognition():
     items = [n for n in news if "award" in n["tags"] or n["slug"] == "techcrunch-disrupt-2026"]
     if not items:
         return ""
-    li = "".join(f'<li><span>{e(n["when"])}</span><strong>{e(n["title"])}</strong></li>' for n in items)
+    li = "".join(f'<li><span>{e(n["when"])}</span><strong>{e(n["title"])}</strong>{video_link(n)}</li>' for n in items)
     return f'<div class="recognition"><h3 class="small-head">Recognition</h3><ul>{li}</ul><p><a href="/news/">All news and awards</a></p></div>'
 
 
@@ -304,7 +311,7 @@ def home():
                      {"id": "ww", "label": "Wastewater"}, {"id": "out", "label": "Discharge", "sub": "Much less"}],
             "attach": [{"type": "loop", "product": "_danu", "sub": "Salts out, water back", "from_after": "ww", "to_before": "proc", "labels": ["wastewater", "reuse water"]}]}
     latest = [n for n in news if news_href(n)][:3]
-    cards = "".join(f'<li><time datetime="{n["date"]}">{e(n["when"])}</time><h3><a href="{news_href(n)}">{e(n["title"])}</a></h3><p>{e(n["summary"])}</p></li>' for n in latest)
+    cards = "".join(f'<li><time datetime="{n["date"]}">{e(n["when"])}</time><h3><a href="{news_href(n)}">{e(n["title"])}</a></h3><p>{e(n["summary"])}{video_link(n)}</p></li>' for n in latest)
     body = f"""
 <section class="hero"><div class="wrap">
   <h1>Industrial water, back in use</h1>
@@ -632,7 +639,7 @@ def news_index():
         tag = n["tags"][0]
         items += f'''<li class="news-item" data-tags="{" ".join(n["tags"])}">
 <div class="meta"><time datetime="{n["date"]}">{e(n["when"])}</time><span class="tag{" linkedin" if tag == "linkedin" else ""}">{TAGNAMES.get(tag, tag.title())}</span></div>
-<div><h3>{title}</h3><p>{e(n["summary"])}</p>{more}</div></li>'''
+<div><h3>{title}</h3><p>{e(n["summary"])}</p>{more}{(" &nbsp;" + video_link(n, "more").strip()) if n.get("video") else ""}</div></li>'''
     follow = f'<p class="muted">More updates on <a href="{SITE["linkedin"]}">our LinkedIn page</a>.</p>' if SITE["linkedin"] else ""
     body = f"""
 <section class="page-head"><div class="wrap">
@@ -651,6 +658,9 @@ def news_index():
         if not n.get("body") or n.get("link"):
             continue
         paras = "".join(f"<p>{e(p)}</p>" for p in n["body"])
+        if n.get("video"):
+            first, _, rest = paras.partition("</p>")
+            paras = f'{first}</p><p><a class="btn" href="{n["video"]}" target="_blank" rel="noopener">Watch the video on YouTube</a></p>{rest}'
         cta = f'<p><a class="btn" href="{n["cta"][1]}">{e(n["cta"][0])}</a></p>' if n.get("cta") else ""
         b = f"""
 <section class="page-head"><div class="wrap">
